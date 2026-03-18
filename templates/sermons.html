@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{# =============================================================================
+   SERMONS PAGE
+   Lists recent sermon series and has placeholder cards for embedding video/audio.
+   You can add real YouTube embeds or links to Spotify/other platforms here.
+   ============================================================================= #}
+
+{% block content %}
+  <!-- Blue header bar: nav + logo. -->
+  <header class="subpage-header">
+    <div class="hero__top">
+      <nav class="nav" aria-label="Primary">
+        <a
+          href="{{ url_for('home') }}"
+          class="{% if active_page == 'home' %}is-active{% endif %}"
+        >
+          Home
+        </a>
+        <a
+          href="{{ url_for('visit') }}"
+          class="{% if active_page == 'visit' %}is-active{% endif %}"
+        >
+          Visit
+        </a>
+        <a
+          href="{{ url_for('about') }}"
+          class="{% if active_page == 'about' %}is-active{% endif %}"
+        >
+          About
+        </a>
+        <a
+          href="{{ url_for('contact') }}"
+          class="{% if active_page == 'contact' %}is-active{% endif %}"
+        >
+          Contact
+        </a>
+        <a
+          href="{{ url_for('sermons') }}"
+          class="{% if active_page == 'sermons' %}is-active{% endif %}"
+        >
+          Sermons
+        </a>
+      </nav>
+      <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
+        <img
+          src="{{ url_for('static', filename='images/PBC logo transparent.png') }}"
+          alt="Plumstead Baptist Church logo"
+        />
+        <span>Plumstead Baptist Church</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="section services">
+    <div class="container">
+      <div class="grid-2">
+        <!-- Left: list of series/topics. -->
+        <section class="panel">
+          <h3>Recent sermons</h3>
+          <p>
+            This is a place to link to your sermon audio or video—YouTube,
+            Spotify, or another platform. For now, these are placeholders you
+            can replace with real series titles and passages.
+          </p>
+          <ul class="list">
+            <li>
+              <strong>Hope in Romans 8</strong> — “Nothing can separate us from
+              the love of God.”
+            </li>
+            <li>
+              <strong>Walking by Faith</strong> — A series through Hebrews 11.
+            </li>
+            <li>
+              <strong>Praying the Psalms</strong> — Learning to pray with the
+              words God gives us.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Right: embed cards (replace placeholders with real video/audio embeds). -->
+        <section class="media-feed" aria-label="Embedded sermon media">
+          <article class="embed">
+            <div class="thumb">YouTube Sermon Placeholder</div>
+            <h4>Latest Sunday Sermon</h4>
+            <p>
+              Embed your most recent sermon here using a YouTube iframe or an
+              audio player from your host.
+            </p>
+          </article>
+          <article class="embed">
+            <div
+              class="thumb"
+              style="background: linear-gradient(135deg,#6b6b65,#8a8a85);"
+            >
+              Sermon Series Highlight
+            </div>
+            <h4>Series: Life in Christ</h4>
+            <p>
+              A short description of an ongoing or recent sermon series with a
+              link to the full playlist.
+            </p>
+          </article>
+        </section>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+

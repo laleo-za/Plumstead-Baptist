@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{# =============================================================================
+   ABOUT PAGE
+   Two tabs: History (default) and Statement of Faith. Edit the content in each
+   tab panel below. Replace image placeholders with real photos if desired.
+   ============================================================================= #}
+
+{% block content %}
+  <!-- Same blue header bar as other subpages: nav links + logo (logo links to Home). -->
+  <header class="subpage-header">
+    <div class="hero__top">
+      <nav class="nav" aria-label="Primary">
+        <a
+          href="{{ url_for('home') }}"
+          class="{% if active_page == 'home' %}is-active{% endif %}"
+        >
+          Home
+        </a>
+        <a
+          href="{{ url_for('visit') }}"
+          class="{% if active_page == 'visit' %}is-active{% endif %}"
+        >
+          Visit
+        </a>
+        <a
+          href="{{ url_for('about') }}"
+          class="{% if active_page == 'about' %}is-active{% endif %}"
+        >
+          About
+        </a>
+        <a
+          href="{{ url_for('contact') }}"
+          class="{% if active_page == 'contact' %}is-active{% endif %}"
+        >
+          Contact
+        </a>
+        <a
+          href="{{ url_for('sermons') }}"
+          class="{% if active_page == 'sermons' %}is-active{% endif %}"
+        >
+          Sermons
+        </a>
+      </nav>
+      <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
+        <img
+          src="{{ url_for('static', filename='images/PBC logo transparent.png') }}"
+          alt="Plumstead Baptist Church logo"
+        />
+        <span>Plumstead Baptist Church</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- About page: tabbed content (History = default, Statement of Faith, Squirrels Leap Farm). -->
+  <main class="section intro about-page">
+    <div class="container">
+      <!-- Tab controls: radio inputs drive which panel is visible (no JS required). -->
+      <div class="about-tabs">
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-history"
+          value="history"
+          checked
+          class="about-tab-input"
+          aria-controls="about-panel-history"
+          aria-label="Show History"
+        />
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-faith"
+          value="faith"
+          class="about-tab-input"
+          aria-controls="about-panel-faith"
+          aria-label="Show Statement of Faith"
+        />
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-squirrels"
+          value="squirrels"
+          class="about-tab-input"
+          aria-controls="about-panel-squirrels"
+          aria-label="Show Squirrels Leap Farm"
+        />
+        <div class="about-tab-list" role="tablist" aria-label="About">
+          <label for="about-tab-history" class="about-tab" role="tab" id="about-tab-label-history" aria-selected="true" aria-controls="about-panel-history">History</label>
+          <label for="about-tab-faith" class="about-tab" role="tab" id="about-tab-label-faith" aria-selected="false" aria-controls="about-panel-faith">Statement of Faith</label>
+          <label for="about-tab-squirrels" class="about-tab" role="tab" id="about-tab-label-squirrels" aria-selected="false" aria-controls="about-panel-squirrels">Squirrels Leap Farm</label>
+        </div>
+
+        <div class="about-tab-panels">
+          <!-- Panel 1: History (shown by default). -->
+          <div id="about-panel-history" class="about-tab-panel panel-history" role="tabpanel" aria-labelledby="about-tab-label-history">
+            <div class="card">
+              <div>
+                <h2>Our History</h2>
+                <h3>From 2007 to the present</h3>
+                <p>
+                  In <b>Jan 2007</b>, ministry began at our new location at 20 Toulon Avenue Plumstead, having moved from our historical 
+                  address in Wynberg.  For most of 2007, the existing building at 20 Toulon Avenue was renovated, specifically to
+                   make a small room for us to hold our Evening Church Services.
+                   <br> 
+
+                  <br>
+                  On <b>10 Feb 2008</b>, we held our first Evening Service and kept our Morning Service at the Dutch Reformed Church in 
+                  Ophir Road, Plumstead.
+                  <br> 
+
+                  <br>  
+                  On <b>3 Sep 2009</b>, work began to build our New Hall in which we would hold both Morning & Evening Services, and 
+                  other events.
+                  <br> 
+
+                  <br>
+                  On <b>5 Dec 2010</b>, with all work on the New Hall completed successfully, we held our first Morning Service.
+                  <br> 
+
+                  <br>
+                  We give God all the Glory for his continued Grace over all these years, now spanning over 123 years.
+                </p>
+                <h3>How it all began</h3>
+                <p>
+                  It would be impossible to attempt to compile a history, however brief, of the Plumstead Baptist Church (formerly 
+                  known as Wynberg Baptist Church) without acknowledging the past role played by the members of Wale Street Baptist 
+                  Church (now located in Orange Street) in its establishment.
+                  <br> 
+
+                  <br>
+                  In these records, tribute is paid to the evangelising zeal of the Rev. W. Hamilton who came to South Africa 
+                  from Spurgeon’s College in London. Soon after his arrival, a preaching station was established at Wynberg.
+                  <br> 
+              
+                  <br>
+                  The work began with cottage meetings in 1876. In 1878 the Rev. H.T. Batts arrived in Cape Town to assist the
+                   Rev. Hamilton. For two months after his arrival the two men held a series of special services between Cape 
+                   Town and Wynberg, preaching almost every night. The cottage meetings soon grew into an organised service held 
+                   in the old Government School at the corner of Tenant Road. A year later the old Court House in Durban Road was 
+                   hired.
+                   <br> 
+                  <br>
+                  In 1880 the work moved into the Baptist Hall in Lower Church Street. The work was under the charge of Cape 
+                  Town until the arrival of the Rev. Ernest Baker from Spurgeons in 1891. Among the preachers in the early days 
+                  were W. Roberts, George White and D. L. Niddrie. These men often walked the whole distance from Cape Town to 
+                  Wynberg and back.
+                  <br> 
+                  <br>
+                  In 1891 the Wynberg cause was formed into a separate Church and the Rev. Ernest Baker was invited to be the 
+                  first pastor. The church thus constituted had twenty-one “foundation members”:                  
+                  Miss Helena van der Bos, Mrs. R. Crane, Miss L. Gomez, Miss R. Stephens, Mrs. J. A. Cresner, Mrs. W. Bridgens,
+                  Miss J. Higgs, Mr. J. Higgs, Miss A. W. Mathew, Mr. James Creser, Mr. Wm. Wright (Church Secretary), Mrs. Wright, 
+                  Miss Grace Wright, Mrs. A. Y. Mathew, Mr A Y. Mathew (parents of your life-Deacon Mr. E. A Mathew), 
+                  Mr. I. van Renan, Miss J. van Renan, Mr. Geo. Hutchinson, Mrs. G Hitchinson and Mr. A. W. Mathew.
+                </p>
+              </div>
+            </div>
+            <section class="panel about-gallery" aria-label="Church history photos">
+              <div class="about-gallery-grid">
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/placeholder.jpg') }}"
+                    alt="20 Toulon Avenue today"
+                  />
+                  <figcaption>20 placeholder image.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/8.png') }}"
+                    alt="20 Toulon Avenue in 1958"
+                  />
+                  <figcaption>placeholder image.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/bmp') }}"
+                    alt="Historic view along Toulon Avenue"
+                  />
+                  <figcaption>placeholder image.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/.bmp') }}"
+                    alt="Historic picture of the house on the property"
+                  />
+                  <figcaption>placeholder image.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/.jpg') }}"
+                    alt="Wider view of the church property"
+                  />
+                  <figcaption>place</figcaption>
+                </figure>
+              </div>
+            </section>
+          </div>
+
+          <!-- Panel 2: Statement of Faith. -->
+          <div id="about-panel-faith" class="about-tab-panel panel-faith" role="tabpanel" aria-labelledby="about-tab-label-faith">
+            <div class="card">
+              <div>
+                <h2>Statement of Faith</h2>
+                <p><strong>We believe</strong></p>
+                <ul class="list statement-of-faith-list">
+                  <li>In the Scriptures of the Old and New Testaments in their original writings as fully inspired of God, and accept them as the final authority for faith and life;</li>
+                  <li>In one God, eternally existing in three Persons – Father, Son and Holy Spirit;</li>
+                  <li>In Jesus Christ the only begotten Son of God, who was conceived by the Holy Spirit, born of the Virgin Mary, and is therefore True God and True Man;</li>
+                  <li>That God created man in His own image; that man sinned and thereby incurred the penalty of death, physical and spiritual;</li>
+                  <li>That all human beings inherit a sinful nature, which issues (in the case of those who have reached moral responsibility) in actual transgression involving personal guilt;</li>
+                  <li>That the Lord Jesus Christ died for our sins, a substitutionary sacrifice according to the Scriptures, and that all who believe in Him are justified on the ground of His shed blood;</li>
+                  <li>In the bodily resurrection of the Lord Jesus Christ, His ascension into heaven, and His present life as our High Priest and Advocate;</li>
+                  <li>In the Personality and Godhead of the Holy Spirit, His indwelling of the Believer in Christ from the time of conversion, and the necessity of His work in making the death and resurrection of Christ effective to the individual;</li>
+                  <li>In the Holy, Catholic, Apostolic Church, which is the Body of Christ, of which Christ is the Head, and which is manifest locally in the gathering together of believers in obedience to Christ alone;</li>
+                  <li>That the Lord Jesus Christ appointed two ordinances – Baptism and the Lord’s Supper – to be observed as acts of obedience and as perpetual witnesses to the cardinal facts of the Christian faith;</li>
+                  <li>That Baptism is the immersion of the believer in water as confession of, and identification with Christ in burial and resurrection;</li>
+                  <li>That the Lord’s Supper is the partaking of bread and wine as symbolical of the Saviour’s broken body and shed blood in remembrance of His sacrificial death, “till He come”;</li>
+                  <li>In the priesthood of all believers;</li>
+                  <li>In the personal return of our Lord Jesus Christ, the bodily resurrection of the just and the unjust, the eternal blessedness of the saved, and the eternal punishment of the lost;</li>
+                  <li>That God has sanctioned marriage between a man and a woman, therefore we believe in heterosexual relationships between a natural man and a natural woman within the confines of lawful matrimony.</li>
+                </ul>
+              </div>
+              <div
+                class="card__media"
+                aria-label="Statement of faith image"
+                style="background-image: url('{{ url_for('static', filename='images/banners/banner1.jpg') }}'); background-size: cover; background-position: center;"
+              >
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Squirrels Leap Farm (history of the property). -->
+          <div id="about-panel-squirrels" class="about-tab-panel panel-squirrels" role="tabpanel" aria-labelledby="about-tab-label-squirrels">
+            <div class="card">
+              <div>
+                <h2>Squirrels Leap Farm</h2>
+                <figure class="about-quote">
+                  <div class="about-quote__marks">“</div>
+                  <blockquote>
+                    We called the place Squirrel's Leap because we felt like squirrels leaping into the unknown when we undertook this way of life;
+                    and we hoped to land on <b>some</b> branch, as squirrels do, even if it wasn't the one they aimed for.
+                  </blockquote>
+                  <figcaption class="about-quote__source">
+                    — Cabbages and Cream, by D.M. Fitzroy
+                  </figcaption>
+                </figure>
+                <p>
+                  We are privileged to own and use this beautiful property, which was purchased in 2006.
+                </p>
+                <p>
+                  The old buildings were originally thatched and part of a farm called 'Squirrels Leap'.
+                </p>
+                <p>
+                  The book "Cabbages and Cream" by VM Fitzroy describes her family's move to the farm in the 1940s,
+                   making an already-old building and plot into a working homestead.
+                </p>
+                <p>
+                  The Vernacular Architecture Society of South Africa (VASSA) visited the property on 2021, and included a 
+                  writeup with some photographs
+                   in their November & December 2021 Newsletter. You can read the article <a href="https://www.vassa.org.za/wp-content/uploads/2021/12/VASSA-Newsletter-November-December-2021.pdf"><u>here</u></a>.
+                                </p>
+              </div>
+            </div>
+            <section class="panel about-gallery" aria-label="Squirrels Leap Farm photos">
+              <div class="about-gallery-grid">
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/20toulon.jpg') }}"
+                    alt="View of 20 Toulon Avenue and the surrounding property"
+                  />
+                  <figcaption>The old farmhouse in 2008, before the thatch was replaced due to fire.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/20toulon1958.png') }}"
+                    alt="20 Toulon Avenue as it appeared in 1958"
+                  />
+                  <figcaption>Squirrel's Leap Farm is visible in the main central rectangle of this 1958 aerial photograph, taken 
+                    from <a href="https://grant.dev.openstreetmap.org/coct-historical-aerial/"><u>https://grant.dev.openstreetmap.org/coct-historical-aerial/</u></a>.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/Ave Toulon.bmp') }}"
+                    alt="Historic view along Toulon Avenue near the property"
+                  />
+                  <figcaption>Squirrel's Leap farm layout.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/Picture of house.bmp') }}"
+                    alt="Older photograph of the house on the Squirrels Leap Farm property"
+                  />
+                  <figcaption>An older drawing of the house on the farm.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="{{ url_for('static', filename='images/site/property.jpg') }}"
+                    alt="Current view of the grounds at Squirrels Leap Farm"
+                  />
+                  <figcaption>The grounds at the current day.</figcaption>
+                </figure>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

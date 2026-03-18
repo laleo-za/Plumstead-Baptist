@@ -1,0 +1,26 @@
+---
+description: Keep templates, app, and CSS well-commented; update README when the project changes.
+alwaysApply: true
+---
+
+# Comments and README for Plumstead Baptist Church Website
+
+## Comments in code
+
+When adding or changing code in this project:
+
+- **Templates** (`templates/**/*.html`): Add clear HTML or Jinja comments above each major section explaining what the section is for and what it does, in plain language for someone with little coding experience. Use block comments like `<!-- ======== Section name / purpose ======== -->` or `{# ... #}` at the top of templates.
+- **Python** (`app.py`): Add a short docstring for each route and a module-level docstring. Comment any non-obvious logic (e.g. YouTube RSS parsing).
+- **CSS** (`static/css/styles.css`): Add a short comment before each logical group of rules (e.g. "Hero banner", "Footer", "Responsive: tablet") so editors can find the right place to change styles.
+
+Do not change behaviour or functionality when adding these comments; only add or adjust comments.
+
+## README updates
+
+When you add or remove pages, routes, partials, or major features:
+
+- Update the **Project structure** table in `README.md` with the new file and its purpose.
+- Update **What this project does** if the site’s behaviour or content changes.
+- If editing instructions or deployment steps are affected, update those sections too.
+
+Keep the README accurate so that someone new to the project can understand structure and where to edit.

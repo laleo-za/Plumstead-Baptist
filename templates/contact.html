@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{# =============================================================================
+   CONTACT PAGE
+   Phone, email, office hours, and a second copy of address + map. Update
+   contact details and address here (and in base.html footer if you want
+   them to match everywhere).
+   ============================================================================= #}
+
+{% block content %}
+  <!-- Blue header bar: nav + logo. -->
+  <header class="subpage-header">
+    <div class="hero__top">
+      <nav class="nav" aria-label="Primary">
+        <a
+          href="{{ url_for('home') }}"
+          class="{% if active_page == 'home' %}is-active{% endif %}"
+        >
+          Home
+        </a>
+        <a
+          href="{{ url_for('visit') }}"
+          class="{% if active_page == 'visit' %}is-active{% endif %}"
+        >
+          Visit
+        </a>
+        <a
+          href="{{ url_for('about') }}"
+          class="{% if active_page == 'about' %}is-active{% endif %}"
+        >
+          About
+        </a>
+        <a
+          href="{{ url_for('contact') }}"
+          class="{% if active_page == 'contact' %}is-active{% endif %}"
+        >
+          Contact
+        </a>
+        <a
+          href="{{ url_for('sermons') }}"
+          class="{% if active_page == 'sermons' %}is-active{% endif %}"
+        >
+          Sermons
+        </a>
+      </nav>
+      <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
+        <img
+          src="{{ url_for('static', filename='images/PBC logo transparent.png') }}"
+          alt="Plumstead Baptist Church logo"
+        />
+        <span>Plumstead Baptist Church</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container grid-2">
+      <!-- Left column: how to reach the church. -->
+      <section class="panel">
+        <h3>Contact details</h3>
+        <p>
+          Please feel free to contact the church office if you have any questions about the church, hiring our hall or property, or want to know more about our services.
+        </p>
+        <ul class="list">
+          <li>
+            <strong>Phone:</strong>
+            076 589 0261 
+          </li>
+          <li>
+            <strong>Email:</strong>
+            office@plumsteadbaptist.co.za
+          </li>
+          <li>
+            <strong>Office hours:</strong>
+            Office hours: Mon, Wed, Fri 09:00 - 13:00
+          </li>
+        </ul>
+
+      </section>
+
+      <!-- Right column: address and embedded map. -->
+      <section class="panel">
+        <h3>Find us</h3>
+        <p>
+          <strong>Address:</strong>
+         20 Toulon Ave, Plumstead, Cape Town, 7945
+        </p>
+        <p>
+    
+        </p>
+        <div class="map" aria-label="Map showing Plumstead Baptist Church">
+          <iframe
+            src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Plumstead Baptist Church location on Google Maps"
+          ></iframe>
+        </div>
+      </section>
+    </div>
+  </main>
+{% endblock %}

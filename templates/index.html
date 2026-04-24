@@ -127,7 +127,7 @@
                 given among men by which we must be saved.</i>
 
               </p></blockquote>
-            We’re a family-friendly, Bible-believing church shaped by the gospel
+            We’re a local Bible-believing church shaped by the Gospel
             and committed to worship, teaching, prayer, and community. On
             Sundays we gather as the redeemed people of God to pray, heard the Word preached,
             and worship our risen Saviour! Throughout the week we meet in smaller groups, serve
@@ -160,7 +160,7 @@
         <div class="panel">
           <h3>Services and ministries</h3>
           {% include "partials/service_times.html" %}
-          <p>Please check our Facebook page for the latest updates, or contact us for more information.</p>
+          <p>Please check our Facebook page for events and latest updates, or contact us for more information.</p>
         </div>
 
         <div class="media-feed" aria-label="Recent media">
@@ -188,21 +188,20 @@
             </p>
           </article>
 
-          <!-- Facebook Page Plugin: shows the live timeline from the church's
-               Facebook page. Requires Facebook SDK (script loaded below). -->
+          <!-- Facebook timeline embed via iframe (more reliable on static hosting). -->
           <article class="embed" aria-label="Latest Facebook updates">
             <div class="fb-wrapper">
-              <div
-                class="fb-page"
-                data-href="https://www.facebook.com/p/Plumstead-Baptist-Church-100064453489540/"
-                data-tabs="timeline"
-                data-width="500"
-                data-height="350"
-                data-small-header="false"
-                data-adapt-container-width="true"
-                data-hide-cover="false"
-                data-show-facepile="false"
-              ></div>
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fp%2FPlumstead-Baptist-Church-100064453489540%2F&tabs=timeline&width=500&height=350&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false"
+                title="Plumstead Baptist Church Facebook timeline"
+                width="500"
+                height="350"
+                style="border: none; overflow: hidden;"
+                scrolling="no"
+                frameborder="0"
+                allowfullscreen="true"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              ></iframe>
             </div>
             <h4>Latest updates</h4>
             <p>
@@ -261,13 +260,11 @@
 
 {# =============================================================================
    SCRIPTS (home page only)
-   - Facebook SDK: required for the Facebook timeline embed above.
    - Banner carousel: advances hero background images every 5 seconds with a
      swipe effect. Only runs if there is more than one slide.
    ============================================================================= #}
 {% block scripts %}
   {{ super() }}
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v18.0"></script>
   <script>
     (function () {
       const slides = Array.from(document.querySelectorAll(".hero__slide"));

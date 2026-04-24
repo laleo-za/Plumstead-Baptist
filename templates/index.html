@@ -44,9 +44,14 @@
         class="hero__slide"
         style="background-image:url('{{ url_for('static', filename='images/banners/banner6.jpg') }}');"
       ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('{{ url_for('static', filename='images/banners/banner7.jpg') }}');"
+      ></div>
     </div>
     <div class="hero__dots" aria-hidden="true">
       <button type="button" class="hero__dot is-active"></button>
+      <button type="button" class="hero__dot"></button>
       <button type="button" class="hero__dot"></button>
       <button type="button" class="hero__dot"></button>
       <button type="button" class="hero__dot"></button>
@@ -82,12 +87,6 @@
           class="{% if active_page == 'contact' %}is-active{% endif %}"
         >
           Contact
-        </a>
-        <a
-          href="{{ url_for('sermons') }}"
-          class="{% if active_page == 'sermons' %}is-active{% endif %}"
-        >
-          Sermons
         </a>
       </nav>
       <!-- Logo: clicking it takes the user back to the Home page. -->
@@ -135,12 +134,7 @@
             our city, and encourage one another to follow Jesus in everyday
             life.
           </p>
-          <p>
-            Whether you’re exploring faith or looking for a church home, you’ll
-            find clear teaching, hospitality, and opportunities to grow—across
-            ages and stages.
-          </p>
-          <div class="actions">
+                <div class="actions">
             <a class="btn btn--ghost" href="{{ url_for('about') }}">Read more</a>
           </div>
         </div>
@@ -190,8 +184,7 @@
             </div>
             <h4>Sermons</h4>
             <p>
-              This section  shows the most recent sermon upload from our YouTube
-              channel.
+              Our most recent sermons from our Youtube Channel.
             </p>
           </article>
 

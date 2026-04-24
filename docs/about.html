@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<!-- =============================================================================
+     BASE TEMPLATE (shared layout for every page)
+     Every page (Home, Visit, About, etc.) extends this file. This provides:
+     - The <head> (title, stylesheet link)
+     - A placeholder where each page inserts its main content
+     - The footer (address, service times, bank details) on every page
+     - Scripts that run on all pages (e.g. sticky header behaviour)
+     Edit the footer section below to change contact info site-wide.
+     ============================================================================= -->
+<html lang="en">
+  <head>
+    <!-- Page title: shows in the browser tab. "Home | Plumstead Baptist Church" etc. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About | Plumstead Baptist Church</title>
+    <link
+      rel="stylesheet"
+      href="static/css/styles.css?v=20260424"
+    />
+  </head>
+  <body>
+    <!-- Required by Facebook's embed script (used on the home page). -->
+    <div id="fb-root"></div>
+    
+  <!-- Same blue header bar as other subpages: nav links + logo (logo links to Home). -->
+  <header class="subpage-header">
+    <div class="hero__top">
+      <nav class="nav" aria-label="Primary">
+        <a
+          href="index.html"
+          class=""
+        >
+          Home
+        </a>
+        <a
+          href="visit.html"
+          class=""
+        >
+          Visit
+        </a>
+        <a
+          href="about.html"
+          class="is-active"
+        >
+          About
+        </a>
+        <a
+          href="contact.html"
+          class=""
+        >
+          Contact
+        </a>
+      </nav>
+      <a href="index.html" class="logo" aria-label="Church logo – go to Home">
+        <img
+          src="static/images/PBC%20logo%20transparent.png"
+          alt="Plumstead Baptist Church logo"
+        />
+        <span>Plumstead Baptist Church</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Squirrels Leap Farm). -->
+  <main class="section intro about-page">
+    <div class="container">
+      <!-- Tab controls: radio inputs drive which panel is visible (no JS required). -->
+      <div class="about-tabs">
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-ministries"
+          value="ministries"
+          checked
+          class="about-tab-input"
+          aria-controls="about-panel-ministries"
+          aria-label="Show Ministries"
+        />
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-history"
+          value="history"
+          class="about-tab-input"
+          aria-controls="about-panel-history"
+          aria-label="Show History"
+        />
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-faith"
+          value="faith"
+          class="about-tab-input"
+          aria-controls="about-panel-faith"
+          aria-label="Show Statement of Faith"
+        />
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-squirrels"
+          value="squirrels"
+          class="about-tab-input"
+          aria-controls="about-panel-squirrels"
+          aria-label="Show Squirrels Leap Farm"
+        />
+        <div class="about-tab-list" role="tablist" aria-label="About">
+          <label for="about-tab-ministries" class="about-tab" role="tab" id="about-tab-label-ministries" aria-selected="true" aria-controls="about-panel-ministries">Ministries</label>
+          <label for="about-tab-history" class="about-tab" role="tab" id="about-tab-label-history" aria-selected="false" aria-controls="about-panel-history">History</label>
+          <label for="about-tab-faith" class="about-tab" role="tab" id="about-tab-label-faith" aria-selected="false" aria-controls="about-panel-faith">Statement of Faith</label>
+          <label for="about-tab-squirrels" class="about-tab" role="tab" id="about-tab-label-squirrels" aria-selected="false" aria-controls="about-panel-squirrels">Squirrels Leap Farm</label>
+        </div>
+
+        <div class="about-tab-panels">
+          <!-- Panel 1: History (split into three periods with matching photo galleries). -->
+          <div id="about-panel-history" class="about-tab-panel panel-history" role="tabpanel" aria-labelledby="about-tab-label-history">
+            <!-- ======== History section 1: 2010s to present ======== -->
+            <section class="panel">
+              <h2>Our History</h2>
+              <h3>From 2010 to the present day</h3>
+              <p>
+                In the mid 2010s, our then pastor and associate pastor both accepted calls to shepherd other congregations in South Africa, after
+                many years of fruitful ministry to the believers of PBC and our community. During the state-mandated society lockdowns
+                of 2020-2022, the church called a missionary associated with PBC to serve as a sort-term pastor for a few years. The church also
+                experienced growth in attendance due to community involvement during the destitution of lockdowns.
+                <br>
+                <br>
+                Our new kitchen and bathroom extension were begun in 2023, and completed in early 2025, allowing for
+                better fellowship after the Sunday services, and catering and hosting events.
+                <br>
+                <br>
+                We give God all the Glory for his continued Grace over all these years, now spanning over 130 years.
+              </p>
+            </section>
+            <section class="panel about-gallery" aria-label="Church history photos from 2010 to present">
+              <div class="about-gallery-grid">
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/service2.jpg"
+                    alt="Weekly services"
+                  />
+                  <figcaption>Sunday services.</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/kitchenproject.jpg"
+                    alt="Progress on the kitchen and bathroom extension"
+                  />
+                  <figcaption>Progress on the kitchen and bathroom extension.</figcaption>
+                </figure>
+
+                <figure class="about-photo" style="--image-scale: 1.00;">
+                  <img
+                    src="static/images/site/lockdownoutreach.jpg"
+                    alt="Community outreach during lockdown"
+                  />
+                  <figcaption>Community outreach during lockdown.</figcaption>
+                </figure>
+
+
+
+              </div>
+            </section>
+
+            <!-- ======== History section 2: 2007 to 2010s ======== -->
+            <section class="panel">
+              <h3>From 2007 to the 2010s</h3>
+              <p>
+                In <b>Jan 2007</b>, ministry began at our new location at 20 Toulon Avenue Plumstead, having moved from our historical
+                address in Wynberg. For most of 2007, the existing building at 20 Toulon Avenue was renovated, specifically to
+                make a small room for us to hold our Evening Church Services.
+                <br>
+                <br>
+                On <b>10 Feb 2008</b>, we held our first Evening Service and kept our Morning Service at the Dutch Reformed Church in
+                Ophir Road, Plumstead.
+                <br>
+                <br>
+                On <b>3 Sep 2009</b>, work began to build our New Hall in which we would hold both Morning & Evening Services, and
+                other events.
+                <br>
+                <br>
+                On <b>5 Dec 2010</b>, with all work on the New Hall completed successfully, we held our first Morning Service.
+                
+              </p>
+            </section>
+            <section class="panel about-gallery" aria-label="Church history photos from 2007 to the 2010s">
+              <div class="about-gallery-grid">
+
+                <figure class="about-photo" style="--image-scale: .8;">
+                  <img
+                    src="static/images/history/compilation.jpg"
+                    alt="Compilation of recent church moments"
+                  />
+                  <figcaption>Church life and moments from the last century</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/banners/banner3.jpg"
+                    alt="Early new hall services"
+                  />
+                  <figcaption>Service early on after the completion of the new hall</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/FILENAME.jpg"
+                    alt="image-name"
+                  />
+                  <figcaption>Placeholder image for 2007 to the 2010s</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/FILENAME.jpg"
+                    alt="image-name"
+                  />
+                  <figcaption>Placeholder image for 2007 to the 2010s</figcaption>
+                </figure>
+
+              </div>
+            </section>
+
+            <!-- ======== History section 3: How it all began ======== -->
+            <section class="panel">
+              <h3>How it all began</h3>
+              <p>
+                It would be impossible to attempt to compile a history, however brief, of the Plumstead Baptist Church (formerly
+                known as Wynberg Baptist Church) without acknowledging the past role played by the members of Wale Street Baptist
+                Church (now located in Orange Street) in its establishment.
+                <br>
+                <br>
+                In these records, tribute is paid to the evangelising zeal of the Rev. W. Hamilton who came to South Africa
+                from Spurgeon’s College in London. Soon after his arrival, a preaching station was established at Wynberg.
+                <br>
+                <br>
+                The work began with cottage meetings in 1876. In 1878 the Rev. H.T. Batts arrived in Cape Town to assist the
+                Rev. Hamilton. For two months after his arrival the two men held a series of special services between Cape
+                Town and Wynberg, preaching almost every night. The cottage meetings soon grew into an organised service held
+                in the old Government School at the corner of Tenant Road. A year later the old Court House in Durban Road was
+                hired.
+                <br>
+                <br>
+                In 1880 the work moved into the Baptist Hall in Lower Church Street. The work was under the charge of Cape
+                Town until the arrival of the Rev. Ernest Baker from Spurgeons in 1891. Among the preachers in the early days
+                were W. Roberts, George White and D. L. Niddrie. These men often walked the whole distance from Cape Town to
+                Wynberg and back.
+                <br>
+                <br>
+                In 1891 the Wynberg cause was formed into a separate Church and the Rev. Ernest Baker was invited to be the
+                first pastor. The church thus constituted had twenty-one “foundation members”:
+                Miss Helena van der Bos, Mrs. R. Crane, Miss L. Gomez, Miss R. Stephens, Mrs. J. A. Cresner, Mrs. W. Bridgens,
+                Miss J. Higgs, Mr. J. Higgs, Miss A. W. Mathew, Mr. James Creser, Mr. Wm. Wright (Church Secretary), Mrs. Wright,
+                Miss Grace Wright, Mrs. A. Y. Mathew, Mr A Y. Mathew (parents of your life-Deacon Mr. E. A Mathew),
+                Mr. I. van Renan, Miss J. van Renan, Mr. Geo. Hutchinson, Mrs. G Hitchinson and Mr. A. W. Mathew.
+              </p>
+            </section>
+            <section class="panel about-gallery" aria-label="Church history photos from the early years">
+              <div class="about-gallery-grid">
+
+                <figure class="about-photo" style="--image-scale: .8;">
+                  <img
+                    src="static/images/history/battswoodmission.jpg"
+                    alt="Battswood Mission historic photo"
+                  />
+                  <figcaption>Battswood Mission</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/familytree.jpg"
+                    alt="Church history family tree graphic"
+                  />
+                  <figcaption>Family tree timeline</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/govthall.jpg"
+                    alt="Historic Government Hall photo"
+                  />
+                  <figcaption>Government Hall gathering</figcaption>
+                </figure>
+
+                <figure class="about-photo" style="--image-scale: .8;">
+                  <img
+                    src="static/images/history/wbchall.jpg"
+                    alt="Wynberg Baptist Church hall"
+                  />
+                  <figcaption>The originalWynberg Baptist Church hall</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/wbchallcomplete.jpg"
+                    alt="Completed Wynberg Baptist Church hall"
+                  />
+                  <figcaption>Wynberg Baptist Church hall (completed)</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/sundayschool.jpg"
+                    alt="Sunday school ministry"
+                  />
+                  <figcaption>Sunday school ministry in earlier years</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/deacons1991.jpg"
+                    alt="Church leadership and members"
+                  />
+                  <figcaption>Leadership and membership across the years</figcaption>
+                </figure>
+                
+              </div>
+            </section>
+          </div>
+
+          <!-- Panel 2: Statement of Faith. -->
+          <div id="about-panel-faith" class="about-tab-panel panel-faith" role="tabpanel" aria-labelledby="about-tab-label-faith">
+            <div class="card">
+              <div>
+                <h2>Statement of Faith</h2>
+                <p>
+                  Plumstead Baptist Church is a member of the <a href="https://baptistunion.org.za/"><u>Baptist Union of South Africa (BUSA)</u></a>. We as Baptists share many areas of our faith with 
+                  other members of the professing Christian Church. These include a belief in one God, Father, Son and Holy Spirit; in the supreme Lordship
+                   of Jesus Christ as Head of the Church; and in the Bible as the inspired Word of God, and as the final authority in all matters of faith and practice.
+
+                  There are however areas of principle and practice where we as Baptists make distinctive emphases arising out of our understanding of the Scriptures
+                   such as the direct lordship of Jesus Christ, the autonomy of the local church, believer’s baptism, the congregational principal of church government, 
+                   the priesthood of all believers, the principle of religious liberty and the principle of separation of church and state.
+                </p>
+                <p><strong>We believe</strong></p>
+                <ul class="list statement-of-faith-list">
+                  <li>In the Scriptures of the Old and New Testaments in their original writings as fully inspired of God, and accept them as the final authority for faith and life;</li>
+                  <li>In one God, eternally existing in three Persons – Father, Son and Holy Spirit;</li>
+                  <li>In Jesus Christ the only begotten Son of God, who was conceived by the Holy Spirit, born of the Virgin Mary, and is therefore True God and True Man;</li>
+                  <li>That God created man in His own image; that man sinned and thereby incurred the penalty of death, physical and spiritual;</li>
+                  <li>That all human beings inherit a sinful nature, which issues (in the case of those who have reached moral responsibility) in actual transgression involving personal guilt;</li>
+                  <li>That the Lord Jesus Christ died for our sins, a substitutionary sacrifice according to the Scriptures, and that all who believe in Him are justified on the ground of His shed blood;</li>
+                  <li>In the bodily resurrection of the Lord Jesus Christ, His ascension into heaven, and His present life as our High Priest and Advocate;</li>
+                  <li>In the Personality and Godhead of the Holy Spirit, His indwelling of the Believer in Christ from the time of conversion, and the necessity of His work in making the death and resurrection of Christ effective to the individual;</li>
+                  <li>In the Holy, Catholic, Apostolic Church, which is the Body of Christ, of which Christ is the Head, and which is manifest locally in the gathering together of believers in obedience to Christ alone;</li>
+                  <li>That the Lord Jesus Christ appointed two ordinances – Baptism and the Lord’s Supper – to be observed as acts of obedience and as perpetual witnesses to the cardinal facts of the Christian faith;</li>
+                  <li>That Baptism is the immersion of the believer in water as confession of, and identification with Christ in burial and resurrection;</li>
+                  <li>That the Lord’s Supper is the partaking of bread and wine as symbolical of the Saviour’s broken body and shed blood in remembrance of His sacrificial death, “till He come”;</li>
+                  <li>In the priesthood of all believers;</li>
+                  <li>In the personal return of our Lord Jesus Christ, the bodily resurrection of the just and the unjust, the eternal blessedness of the saved, and the eternal punishment of the lost;</li>
+                  <li>That God has sanctioned marriage between a man and a woman, therefore we believe in heterosexual relationships between a natural man and a natural woman within the confines of lawful matrimony.</li>
+                </ul>
+              </div>
+              <div
+                class="card__media"
+                aria-label="Statement of faith image"
+                style="background-image: url('/static/images/banners/banner1.jpg'); background-size: cover; background-position: center;"
+              >
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Squirrels Leap Farm (history of the property). -->
+          <div id="about-panel-squirrels" class="about-tab-panel panel-squirrels" role="tabpanel" aria-labelledby="about-tab-label-squirrels">
+            <div class="card">
+              <div>
+                <h2>Squirrels Leap Farm</h2>
+                <figure class="about-quote">
+                  <div class="about-quote__marks">“</div>
+                  <blockquote>
+                    We called the place Squirrel's Leap because we felt like squirrels leaping into the unknown when we undertook this way of life;
+                    and we hoped to land on <b>some</b> branch, as squirrels do, even if it wasn't the one they aimed for.
+                  </blockquote>
+                  <figcaption class="about-quote__source">
+                    — Cabbages and Cream, by D.M. Fitzroy
+                  </figcaption>
+                </figure>
+                <p>
+                  We are privileged to own and use this beautiful property, which was purchased in 2006.
+                </p>
+                <p>
+                  The old buildings were originally thatched and part of a farm called 'Squirrels Leap'. 
+                </p>
+                <p>
+                  The book "Cabbages and Cream" by VM Fitzroy describes her family's move to the farm in the 1940s,
+                   making an already-old building and plot into a working homestead. It is a very interesting account 
+                   of life on a smallholding, growing a garden, taking care of cows, chickens, and children, and about
+                    the property and surroundings.
+                    <p>
+                   She relates <i>“The house had been 
+                    built more than a century before by a freed slave, and it had every characteristic of its period:
+                     thick whitewashed walls, low-slung thatch, shuttered windows, the air of being settled snugly on the 
+                     land that Dutch architecture achieved as if without effort. Its builder had a grant of fourty acres 
+                     of the land round about; it must have been a pearl of a property in those days; in 
+                     fact, he called it Pearldale.”</i>  
+                    </p>
+                    <p>They also had problems with moles, the sandy soil, and an old and maintenance-heavy building!
+                    
+                    </p>
+                </p>
+                <p>
+                  The Vernacular Architecture Society of South Africa (VASSA) visited the property on 2021, and included a 
+                  writeup with some photographs
+                   in their November & December 2021 Newsletter. You can read the article <a href="https://www.vassa.org.za/wp-content/uploads/2021/12/VASSA-Newsletter-November-December-2021.pdf"><u>here</u></a>.
+                                </p>
+              </div>
+            </div>
+            <section class="panel about-gallery" aria-label="Squirrels Leap Farm photos">
+              <div class="about-gallery-grid">
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/20toulon.jpg"
+                    alt="View of 20 Toulon Avenue and the surrounding property"
+                  />
+                  <figcaption>The old farmhouse in 2008, before the thatch was replaced due to fire</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/20toulon1958.png"
+                    alt="20 Toulon Avenue as it appeared in 1958"
+                  />
+                  <figcaption>Squirrel's Leap Farm is visible in the main central rectangle of this 
+                    1958 aerial photograph, taken 
+                    from <a href="https://grant.dev.openstreetmap.org/coct-historical-aerial/"><u>https://grant.dev.openstreetmap.org/coct-historical-aerial/</u></a>.</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/Ave%20Toulon.bmp"
+                    alt="Historic view along Toulon Avenue near the property"
+                  />
+                  <figcaption>Squirrel's Leap farm layout</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/Picture%20of%20house.bmp"
+                    alt="Older photograph of the house on the Squirrels Leap Farm property"
+                  />
+                  <figcaption>An older drawing of the house on the farm</figcaption>
+                </figure>
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/property.jpg"
+                    alt="Current view of the grounds at Squirrels Leap Farm"
+                  />
+                  <figcaption>The grounds at the current day</figcaption>
+                </figure>
+              </div>
+            </section>
+          </div>
+
+          <!-- Panel 4: Ministries (church life and outreach activities). -->
+          <div id="about-panel-ministries" class="about-tab-panel panel-ministries" role="tabpanel" aria-labelledby="about-tab-label-ministries">
+            <section class="panel">
+              <h2>Ministries</h2>
+              <p>
+                Ministry is at the heart of church life at Plumstead Baptist Church. Below is an overview of how we
+                serve one another and reach out to our wider community.
+              </p>
+
+              <h3>Service kinds</h3>
+              <ul class="list">
+                <li><strong>Sunday worship services:</strong> Prayer, Bible preaching, congregational worship, and fellowship.</li>
+                <li><strong>Midweek Bible studies:</strong> Smaller group gatherings focused on Scripture, prayer, and mutual care.</li>
+                <li><strong>Youth and children:</strong> Age-appropriate teaching, discipleship, and activities throughout the year.</li>
+              </ul>
+
+              <h3>Missionaries</h3>
+              <p>
+                We support missionary work through prayer, practical encouragement, and financial giving. This includes
+                both local and cross-cultural gospel partnerships.
+              </p>
+
+              <h3>Community outreach</h3>
+              <p>
+                We seek to serve our local community through practical care, pastoral support, and gospel witness.
+                Outreach efforts include support for families, hospitality events, and opportunities to connect people
+                with the life of the church.
+              </p>
+
+              <h3>Holiday clubs and seasonal events</h3>
+              <p>
+                During school holidays and key times of the year, we run church activities for children and families.
+                These events provide Bible teaching, games, and opportunities to build friendships.
+              </p>
+            </section>
+
+            <!-- Ministries gallery: two placeholder photos below the text content. -->
+            <section class="panel about-gallery" aria-label="Ministries photos">
+              <div class="about-gallery-grid">
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/hc2025.jpg"
+                    alt="2025 Holiday Club"
+                  />
+                  <figcaption>2025 Holiday Club.</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/vwlucktalk.jpg"
+                    alt="Talk and testimony"
+                  />
+                  <figcaption>Talk and testimony of salvation from drug abuse.</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/missionsbreakfast.jpg"
+                    alt="Missionaries breakfast"
+                  />
+                  <figcaption>Missions weekend breakfast and prayer.</figcaption>
+                </figure>
+
+                <figure class="about-photo">
+                  <img
+                    src="static/images/site/youthgroup2.jpg"
+                    alt="Youth group meeting"
+                  />
+                  <figcaption>Youth group meeting.</figcaption>
+                </figure>
+
+
+
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+    <!-- ========================================================================
+         FOOTER (appears on every page)
+         Update address, phone, email, service times, and bank details here.
+         Changes will show on all pages at once.
+         ======================================================================== -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <h5>Find us</h5>
+          <p>
+            <strong>Address:</strong>
+            20 Toulon Ave, Plumstead, 7945, Cape Town
+          </p>
+          <p>
+            <strong>Contacts:</strong>
+            076 589 0261 · office@plumsteadbaptist.co.za
+            <br>(Office hours: Mon, Wed, Fri 09:00 - 13:00)
+          </p>
+          <ul>
+            <li><a href="https://https://www.youtube.com/@plumsteadbaptist3246#youtube">YouTube</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Facebook</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Service times</h5>
+          <ul>
+            <li><strong>Sunday morning:</strong> 10:00</li>
+            <!--<li><strong>Sunday evening:</strong> 18:00</li>-->
+            <li><strong>Sunday School &amp; youth:</strong> during the morning service, and every 2nd Saturday</li>
+            <li><strong>Midweek groups for adults and Young adults:</strong> Tue morning/Wed evenings</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Bank details</h5>
+          <ul>
+            <li><strong>Name:</strong> Plumstead Baptist Church</li>
+            <li><strong>Bank:</strong> Absa Bank</li>
+            <li><strong>Account:</strong> 4055 960 150</li>
+            <li><strong>Branch:</strong> Plumstead Branch</li>
+            <li><strong>Reference:</strong> Offerings</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plumstead Baptist Church. All rights reserved.</span>
+        
+      </div>
+    </footer>
+
+    <!-- Scripts block: each page can add its own scripts. The script below
+         runs on every page and makes the top nav bar shrink slightly when
+         you scroll down. -->
+    
+      <script>
+        (function () {
+          function updateHeader() {
+            if (window.scrollY > 40) {
+              document.body.classList.add("header-compact");
+            } else {
+              document.body.classList.remove("header-compact");
+            }
+          }
+          window.addEventListener("scroll", updateHeader);
+          updateHeader();
+        })();
+      </script>
+    
+  </body>
+</html>

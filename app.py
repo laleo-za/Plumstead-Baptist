@@ -64,12 +64,6 @@ def about():
     return render_template("about.html", page_title="About", active_page="about")
 
 
-@app.route("/sermons")
-def sermons():
-    """Sermons page: recent series and video/audio embeds."""
-    return render_template("sermons.html", page_title="Sermons", active_page="sermons")
-
-
 @app.route("/contact")
 def contact():
     """Contact page: phone, email, address, map."""

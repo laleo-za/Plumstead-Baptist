@@ -1,0 +1,952 @@
+/* =============================================================================
+   PLUMSTEAD BAPTIST CHURCH — MAIN STYLESHEET
+   All colours, layout, and visual design for the site. Sections are commented
+   so you can find and adjust styles for specific parts of the site.
+   ============================================================================= */
+
+/* --- Colour palette (Cape Dutch–inspired) --- */
+:root {
+  --beige: #e9dfcf;
+  --light-grey: #e6e6e3;
+  --stone-grey: #6b6b65;
+  --ochre: #c2943a;
+  --pastel-blue: #9fb8c7;
+  --deep-blue: #1f3a56;
+  --dark: #1c1c1a;
+  --white: #ffffff;
+}
+
+/* --- Base: reset and global body/link styles --- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+  color: var(--dark);
+  background: var(--light-grey);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* --- Hero banner (home page top section with rotating images) --- */
+.hero {
+  position: relative;
+  height: 72vh;
+  min-height: 520px;
+  color: var(--white);
+  overflow: hidden;
+  background: var(--deep-blue);
+}
+
+/* Hero: background slide images and overlay */
+.hero__slides {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  pointer-events: none;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 400ms ease-in-out, opacity 400ms ease-in-out;
+}
+
+.hero__slide.is-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.hero__slide.is-leaving {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(31, 58, 86, 0.55) 0%,
+    rgba(31, 58, 86, 0.5) 40%,
+    rgba(28, 28, 26, 0.45) 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.hero__dots {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0.9rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  z-index: 60;
+  pointer-events: auto;
+}
+
+.hero__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.hero__dot.is-active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.1);
+}
+
+/* Hero: top bar (nav + logo) — fixed on scroll, shrinks when scrolled (see body.header-compact below) */
+.hero__top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--deep-blue);
+  transition: padding 160ms ease, box-shadow 160ms ease, background 200ms ease;
+}
+
+.nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.nav a {
+  padding: 0.5rem 0.75rem;
+  color: var(--white);
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.nav a.is-active {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+  font-weight: 700;
+}
+
+/* Logo in header (image + church name) */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(233, 223, 207, 0.2);
+  border: 1px solid rgba(233, 223, 207, 0.35);
+  padding: 0.35rem 0.6rem 0.35rem 0.5rem;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
+}
+
+.logo img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.logo span {
+  color: var(--beige);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Hero: centred welcome text and tagline */
+.hero__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  z-index: 10;
+}
+
+.hero__content {
+  max-width: 1000px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--beige);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.hero p {
+  margin: 0.85rem auto 1.5rem;
+  max-width: 760px;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  color: #f3f0ea;
+  opacity: 0.95;
+}
+
+.hero__bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2rem;
+  z-index: 10;
+  text-align: center;
+}
+
+/* Buttons (primary = gold, ghost = outline) */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 200ms ease,
+    color 200ms ease;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: linear-gradient(180deg, var(--ochre), #b78934);
+  color: var(--dark);
+  border-color: rgba(28, 28, 26, 0.15);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Page sections and layout containers --- */
+.section {
+  padding: 3rem 1.25rem;
+  width: 100%;
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Intro section (e.g. "Who we are" card) — light grey background */
+.intro {
+  background: var(--light-grey);
+}
+
+/* Card: white box with optional image (e.g. intro, about) */
+.card {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  background: var(--white);
+  border: 1px solid rgba(107, 107, 101, 0.18);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 12px 28px rgba(31, 58, 86, 0.06);
+}
+
+.about-page .card {
+  grid-template-columns: 1fr;
+}
+
+.about-page .card__media {
+  margin-top: 1.5rem;
+}
+
+.card h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+  color: var(--deep-blue);
+}
+
+.card p {
+  color: #3b3b38;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.card .actions {
+  margin-top: 1rem;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--deep-blue);
+  border-color: var(--deep-blue);
+}
+
+.btn--ghost:hover {
+  background: rgba(31, 58, 86, 0.08);
+}
+
+.card__media {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--pastel-blue);
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.about-gallery {
+  margin-top: 1.5rem;
+}
+
+.about-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* About gallery photos: can use global --image-scale per figure/image */
+.about-photo {
+  margin: 0;
+  overflow: hidden;
+  --image-scale: 1;
+}
+
+.about-photo img {
+  width: calc(100% * var(--image-scale));
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  display: block;
+  transition: width 0.2s ease;
+}
+
+.about-photo figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #4a4a46;
+}
+
+/* History galleries: masonry-style layout to reduce blank space between mixed image sizes */
+.panel-history .about-gallery-grid {
+  column-count: 3;
+  column-gap: 1rem;
+}
+
+.panel-history .about-photo {
+  break-inside: avoid;
+  margin: 0 0 1rem 0;
+}
+
+.about-quote {
+  margin: 1.5rem 0 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  background: rgba(159, 184, 199, 0.15);
+  border-left: 4px solid var(--ochre);
+  border-radius: 12px;
+  position: relative;
+}
+
+.about-quote__marks {
+  position: absolute;
+  top: -0.8rem;
+  left: 0.9rem;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: rgba(31, 58, 86, 0.2);
+  pointer-events: none;
+}
+
+.about-quote blockquote {
+  margin: 0;
+  font-style: italic;
+  color: #2f3439;
+}
+
+.about-quote__source {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* About page: tabbed content (History / Statement of Faith / Squirrels Leap Farm / Ministries) */
+.about-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-tab-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.about-tab-list {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid rgba(31, 58, 86, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.about-tab {
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  color: var(--stone-grey);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.about-tab:hover {
+  color: var(--deep-blue);
+}
+
+#about-tab-history:checked ~ .about-tab-list .about-tab[for="about-tab-history"],
+#about-tab-faith:checked ~ .about-tab-list .about-tab[for="about-tab-faith"],
+#about-tab-squirrels:checked ~ .about-tab-list .about-tab[for="about-tab-squirrels"],
+#about-tab-ministries:checked ~ .about-tab-list .about-tab[for="about-tab-ministries"] {
+  color: var(--deep-blue);
+  border-bottom-color: var(--ochre);
+}
+
+.about-tab-panels {
+  position: relative;
+}
+
+.about-tab-panel {
+  display: none;
+}
+
+#about-tab-history:checked ~ .about-tab-panels .panel-history,
+#about-tab-faith:checked ~ .about-tab-panels .panel-faith,
+#about-tab-squirrels:checked ~ .about-tab-panels .panel-squirrels,
+#about-tab-ministries:checked ~ .about-tab-panels .panel-ministries {
+  display: block;
+}
+
+/* History galleries responsive behaviour: fewer columns on smaller screens */
+@media (max-width: 920px) {
+  .panel-history .about-gallery-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 620px) {
+  .panel-history .about-gallery-grid {
+    column-count: 1;
+  }
+}
+
+/* Services section (two-column: panel + media feed) */
+.services {
+  background: var(--light-grey);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Panel: white box for service times, contact details, etc. */
+.panel {
+  background: var(--white);
+  border: 1px solid rgba(107, 107, 101, 0.18);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 12px 28px rgba(31, 58, 86, 0.06);
+}
+
+.panel h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: var(--deep-blue);
+}
+
+/* List style used in panels (service times, contact, etc.) */
+.list {
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed rgba(107, 107, 101, 0.25);
+}
+
+.list li:last-child {
+  border-bottom: none;
+}
+
+.media-feed {
+  display: grid;
+  gap: 1rem;
+}
+
+.visit-columns-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.visit-columns-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.visit-photo-panel {
+  padding: 0.75rem;
+}
+
+.visit-photo {
+  border-radius: 12px;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.embed {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid rgba(107, 107, 101, 0.18);
+  padding: 0.75rem;
+  box-shadow: 0 8px 18px rgba(31, 58, 86, 0.06);
+}
+
+/* Embed card: thumbnail area and video/iframe wrappers */
+.embed .thumb {
+  height: 170px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--pastel-blue), #86a9b9);
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.video-wrapper,
+.fb-wrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-wrapper {
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fb-wrapper {
+  min-height: 350px;
+}
+
+.fb-wrapper .fb-page,
+.fb-wrapper iframe {
+  width: 100% !important;
+  min-height: 350px;
+}
+
+/* Embed card: title and description text */
+.embed h4 {
+  margin: 0.6rem 0 0.25rem;
+  font-size: 1rem;
+  color: var(--deep-blue);
+}
+
+.embed p {
+  margin: 0;
+  color: #4a4a47;
+  font-size: 0.95rem;
+}
+
+/* Visit section (beige background, address, map) — full width at bottom of home page */
+.section.visit {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  clear: both;
+}
+
+.visit {
+  background: var(--beige);
+  border-top: 1px solid rgba(107, 107, 101, 0.18);
+  border-bottom: 1px solid rgba(107, 107, 101, 0.18);
+}
+
+.visit .cta {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.visit .address {
+  text-align: center;
+  color: var(--dark);
+  margin-bottom: 1.75rem;
+}
+
+/* Google Map embed container */
+.map {
+  height: 380px;
+  background: var(--light-grey);
+  border: 1px solid rgba(107, 107, 101, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(31, 58, 86, 0.06);
+  display: grid;
+  place-items: center;
+  color: var(--stone-grey);
+  font-weight: 600;
+}
+
+/* Subpage header (About, Visit, Contact, Sermons): same blue bar, no hero images */
+.subpage-header {
+  background: transparent;
+  color: var(--white);
+}
+
+/* Space for fixed header so content is not hidden underneath */
+body {
+  padding-top: 80px;
+}
+
+/* When user has scrolled down: header bar gets slightly smaller (see base.html script) */
+body.header-compact .hero__top {
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* --- Footer (on every page, content in base.html) --- */
+footer {
+  width: 100%;
+  box-sizing: border-box;
+  background: #2a2a27;
+  color: #ddd9d0;
+  padding: 2.5rem 1.25rem;
+}
+
+.footer-grid {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.footer-grid h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.05rem;
+  color: var(--beige);
+}
+
+.footer-grid p,
+.footer-grid a,
+.footer-grid li {
+  color: #ddd9d0;
+  opacity: 0.95;
+  font-size: 0.98rem;
+}
+
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.footer-bottom {
+  max-width: 1150px;
+  margin: 1.5rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(221, 217, 208, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #cfcabf;
+}
+
+/* =============================================================================
+   RESPONSIVE LAYOUT
+   These rules only apply at smaller screen widths. Desktop (above 920px) is
+   unchanged. Breakpoints: 920px = tablet, 620px = phone, 480px = small phone.
+   ============================================================================= */
+
+/* --- Tablet and smaller (e.g. iPad portrait, small laptop) --- */
+@media (max-width: 920px) {
+  .card,
+  .grid-2,
+  .hero__top {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__top {
+    padding: 0.85rem 1.25rem;
+  }
+
+  .nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .logo {
+    justify-self: center;
+    margin-top: 0.75rem;
+  }
+
+  .card {
+    padding: 1.5rem 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .card__media {
+    min-height: 220px;
+  }
+
+  .section {
+    padding: 2.25rem 1.25rem;
+  }
+
+  .panel {
+    padding: 1.25rem 1.35rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-bottom {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* --- Mobile (phone in portrait) --- */
+@media (max-width: 620px) {
+  /* Load in compact header from the start: slim bar, icon-only logo, one row */
+  body {
+    padding-top: 52px;
+  }
+
+  .hero__top {
+    grid-template-columns: 1fr auto;
+    padding: 0.35rem 0.6rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .nav a {
+    padding: 0.4rem 0.5rem;
+    min-height: 36px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .logo {
+    justify-self: end;
+    margin-top: 0;
+    padding: 0.25rem 0.4rem;
+    gap: 0;
+  }
+
+  .logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .hero {
+    height: 68vh;
+    min-height: 420px;
+  }
+
+  .hero__center {
+    padding: 0 1rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .hero p {
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  }
+
+  .hero__bottom {
+    bottom: 1.5rem;
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: 0.75rem 1.1rem;
+  }
+
+  .section {
+    padding: 1.75rem 1rem;
+  }
+
+  .card {
+    padding: 1.25rem 1rem;
+    gap: 1.25rem;
+  }
+
+  .panel {
+    padding: 1.1rem 1.15rem;
+  }
+
+  .embed {
+    padding: 0.6rem;
+  }
+
+  .embed .thumb {
+    height: 140px;
+  }
+
+  .fb-wrapper {
+    min-height: 300px;
+  }
+
+  .fb-wrapper .fb-page,
+  .fb-wrapper iframe {
+    min-height: 300px;
+  }
+
+  .map {
+    height: 280px;
+  }
+
+  .visit .cta,
+  .visit .address {
+    margin-bottom: 1rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  footer {
+    padding: 1.75rem 1rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    padding-top: 1.25rem;
+  }
+
+  /* Mobile only: when user has scrolled, shrink header to a slim bar and show logo only (no text) */
+  body.header-compact {
+    padding-top: 52px;
+  }
+
+  body.header-compact .hero__top {
+    padding: 0.35rem 0.6rem;
+  }
+
+  body.header-compact .logo span {
+    display: none;
+  }
+
+  body.header-compact .logo {
+    justify-self: end;
+    margin-top: 0;
+    padding: 0.25rem 0.4rem;
+    gap: 0;
+  }
+
+  body.header-compact .logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  body.header-compact .nav a {
+    padding: 0.4rem 0.5rem;
+    min-height: 36px;
+    font-size: 0.9rem;
+  }
+}
+
+/* --- Small phone (narrow screens) --- */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 380px;
+  }
+
+  .hero__bottom {
+    bottom: 1.25rem;
+  }
+
+  .section {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .card,
+  .panel {
+    padding: 1rem 0.85rem;
+  }
+
+  .map {
+    height: 240px;
+  }
+}

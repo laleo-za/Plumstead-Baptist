@@ -34,12 +34,6 @@
         >
           Contact
         </a>
-        <a
-          href="{{ url_for('sermons') }}"
-          class="{% if active_page == 'sermons' %}is-active{% endif %}"
-        >
-          Sermons
-        </a>
       </nav>
       <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
         <img
@@ -67,22 +61,25 @@
         <div class="visit-columns-left">
           <section class="panel">
             <!-- Visit page: service times are independent from the shared home-page partial. -->
-            <h3>Service times</h3>
+            <h3>Sunday Services and Ministries</h3>
             <ul class="list">
               <li>
                 <strong>Sunday services:</strong>
                 We meet for prayer at 9:15 and for worship at 10:00. The music is a blend of traditional hymns and congregational modern 
-                worship songs, and the whole serviceusually lasts between 1 and 1.5 hours. We try follow the pattern of the early church in the book of Acts,
+                worship songs, and the whole service usually lasts between 1 and 1.5 hours. We try follow the pattern of the early church in the book of Acts,
                 where the church <i>"devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer"</i>.
-                The preaching of the Word is central to the service, and we celebrate the Lord's Supper at the beginning of every month.  
-                
+                The expositional preaching of the Word is central to the service, and we celebrate the Lord's Supper at the beginning of every month.  
+                <p>
+                Please feel free to sit anywhere you like in the hall, and introduce yourself as a visitor to the door stewards. Coffee and tea is usually served afterwards.
+                </p>
               </li>
               <li>
                 <strong>Kids &amp; youth:</strong>
                 Younger children stay in for the opening part of the service and then head to age-appropriate groups.
-                <br>
-                Our high-school aged kids meet every 2nd Saturday of the month for a youth night, filled with games, fellowship, 
+                <p>
+                Our high-school aged kids stay for the whole Sunday service, andmeet every 2nd Saturday of the month for a youth night, filled with games, fellowship, 
                 and a message from the Bible.
+                </p>
               </li>
               <li>
                 <strong>Midweek groups:</strong>
@@ -110,19 +107,23 @@
               </li>
               <li>
                 <strong>Cry room:</strong>
-                A small but comfortable cry room is available for parents with babies and toddlers, with audio from the service so you can still follow along.
+                A small but comfortable Mothers Room is available for mothers with babies and toddlers,
+                 with an audio feed from the service so you can still follow along.
               </li>
               <li>
                 <strong>Refreshments:</strong>
-                Tea and coffee are usually served after the morning service – a good opportunity to meet people and ask questions.
+                Tea and coffee are usually served after the morning service – a good opportunity to get to know each other 
+                better and have fellowship.
               </li>
               <li>
                 <strong>Accessibility:</strong>
-                The main hall is on one level with ramp access from the parking area; if you have specific accessibility needs, please chat to a steward on arrival.
+                The main hall is on one level with ramp access from the parking area and a wheelchair is available for use.
+                If you have specific accessibility needs, please chat to a door steward on arrival.
               </li>
               <li>
                 <strong>Garden & play area</strong>
-                We are blessed to have a large and beautiful property, with open grassy space, trees, and play equipment for children after the service.
+                We are blessed to have a large and beautiful property, with open grassy space, trees, and play equipment
+                 for children after the service.
                        </ul>
           </section>
         </div>
@@ -135,7 +136,7 @@
               20 Toulon Ave, Plumstead, 7945, Cape Town
             </p>
             <p>
-              Please feel free to make use of the Visitor and Disabled parking bays near the hall, and introduce yourself to the door stewards.
+              Please feel free to make use of the Visitor and Disabled parking bays near the hall.
             </p>
             <div class="map" aria-label="Map showing Plumstead Baptist Church">
               <iframe
@@ -155,6 +156,10 @@
             class="panel visit-photo-panel"
             aria-label="Photo of Plumstead Baptist Church property"
           >
+            <div
+              class="visit-photo"
+              style="background-image: url('{{ url_for('static', filename='images/site/service3.jpg') }}'); margin-bottom: 1rem;"
+            ></div>
             <div
               class="visit-photo"
               style="background-image: url('{{ url_for('static', filename='images/site/property.jpg') }}');"

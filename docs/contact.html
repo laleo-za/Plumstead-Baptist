@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- =============================================================================
+     BASE TEMPLATE (shared layout for every page)
+     Every page (Home, Visit, About, etc.) extends this file. This provides:
+     - The <head> (title, stylesheet link)
+     - A placeholder where each page inserts its main content
+     - The footer (address, service times, bank details) on every page
+     - Scripts that run on all pages (e.g. sticky header behaviour)
+     Edit the footer section below to change contact info site-wide.
+     ============================================================================= -->
+<html lang="en">
+  <head>
+    <!-- Page title: shows in the browser tab. "Home | Plumstead Baptist Church" etc. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact | Plumstead Baptist Church</title>
+    <link
+      rel="stylesheet"
+      href="static/css/styles.css?v=20260424"
+    />
+  </head>
+  <body>
+    <!-- Required by Facebook's embed script (used on the home page). -->
+    <div id="fb-root"></div>
+    
+  <!-- Blue header bar: nav + logo. -->
+  <header class="subpage-header">
+    <div class="hero__top">
+      <nav class="nav" aria-label="Primary">
+        <a
+          href="index.html"
+          class=""
+        >
+          Home
+        </a>
+        <a
+          href="visit.html"
+          class=""
+        >
+          Visit
+        </a>
+        <a
+          href="about.html"
+          class=""
+        >
+          About
+        </a>
+        <a
+          href="contact.html"
+          class="is-active"
+        >
+          Contact
+        </a>
+      </nav>
+      <a href="index.html" class="logo" aria-label="Church logo – go to Home">
+        <img
+          src="static/images/PBC%20logo%20transparent.png"
+          alt="Plumstead Baptist Church logo"
+        />
+        <span>Plumstead Baptist Church</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container grid-2">
+      <!-- Left column: how to reach the church. -->
+      <section class="panel">
+        <h3>Contact details</h3>
+        <p>
+          Please feel free to contact the church office if you have any questions about the church, hiring our hall or property, or want to know more about our services.
+        </p>
+        <ul class="list">
+          <li>
+            <strong>Phone:</strong>
+            076 589 0261 
+          </li>
+          <li>
+            <strong>Email:</strong>
+            office@plumsteadbaptist.co.za
+          </li>
+          <li>
+            <strong>Office hours:</strong>
+            Office hours: Mon, Wed, Fri 09:00 - 13:00
+          </li>
+        </ul>
+
+      </section>
+
+      <!-- Right column: address and embedded map. -->
+      <section class="panel">
+        <h3>Find us</h3>
+        <p>
+          <strong>Address:</strong>
+         20 Toulon Ave, Plumstead, Cape Town, 7945
+        </p>
+        <p>
+    
+        </p>
+        <div class="map" aria-label="Map showing Plumstead Baptist Church">
+          <iframe
+            src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Plumstead Baptist Church location on Google Maps"
+          ></iframe>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+    <!-- ========================================================================
+         FOOTER (appears on every page)
+         Update address, phone, email, service times, and bank details here.
+         Changes will show on all pages at once.
+         ======================================================================== -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <h5>Find us</h5>
+          <p>
+            <strong>Address:</strong>
+            20 Toulon Ave, Plumstead, 7945, Cape Town
+          </p>
+          <p>
+            <strong>Contacts:</strong>
+            076 589 0261 · office@plumsteadbaptist.co.za
+            <br>(Office hours: Mon, Wed, Fri 09:00 - 13:00)
+          </p>
+          <ul>
+            <li><a href="https://https://www.youtube.com/@plumsteadbaptist3246#youtube">YouTube</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Facebook</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Service times</h5>
+          <ul>
+            <li><strong>Sunday morning:</strong> 10:00</li>
+            <!--<li><strong>Sunday evening:</strong> 18:00</li>-->
+            <li><strong>Sunday School &amp; youth:</strong> during the morning service, and every 2nd Saturday</li>
+            <li><strong>Midweek groups for adults and Young adults:</strong> Tue morning/Wed evenings</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Bank details</h5>
+          <ul>
+            <li><strong>Name:</strong> Plumstead Baptist Church</li>
+            <li><strong>Bank:</strong> Absa Bank</li>
+            <li><strong>Account:</strong> 4055 960 150</li>
+            <li><strong>Branch:</strong> Plumstead Branch</li>
+            <li><strong>Reference:</strong> Offerings</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plumstead Baptist Church. All rights reserved.</span>
+        
+      </div>
+    </footer>
+
+    <!-- Scripts block: each page can add its own scripts. The script below
+         runs on every page and makes the top nav bar shrink slightly when
+         you scroll down. -->
+    
+      <script>
+        (function () {
+          function updateHeader() {
+            if (window.scrollY > 40) {
+              document.body.classList.add("header-compact");
+            } else {
+              document.body.classList.remove("header-compact");
+            }
+          }
+          window.addEventListener("scroll", updateHeader);
+          updateHeader();
+        })();
+      </script>
+    
+  </body>
+</html>

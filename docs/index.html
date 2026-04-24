@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!-- =============================================================================
+     BASE TEMPLATE (shared layout for every page)
+     Every page (Home, Visit, About, etc.) extends this file. This provides:
+     - The <head> (title, stylesheet link)
+     - A placeholder where each page inserts its main content
+     - The footer (address, service times, bank details) on every page
+     - Scripts that run on all pages (e.g. sticky header behaviour)
+     Edit the footer section below to change contact info site-wide.
+     ============================================================================= -->
+<html lang="en">
+  <head>
+    <!-- Page title: shows in the browser tab. "Home | Plumstead Baptist Church" etc. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home | Plumstead Baptist Church</title>
+    <link
+      rel="stylesheet"
+      href="static/css/styles.css?v=20260424"
+    />
+  </head>
+  <body>
+    <!-- Required by Facebook's embed script (used on the home page). -->
+    <div id="fb-root"></div>
+    
+  <!-- ========================================================================
+       HERO BANNER (top of page)
+       The large area with rotating background images, welcome message, and
+       the main "I'm New · Visit Us" button. The nav bar and logo sit on top.
+       ======================================================================== -->
+  <header
+    id="home"
+    class="hero"
+    role="banner"
+    aria-label="Hero images with navigation and welcome message"
+  >
+    <!-- Rotating banner images: cycles every 5 seconds (see scripts at bottom).
+         Images live in static/images/banners/ (banner1.jpg through banner4.jpg). -->
+    <div class="hero__slides" aria-hidden="true">
+      <div
+        class="hero__slide is-active"
+        style="background-image:url('/static/images/banners/banner1.jpg');"
+      ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('/static/images/banners/banner2.jpg');"
+      ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('/static/images/banners/banner3.jpg');"
+      ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('/static/images/banners/banner4.jpg');"
+      ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('/static/images/banners/banner5.jpg');"
+      ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('/static/images/banners/banner6.jpg');"
+      ></div>
+      <div
+        class="hero__slide"
+        style="background-image:url('/static/images/banners/banner7.jpg');"
+      ></div>
+    </div>
+    <div class="hero__dots" aria-hidden="true">
+      <button type="button" class="hero__dot is-active"></button>
+      <button type="button" class="hero__dot"></button>
+      <button type="button" class="hero__dot"></button>
+      <button type="button" class="hero__dot"></button>
+      <button type="button" class="hero__dot"></button>
+      <button type="button" class="hero__dot"></button>
+      <button type="button" class="hero__dot"></button>
+    </div>
+    <!-- Dark overlay so white text stays readable on top of the photos. -->
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <!-- Top bar: stays fixed when you scroll. Contains nav links and logo. -->
+    <div class="hero__top">
+      <nav class="nav" aria-label="Primary">
+        <a
+          href="index.html"
+          class="is-active"
+        >
+          Home
+        </a>
+        <a
+          href="visit.html"
+          class=""
+        >
+          Visit
+        </a>
+        <a
+          href="about.html"
+          class=""
+        >
+          About
+        </a>
+        <a
+          href="contact.html"
+          class=""
+        >
+          Contact
+        </a>
+      </nav>
+      <!-- Logo: clicking it takes the user back to the Home page. -->
+      <a href="index.html" class="logo" aria-label="Church logo – go to Home">
+        <img
+          src="static/images/PBC%20logo%20transparent.png"
+          alt="Plumstead Baptist Church logo"
+        />
+        <span>Plumstead Baptist Church</span>
+      </a>
+    </div>
+
+    <!-- Centred welcome text and tagline (appears over the banner images). -->
+    <div class="hero__center">
+      <div class="hero__content">
+        <h1>Welcome to Plumstead Baptist Church</h1>
+        <p>
+          In Christ, we worship, grow and reach out together!
+        </p>
+      </div>
+    </div>
+
+    <div class="hero__bottom">
+      <a class="btn btn--primary" href="visit.html">I’m New · Visit Us</a>
+    </div>
+  </header>
+
+  <!-- Intro section -->
+  <section id="about" class="section intro">
+    <div class="container">
+      <div class="card">
+        <div>
+          <h2>Who we are</h2>
+          <p>
+            Our church exalts Jesus Christ as Lord and Saviour and we proclaim this glorious Truth to all.
+            <blockquote>
+              <p><a href="https://biblehub.com/acts/4-12.htm">Acts 4:12</a> &nbsp;… <i>there is salvation in no one else, for there is no other name under heaven 
+                given among men by which we must be saved.</i>
+
+              </p></blockquote>
+            We’re a family-friendly, Bible-believing church shaped by the gospel
+            and committed to worship, teaching, prayer, and community. On
+            Sundays we gather as the redeemed people of God to pray, heard the Word preached,
+            and worship our risen Saviour! Throughout the week we meet in smaller groups, serve
+            our city, and encourage one another to follow Jesus in everyday
+            life.
+          </p>
+                <div class="actions">
+            <a class="btn btn--ghost" href="about.html">Read more</a>
+          </div>
+        </div>
+        <div
+          class="card__media"
+          aria-label="Church picnic photo"
+          style="background-image: url('/static/images/site/picnic2.jpg'); background-size: cover; background-position: center;"
+        >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SERVICES & MEDIA FEED
+       Left: service times and ministries (pulled from partials/service_times.html).
+       Right: latest YouTube sermon (auto-updated), Facebook feed, and a static
+       highlight card. Edit service_times.html to change times in one place.
+       ======================================================================== -->
+  <section id="sermons" class="section services">
+    <div class="container">
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Services and ministries</h3>
+          
+<ul class="list">
+  <li>
+    <strong>Sunday services:</strong>
+    9:15 (Prayer) &amp; 10:00 (Worship service)
+  </li>
+  <li>
+    <strong>Kids &amp; youth:</strong>
+    Sunday school for junior school children and youth group on Saturdays for senior children.
+   
+  </li>
+  <li>
+    <strong>Midweek groups:</strong>
+   Toulon: Tuesdays @ 10
+   Young Adults: Wednesdays @ 19:30
+   Bells': Wednesdays @ 19:30
+  </li>
+</ul>
+
+          <p>Please check our Facebook page for the latest updates, or contact us for more information.</p>
+        </div>
+
+        <div class="media-feed" aria-label="Recent media">
+          <!-- Latest YouTube video: app.py fetches the most recent upload from
+               the church channel and embeds it here. No manual URL updates needed. -->
+          <article class="embed" aria-label="Latest YouTube sermon">
+            <div class="video-wrapper">
+              
+                <iframe
+                  src="https://www.youtube.com/embed/ULdyGSSFrnQ"
+                  title="Latest sermon from Plumstead Baptist Church on YouTube"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              
+            </div>
+            <h4>Sermons</h4>
+            <p>
+              Our most recent sermons from our Youtube Channel.
+            </p>
+          </article>
+
+          <!-- Facebook Page Plugin: shows the live timeline from the church's
+               Facebook page. Requires Facebook SDK (script loaded below). -->
+          <article class="embed" aria-label="Latest Facebook updates">
+            <div class="fb-wrapper">
+              <div
+                class="fb-page"
+                data-href="https://www.facebook.com/p/Plumstead-Baptist-Church-100064453489540/"
+                data-tabs="timeline"
+                data-width="500"
+                data-height="350"
+                data-small-header="false"
+                data-adapt-container-width="true"
+                data-hide-cover="false"
+                data-show-facepile="false"
+              ></div>
+            </div>
+            <h4>Latest updates</h4>
+            <p>
+              Our most recent updates and notifications from our Facebook page appear here automatically.
+            </p>
+          </article>
+
+          <!-- Optional static card: use for a fixed highlight (e.g. youth, event). -->
+           <!-- <article class="embed" aria-label="Example media highlight">
+            <div class="thumb">Youth Night Recap</div>
+            <h4>Youth: Serving Together</h4>
+            <p>
+              A snapshot of last week’s youth gathering and how our teens are
+              growing in Christ.
+            </p>
+          </article>-->
+        </div>
+        <!-- end .media-feed -->
+      </div>
+      <!-- end .grid-2 (two-column layout ends here; Visit section must be full width below) -->
+    </div>
+    <!-- end .container -->
+  </section>
+  <!-- end #sermons Services section -->
+
+  <!-- ========================================================================
+       VISIT US (address + map)
+       Button to Visit page, address text, and embedded Google Map. Map points
+       to 20 Toulon Ave, Plumstead. Update address here if it changes.
+       ======================================================================== -->
+  <section id="visit" class="section visit">
+    <div class="container">
+      <div class="cta">
+        <a class="btn btn--primary" href="visit.html">Visit Us</a>
+      </div>
+      <div class="address">
+        <strong>Address:</strong>
+        20 Toulon Ave, Plumstead, Cape Town, 7945
+      </div>
+      <div class="map" aria-label="Map showing Plumstead Baptist Church">
+        <iframe
+          src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Plumstead Baptist Church location on Google Maps"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+
+
+    <!-- ========================================================================
+         FOOTER (appears on every page)
+         Update address, phone, email, service times, and bank details here.
+         Changes will show on all pages at once.
+         ======================================================================== -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <h5>Find us</h5>
+          <p>
+            <strong>Address:</strong>
+            20 Toulon Ave, Plumstead, 7945, Cape Town
+          </p>
+          <p>
+            <strong>Contacts:</strong>
+            076 589 0261 · office@plumsteadbaptist.co.za
+            <br>(Office hours: Mon, Wed, Fri 09:00 - 13:00)
+          </p>
+          <ul>
+            <li><a href="https://https://www.youtube.com/@plumsteadbaptist3246#youtube">YouTube</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Facebook</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Service times</h5>
+          <ul>
+            <li><strong>Sunday morning:</strong> 10:00</li>
+            <!--<li><strong>Sunday evening:</strong> 18:00</li>-->
+            <li><strong>Sunday School &amp; youth:</strong> during the morning service, and every 2nd Saturday</li>
+            <li><strong>Midweek groups for adults and Young adults:</strong> Tue morning/Wed evenings</li>
+          </ul>
+        </div>
+        <div>
+          <h5>Bank details</h5>
+          <ul>
+            <li><strong>Name:</strong> Plumstead Baptist Church</li>
+            <li><strong>Bank:</strong> Absa Bank</li>
+            <li><strong>Account:</strong> 4055 960 150</li>
+            <li><strong>Branch:</strong> Plumstead Branch</li>
+            <li><strong>Reference:</strong> Offerings</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plumstead Baptist Church. All rights reserved.</span>
+        
+      </div>
+    </footer>
+
+    <!-- Scripts block: each page can add its own scripts. The script below
+         runs on every page and makes the top nav bar shrink slightly when
+         you scroll down. -->
+    
+  
+      <script>
+        (function () {
+          function updateHeader() {
+            if (window.scrollY > 40) {
+              document.body.classList.add("header-compact");
+            } else {
+              document.body.classList.remove("header-compact");
+            }
+          }
+          window.addEventListener("scroll", updateHeader);
+          updateHeader();
+        })();
+      </script>
+    
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v18.0"></script>
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll(".hero__slide"));
+      const dots = Array.from(document.querySelectorAll(".hero__dot"));
+      let i = 0;
+      let timerId = null;
+
+      function setActiveSlide(nextIndex) {
+        if (!slides.length) return;
+        const current = slides[i];
+        const next = slides[nextIndex];
+
+        current.classList.remove("is-active");
+        current.classList.add("is-leaving");
+        next.classList.add("is-active");
+
+        if (dots.length === slides.length) {
+          dots[i].classList.remove("is-active");
+          dots[nextIndex].classList.add("is-active");
+        }
+
+        setTimeout(function () {
+          current.classList.remove("is-leaving");
+        }, 450);
+
+        i = nextIndex;
+      }
+
+      function advance() {
+        const nextIndex = (i + 1) % slides.length;
+        setActiveSlide(nextIndex);
+      }
+
+      function startTimer() {
+        if (timerId !== null || slides.length <= 1) return;
+        timerId = setInterval(advance, 5000);
+      }
+
+      function resetTimer() {
+        if (timerId !== null) {
+          clearInterval(timerId);
+          timerId = null;
+        }
+        startTimer();
+      }
+
+      if (dots.length === slides.length) {
+        dots.forEach(function (dot, index) {
+          dot.addEventListener("click", function () {
+            if (index === i) return;
+            setActiveSlide(index);
+            resetTimer();
+          });
+        });
+      }
+
+      if (slides.length > 1) {
+        startTimer();
+      }
+    })();
+  </script>
+
+  </body>
+</html>

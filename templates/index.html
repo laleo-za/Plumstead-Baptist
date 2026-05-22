@@ -160,7 +160,8 @@
         <div class="panel">
           <h3>Services and ministries</h3>
           {% include "partials/service_times.html" %}
-          <p>Please check our Facebook page for events and latest updates, or contact us for more information.</p>
+          <!-- "contact us" links to the Contact page so visitors can quickly get in touch. -->
+          <p>Please check our Facebook page for events and latest updates, or <a href="{{ url_for('contact') }}">contact us</a> for more information.</p>
         </div>
 
         <div class="media-feed" aria-label="Recent media">

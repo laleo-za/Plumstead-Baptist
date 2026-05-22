@@ -397,6 +397,107 @@ img {
   color: #555;
 }
 
+/* Floated variant of .about-quote: the quote sits on the right of the panel
+   and any sibling headings / paragraphs wrap around it on the left, similar
+   to how a floated image behaves in a Word document.
+   On narrower screens this collapses back to a normal full-width block so
+   the quote stays readable on tablets and phones. */
+.about-quote--float-right {
+  float: right;
+  clear: right;
+  width: 45%;
+  max-width: 380px;
+  margin: 0.25rem 0 1rem 1.5rem;
+}
+
+/* Ensure the parent .panel fully contains the floated quote (so the float
+   does not bleed past the section into the next gallery / panel below).
+   display: flow-root is the modern, side-effect-free clearfix. */
+.panel:has(.about-quote--float-right) {
+  display: flow-root;
+}
+
+@media (max-width: 720px) {
+  .about-quote--float-right {
+    float: none;
+    width: auto;
+    max-width: none;
+    margin: 1.5rem 0 1.75rem 0;
+  }
+}
+
+/* ============================================================================
+   Statement of Faith "creed card"
+   Used on the About page to make the church's confession of faith feel like
+   the centrepiece of the page rather than just another bulleted list.
+
+   - Soft cream/beige background with a thick ochre top accent bar (echoes the
+     about-quote left accent so the design language is consistent).
+   - "We believe" line is styled as a small-caps banner with an ochre underline.
+   - Each belief is rendered as a numbered "article" via a CSS counter, with
+     a small ochre circle marker on the left replacing the default bullet.
+   - Falls back gracefully on small screens (smaller markers, less padding).
+   ============================================================================ */
+.statement-of-faith-card {
+  margin: 1.25rem 0 1.5rem 0;
+  padding: 1.75rem 1.75rem 1.25rem 1.75rem;
+  background: linear-gradient(180deg, rgba(233, 223, 207, 0.55), rgba(255, 255, 255, 0.95));
+  border: 1px solid rgba(194, 148, 58, 0.35);
+  border-top: 4px solid var(--ochre);
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(31, 58, 86, 0.08);
+}
+
+.statement-of-faith-card__title {
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--deep-blue);
+  border-bottom: 2px solid rgba(194, 148, 58, 0.5);
+}
+
+.statement-of-faith-card__title strong {
+  font-weight: 700;
+}
+
+.statement-of-faith-list {
+  margin: 0;
+}
+
+/* Each belief gets a small ochre bullet (a coloured dot) on the left,
+   matching the ochre accents on the surrounding creed card. The custom
+   bullet replaces the default disc marker (which .list already hides).
+
+   Spacing rationale: the bullet sits ~0.5rem in from the card edge and is
+   0.5rem wide, so its right edge is at ~1rem. The list item's left padding
+   is 2rem, which guarantees a clear ~1rem gap between the bullet and the
+   first character of the text (so the dot never overlaps the wording). */
+.statement-of-faith-card .statement-of-faith-list > li {
+  position: relative;
+  padding: 0.55rem 0 0.6rem 2rem;
+  line-height: 1.55;
+  color: #2f3439;
+}
+
+.statement-of-faith-card .statement-of-faith-list > li::before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 1.1rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--ochre);
+  border-radius: 50%;
+}
+
+@media (max-width: 620px) {
+  .statement-of-faith-card {
+    padding: 1.25rem 1.1rem;
+  }
+}
+
 /* About page: tabbed content (History / Statement of Faith / Squirrels Leap Farm / Ministries) */
 .about-tabs {
   display: flex;

@@ -159,6 +159,15 @@ img {
   font-weight: 700;
 }
 
+/* External nav link (e.g. "Sermons" -> YouTube): keeps the text and its
+   small "opens in a new tab" arrow icon together on one line, with a little
+   space between them. The icon is sized in em so it scales with the text. */
+.nav a.nav__external {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
 /* Logo in header (image + church name) */
 .logo {
   display: inline-flex;
@@ -498,7 +507,7 @@ img {
   }
 }
 
-/* About page: tabbed content (History / Statement of Faith / Squirrels Leap Farm / Ministries) */
+/* About page: tabbed content (Ministries / History / Statement of Faith / Leadership / Squirrels Leap Farm) */
 .about-tabs {
   display: flex;
   flex-direction: column;
@@ -542,6 +551,7 @@ img {
 
 #about-tab-history:checked ~ .about-tab-list .about-tab[for="about-tab-history"],
 #about-tab-faith:checked ~ .about-tab-list .about-tab[for="about-tab-faith"],
+#about-tab-leadership:checked ~ .about-tab-list .about-tab[for="about-tab-leadership"],
 #about-tab-squirrels:checked ~ .about-tab-list .about-tab[for="about-tab-squirrels"],
 #about-tab-ministries:checked ~ .about-tab-list .about-tab[for="about-tab-ministries"] {
   color: var(--deep-blue);
@@ -558,9 +568,71 @@ img {
 
 #about-tab-history:checked ~ .about-tab-panels .panel-history,
 #about-tab-faith:checked ~ .about-tab-panels .panel-faith,
+#about-tab-leadership:checked ~ .about-tab-panels .panel-leadership,
 #about-tab-squirrels:checked ~ .about-tab-panels .panel-squirrels,
 #about-tab-ministries:checked ~ .about-tab-panels .panel-ministries {
   display: block;
+}
+
+/* About page: Leadership tab.
+   - Elders: circular photo beside the name, role and short bio (.leader-grid).
+   - Deacons: name, role and short bio only, no photo (.leader-list).
+   Both lay out in two columns on wider screens and stack to a single column
+   on phones (see the max-width rule at the end of this block). */
+.leader-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.leader-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.leader-card__photo {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--light-grey);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.leader-card__name {
+  margin: 0;
+}
+
+.leader-card__role {
+  margin: 0.15rem 0 0.5rem;
+  color: var(--ochre);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+}
+
+.leader-card__bio {
+  margin: 0;
+}
+
+.leader-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+}
+
+@media (max-width: 620px) {
+  .leader-grid,
+  .leader-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* History galleries responsive behaviour: fewer columns on smaller screens */
@@ -586,6 +658,13 @@ img {
   grid-template-columns: 1.2fr 1fr;
   gap: 2rem;
   align-items: flex-start;
+}
+
+/* Banking-details panel on the Contact page: sits as a full-width block
+   below the two-column "Contact details / Find us" grid, so it needs its
+   own top margin (the grid's gap doesn't apply outside the grid). */
+.contact-banking {
+  margin-top: 2rem;
 }
 
 /* Panel: white box for service times, contact details, etc. */
@@ -775,11 +854,14 @@ footer {
   padding: 2.5rem 1.25rem;
 }
 
+/* Footer grid: two columns on desktop ("Find us" and "Service times").
+   Banking details previously sat in a third column here; they've moved to
+   the Contact page only. Tablet/mobile rules below collapse this further. */
 .footer-grid {
   max-width: 1150px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 2rem;
 }
 
@@ -803,6 +885,147 @@ footer {
   margin: 0;
   display: grid;
   gap: 0.4rem;
+}
+
+/* =============================================================================
+   Social media links
+   Shared between the site-wide footer and the Contact page's "Follow us"
+   section (markup lives in templates/partials/social_links.html). The same
+   <ul> is rendered in both places; the two variants below give it a
+   different look in each context:
+
+   - Footer variant: circular icon-only "chips" in a horizontal row, sized
+     to be a comfortable touch target (~44px). The visible "Facebook" /
+     "YouTube" text is hidden visually (still read by screen readers via
+     the aria-label on the <a>), so what visitors actually see is just the
+     icon. Beige border + icon on the dark footer, switching to a filled
+     ochre chip with a deep-blue icon on hover/focus.
+
+   - Contact page variant: rounded "pill" buttons with both the icon AND a
+     visible label, sitting on the white Contact panel. This is a more
+     prominent call to action than the footer.
+
+   fill="currentColor" on each inline SVG means the icon picks up its
+   parent link's `color`, so theming both variants is just a matter of
+   setting `color` on the <a>.
+   ============================================================================= */
+.social-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.social-links li {
+  border: 0;
+  padding: 0;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.social-icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+
+/* ---- Footer variant: icon-only chips ---- */
+/* Override the vertical .footer-grid ul layout so the social icons sit in
+   a tight horizontal row instead of a stacked list. */
+.footer-grid .social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+/* Hide the "Facebook" / "YouTube" text visually, but keep it in the DOM so
+   screen readers (and "view source") still see a label. The aria-label on
+   each <a> is what assistive tech actually announces. */
+.footer-grid .social-links a > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.footer-grid .social-links a {
+  position: relative; /* containing block for the visually-hidden span above */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid rgba(233, 223, 207, 0.45); /* soft beige outline */
+  color: var(--beige);
+  background: transparent;
+  transition: background 160ms ease, color 160ms ease,
+    border-color 160ms ease, transform 160ms ease;
+}
+
+.footer-grid .social-links a:hover,
+.footer-grid .social-links a:focus-visible {
+  background: var(--ochre);
+  border-color: var(--ochre);
+  color: var(--deep-blue);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.footer-grid .social-links .social-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* ---- Contact page "Follow us" variant: labelled pills ---- */
+.contact-follow {
+  margin-top: 1.5rem;
+}
+
+.contact-follow__heading {
+  margin: 0 0 0.6rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+}
+
+.contact-follow .social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.contact-follow .social-links li {
+  border-bottom: 0;
+}
+
+.contact-follow .social-links a {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(31, 58, 86, 0.2);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--deep-blue);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.contact-follow .social-links a:hover,
+.contact-follow .social-links a:focus-visible {
+  background: var(--beige);
+  border-color: var(--ochre);
+  text-decoration: none;
 }
 
 .footer-bottom {

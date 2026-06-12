@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 {# =============================================================================
    ABOUT PAGE
-   Four tabs: History (default), Statement of Faith, Squirrels Leap Farm, and
-   Ministries. Edit the content in each tab panel below.
+   Five tabs: Ministries (default), History, Statement of Faith, Leadership,
+   and Squirrels Leap Farm. Edit the content in each tab panel below.
    ============================================================================= #}
+
+{# Search-result description for the ABOUT page. Mentions all four tabs so
+   the page can rank for searches about ministries, history, beliefs, or
+   the farm. #}
+{% block meta_description %}
+  <meta name="description" content="Learn about Plumstead Baptist Church in Cape Town — our ministries, history since the early 1900s, statement of faith, and Squirrels Leap Farm." />
+{% endblock %}
 
 {% block content %}
   <!-- Same blue header bar as other subpages: nav links + logo (logo links to Home). -->
@@ -34,6 +41,32 @@
         >
           Contact
         </a>
+        <!-- Sermons: external link to the church YouTube channel. Opens in a
+             new tab (target="_blank"); the small arrow icon after the text
+             signals that this leaves the website. This is a link out, not a
+             page on this site, so it has no active_page state. -->
+        <a
+          href="https://www.youtube.com/@plumsteadbaptist3246"
+          class="nav__external"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Sermons on our YouTube channel (opens in a new tab)"
+        >
+          Sermons
+          <svg
+            class="nav__external-icon"
+            viewBox="0 0 24 24"
+            width="0.7em"
+            height="0.7em"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M14 3h7v7h-2V6.414l-8.293 8.293-1.414-1.414L19.586 5H14V3zM5 5h4v2H7v10h10v-2h2v4H5V5z"
+            />
+          </svg>
+        </a>
       </nav>
       <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
         <img
@@ -45,7 +78,7 @@
     </div>
   </header>
 
-  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Squirrels Leap Farm). -->
+  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Leadership, Squirrels Leap Farm). -->
   <main class="section intro about-page">
     <div class="container">
       <!-- Tab controls: radio inputs drive which panel is visible (no JS required). -->
@@ -81,6 +114,15 @@
         <input
           type="radio"
           name="about-tab"
+          id="about-tab-leadership"
+          value="leadership"
+          class="about-tab-input"
+          aria-controls="about-panel-leadership"
+          aria-label="Show Leadership"
+        />
+        <input
+          type="radio"
+          name="about-tab"
           id="about-tab-squirrels"
           value="squirrels"
           class="about-tab-input"
@@ -91,11 +133,15 @@
           <label for="about-tab-ministries" class="about-tab" role="tab" id="about-tab-label-ministries" aria-selected="true" aria-controls="about-panel-ministries">Ministries</label>
           <label for="about-tab-history" class="about-tab" role="tab" id="about-tab-label-history" aria-selected="false" aria-controls="about-panel-history">History</label>
           <label for="about-tab-faith" class="about-tab" role="tab" id="about-tab-label-faith" aria-selected="false" aria-controls="about-panel-faith">Statement of Faith</label>
+          <label for="about-tab-leadership" class="about-tab" role="tab" id="about-tab-label-leadership" aria-selected="false" aria-controls="about-panel-leadership">Leadership</label>
           <label for="about-tab-squirrels" class="about-tab" role="tab" id="about-tab-label-squirrels" aria-selected="false" aria-controls="about-panel-squirrels">Squirrels Leap Farm</label>
         </div>
 
+        <!-- Panels shown one at a time, controlled by the radio inputs above.
+             They are listed here in a fixed content order; the tab that opens by
+             default is whichever input has "checked" — currently Ministries. -->
         <div class="about-tab-panels">
-          <!-- Panel 1: History (split into three periods with matching photo galleries). -->
+          <!-- Tab panel: History (split into three periods with matching photo galleries). -->
           <div id="about-panel-history" class="about-tab-panel panel-history" role="tabpanel" aria-labelledby="about-tab-label-history">
             <!-- ======== History section 1: 2010s to present ======== -->
             <section class="panel">
@@ -159,6 +205,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/service2.jpg') }}"
                     alt="Weekly services"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Sunday services.</figcaption>
                 </figure>
@@ -167,6 +215,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/kitchenproject.jpg') }}"
                     alt="Progress on the kitchen and bathroom extension"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Progress on the kitchen and bathroom extension.</figcaption>
                 </figure>
@@ -175,6 +225,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/lockdownoutreach.jpg') }}"
                     alt="Community outreach during lockdown"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Community outreach during lockdown.</figcaption>
                 </figure>
@@ -212,6 +264,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/compilation.jpg') }}"
                     alt="Compilation of recent church moments"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Church life and moments from the last century</figcaption>
                 </figure>
@@ -220,6 +274,8 @@
                   <img
                     src="{{ url_for('static', filename='images/banners/banner3.jpg') }}"
                     alt="Early new hall services"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Service early on after the completion of the new hall</figcaption>
                 </figure>
@@ -259,7 +315,7 @@
                 The work began with cottage meetings in 1876. In 1878 the Rev. H.T. Batts arrived in Cape Town to assist the
                 Rev. Hamilton. For two months after his arrival the two men held a series of special services between Cape
                 Town and Wynberg, preaching almost every night. The cottage meetings soon grew into an organised service held
-                in the old Government School at the corner of Tenant Road. A year later the old Court House in Durban Road was
+                in the old Government School at the corner of Tenannt Road. A year later the old Court House in Durban Road was
                 hired.
                 <br>
                 <br>
@@ -284,6 +340,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/battswoodmission.jpg') }}"
                     alt="Battswood Mission historic photo"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Battswood Mission</figcaption>
                 </figure>
@@ -293,6 +351,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/govthall.jpg') }}"
                     alt="Historic Government Hall photo"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Government Hall gathering</figcaption>
                 </figure>
@@ -302,6 +362,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/wbchallcomplete.jpg') }}"
                     alt="Completed Wynberg Baptist Church hall"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Wynberg Baptist Church hall (completed)</figcaption>
                 </figure>
@@ -310,6 +372,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/wbchall.jpg') }}"
                     alt="Wynberg Baptist Church hall"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>The original Wynberg Baptist Church hall</figcaption>
                 </figure>
@@ -319,6 +383,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/sundayschool.jpg') }}"
                     alt="Sunday school ministry"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Sunday school ministry in earlier years</figcaption>
                 </figure>
@@ -328,6 +394,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/familytree.jpg') }}"
                     alt="Church history family tree graphic"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Family tree timeline</figcaption>
                 </figure>
@@ -336,6 +404,8 @@
                   <img
                     src="{{ url_for('static', filename='images/history/deacons1991.jpg') }}"
                     alt="Church leadership and members"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Leadership and membership across the years</figcaption>
                 </figure>
@@ -344,7 +414,7 @@
             </section>
           </div>
 
-          <!-- Panel 2: Statement of Faith. -->
+          <!-- Tab panel: Statement of Faith. -->
           <div id="about-panel-faith" class="about-tab-panel panel-faith" role="tabpanel" aria-labelledby="about-tab-label-faith">
             <div class="card">
               <div>
@@ -355,7 +425,7 @@
                    of Jesus Christ as Head of the Church; and in the Bible as the inspired Word of God, and as the final authority in all matters of faith and practice.
 
                   There are however areas of principle and practice where we as Baptists make distinctive emphases arising out of our understanding of the Scriptures
-                   such as the direct lordship of Jesus Christ, the autonomy of the local church, believer’s baptism, the congregational principal of church government, 
+                   such as the direct lordship of Jesus Christ, the autonomy of the local church, believer’s baptism, the congregational principle of church government, 
                    the priesthood of all believers, the principle of religious liberty and the principle of separation of church and state.</i>
                 </p>
                 <!-- Statement of Faith "creed card": this is the main content of the
@@ -409,7 +479,97 @@
             </div>
           </div>
 
-          <!-- Panel 3: Squirrels Leap Farm (history of the property). -->
+          <!-- Tab panel: Leadership (elders with photos + bios, deacons with bios). -->
+          <div id="about-panel-leadership" class="about-tab-panel panel-leadership" role="tabpanel" aria-labelledby="about-tab-label-leadership">
+            <section class="panel">
+              <h2>Our Leadership</h2>
+            <!-- ========   <p>
+                Plumstead Baptist Church is served by a team of elders, who give spiritual oversight
+                and teaching, and deacons, who care for the practical needs of the church family.
+                Below is a short introduction to those currently serving.
+              </p>-->
+
+              <!-- ======== Elders (each has a photo and a short bio) ========
+                   To add a real photo: save the image into
+                   static/images/leadership/ (create the folder if needed) and
+                   change the src below to point at it, e.g.
+                   images/leadership/firstname-surname.jpg. Until a photo is
+                   added, the church logo is shown as a placeholder. -->
+              <h3>Elders</h3>
+              <div class="leader-grid">
+
+                <!-- Elder 1 -->
+                <article class="leader-card">
+                  <img
+                    class="leader-card__photo"
+                    src="{{ url_for('static', filename='images/PBC logo transparent.png') }}"
+                    alt="Photo of the first elder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div class="leader-card__body">
+                    <h4 class="leader-card__name">Paul Karstens</h4>
+                    <p class="leader-card__role">Elder</p>
+                  </div>
+                </article>
+
+                <!-- Elder 2 -->
+                <article class="leader-card">
+                  <img
+                    class="leader-card__photo"
+                    src="{{ url_for('static', filename='images/leadership/nickcollins.jpeg') }}"
+                    alt="Photo of the second elder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div class="leader-card__body">
+                    <h4 class="leader-card__name">Nick Collins</h4>
+                    <p class="leader-card__role">Elder</p>
+                  </div>
+                </article>
+
+              </div>
+
+              <!-- ======== Deacons (short bio only, no photos) ========
+                   To add or remove a deacon, copy or delete one <li> block below. -->
+              <h3>Deacons</h3>
+              <ul class="leader-list">
+
+                <!-- Deacon 1 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Henry Jooste</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 2 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Yolandi Nicolau</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 3 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Elias Nicolau</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 4 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Denise Brown</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 5 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Charmaine Williams</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+              </ul>
+            </section>
+          </div>
+
+          <!-- Tab panel: Squirrels Leap Farm (history of the property). -->
           <div id="about-panel-squirrels" class="about-tab-panel panel-squirrels" role="tabpanel" aria-labelledby="about-tab-label-squirrels">
             <div class="card">
               <div>
@@ -421,7 +581,7 @@
                     and we hoped to land on <b>some</b> branch, as squirrels do, even if it wasn't the one they aimed for.
                   </blockquote>
                   <figcaption class="about-quote__source">
-                    — Cabbages and Cream, by D.M. Fitzroy
+                    — Cabbages and Cream, by V.M. Fitzroy
                   </figcaption>
                 </figure>
                 <p>
@@ -432,20 +592,20 @@
                 </p>
                 <p>
                   The book "Cabbages and Cream" by VM Fitzroy describes her family's move to the farm in the 1940s,
-                   making an already-old building and plot into a working homestead. It is a very interesting account 
-                   of life on a smallholding, growing a garden, taking care of cows, chickens, and children, and about
-                    the property and surroundings.
-                    <p>
-                   She relates <i>“The house had been 
-                    built more than a century before by a freed slave, and it had every characteristic of its period:
-                     thick whitewashed walls, low-slung thatch, shuttered windows, the air of being settled snugly on the 
-                     land that Dutch architecture achieved as if without effort. Its builder had a grant of fourty acres 
-                     of the land round about; it must have been a pearl of a property in those days; in 
-                     fact, he called it Pearldale.”</i>  
-                    </p>
-                    <p>They also had problems with moles, the sandy soil, and an old and maintenance-heavy building!
-                    
-                    </p>
+                  making an already-old building and plot into a working homestead. It is a very interesting account
+                  of life on a smallholding, growing a garden, taking care of cows, chickens, and children, and about
+                  the property and surroundings.
+                </p>
+                <p>
+                  She relates <i>“The house had been
+                  built more than a century before by a freed slave, and it had every characteristic of its period:
+                  thick whitewashed walls, low-slung thatch, shuttered windows, the air of being settled snugly on the
+                  land that Dutch architecture achieved as if without effort. Its builder had a grant of forty acres
+                  of the land round about; it must have been a pearl of a property in those days; in
+                  fact, he called it Pearldale.”</i>
+                </p>
+                <p>
+                  They also had problems with moles, the sandy soil, and an old and maintenance-heavy building!
                 </p>
                 <p>
                   The Vernacular Architecture Society of South Africa (VASSA) visited the property on 2021, and included a 
@@ -460,13 +620,17 @@
                   <img
                     src="{{ url_for('static', filename='images/site/20toulon.jpg') }}"
                     alt="View of 20 Toulon Avenue and the surrounding property"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>The old farmhouse in 2008, before the thatch was replaced due to fire</figcaption>
                 </figure>
                 <figure class="about-photo">
                   <img
-                    src="{{ url_for('static', filename='images/site/20toulon1958.png') }}"
+                    src="{{ url_for('static', filename='images/site/20toulon1958.jpg') }}"
                     alt="20 Toulon Avenue as it appeared in 1958"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Squirrel's Leap Farm is visible in the main central rectangle of this 
                     1958 aerial photograph, taken 
@@ -474,15 +638,19 @@
                 </figure>
                 <figure class="about-photo">
                   <img
-                    src="{{ url_for('static', filename='images/site/Ave Toulon.bmp') }}"
+                    src="{{ url_for('static', filename='images/site/Ave Toulon.jpg') }}"
                     alt="Historic view along Toulon Avenue near the property"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Squirrel's Leap farm layout</figcaption>
                 </figure>
                 <figure class="about-photo">
                   <img
-                    src="{{ url_for('static', filename='images/site/Picture of house.bmp') }}"
+                    src="{{ url_for('static', filename='images/site/Picture of house.jpg') }}"
                     alt="Older photograph of the house on the Squirrels Leap Farm property"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>An older drawing of the house on the farm</figcaption>
                 </figure>
@@ -490,6 +658,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/property.jpg') }}"
                     alt="Current view of the grounds at Squirrels Leap Farm"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>The grounds at the current day</figcaption>
                 </figure>
@@ -497,7 +667,9 @@
             </section>
           </div>
 
-          <!-- Panel 4: Ministries (church life and outreach activities). -->
+          <!-- Tab panel: Ministries — the DEFAULT tab, shown when the About page
+               first loads (set by the "checked" radio input near the top of this
+               file). Church life and outreach activities. -->
           <div id="about-panel-ministries" class="about-tab-panel panel-ministries" role="tabpanel" aria-labelledby="about-tab-label-ministries">
             <section class="panel">
 
@@ -508,7 +680,7 @@
               </p> -->
 
               <h3>Services</h3>
-              <p>We meet for prayer at 9:15 and for worship at 10:00. The music is a blend of traditional hymns and congregational modern 
+              <p>We meet for prayer at <b>9:15</b> and for worship at <b>10:00</b>. The music is a blend of traditional hymns and congregational modern 
                 worship songs, and the whole service usually lasts between 1 and 1.5 hours. We try follow the pattern of the early church in the book of Acts,
                 where the church <i>"devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer"</i>.
                 The expositional preaching of the Word is central to the service, and we celebrate the Lord's Supper at the beginning of every month.  
@@ -516,14 +688,13 @@
 
               <ul class="list">
                 <li><strong>Sunday worship services:</strong> Prayer, Bible preaching, congregational worship, and fellowship.</li>
-                <li><strong>Midweek Bible studies:</strong> Smaller group gatherings focused on Scripture, prayer, and mutual care.</li>
-                <li><strong>Youth and children:</strong> Age-appropriate teaching, discipleship, and activities throughout the year.</li>
-              </ul>
+                <li><strong>Midweek Bible studies:</strong> Smaller group gatherings in the Plumstead area focused on Scripture, prayer, and mutual care.</li>
+                </ul>
 
               <h3>Missionaries</h3>
               <p>
-                We support missionary work through prayer, practical encouragement, and financial giving. Our two main missionaries supported work in Nigeria 
-                and locally in South Africa with various people groups.
+                We support the spread of the Good News of Jesus Christ through missionary work and prayer, practical encouragement, and financial giving.
+                 Our two main missionaries we support work in Nigeria and locally in South Africa with various people groups.
               </p>
 
               <h3>Community outreach</h3>
@@ -533,7 +704,7 @@
                 with the life of the church.
               </p>
 
-              <h3>Holiday clubs and seasonal events</h3>
+              <h3>Holiday clubs, Youth, and seasonal events</h3>
               <p>
                 During school holidays and key times of the year, we run church activities for children and families.
                 These events provide Bible teaching, games, and opportunities to build friendships.
@@ -565,6 +736,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/hc2025.jpg') }}"
                     alt="2025 Holiday Club"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>2025 Holiday Club.</figcaption>
                 </figure>
@@ -573,6 +746,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/vwlucktalk.jpg') }}"
                     alt="Talk and testimony"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Talk and testimony of salvation from drug abuse.</figcaption>
                 </figure>
@@ -581,6 +756,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/missionsbreakfast.jpg') }}"
                     alt="Missionaries breakfast"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Missions weekend breakfast and prayer.</figcaption>
                 </figure>
@@ -589,6 +766,8 @@
                   <img
                     src="{{ url_for('static', filename='images/site/youthgroup2.jpg') }}"
                     alt="Youth group meeting"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Youth group meeting.</figcaption>
                 </figure>

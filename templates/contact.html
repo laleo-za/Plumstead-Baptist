@@ -6,6 +6,13 @@
    them to match everywhere).
    ============================================================================= #}
 
+{# Search-result description for the CONTACT page. Includes "hall hire"
+   because that is a common reason people search for a church's contact
+   details, and the contact page already invites those enquiries. #}
+{% block meta_description %}
+  <meta name="description" content="Contact Plumstead Baptist Church in Plumstead, Cape Town. Office hours, phone, email, address and map for general enquiries and hall hire." />
+{% endblock %}
+
 {% block content %}
   <!-- Blue header bar: nav + logo. -->
   <header class="subpage-header">
@@ -35,6 +42,32 @@
         >
           Contact
         </a>
+        <!-- Sermons: external link to the church YouTube channel. Opens in a
+             new tab (target="_blank"); the small arrow icon after the text
+             signals that this leaves the website. This is a link out, not a
+             page on this site, so it has no active_page state. -->
+        <a
+          href="https://www.youtube.com/@plumsteadbaptist3246"
+          class="nav__external"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Sermons on our YouTube channel (opens in a new tab)"
+        >
+          Sermons
+          <svg
+            class="nav__external-icon"
+            viewBox="0 0 24 24"
+            width="0.7em"
+            height="0.7em"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M14 3h7v7h-2V6.414l-8.293 8.293-1.414-1.414L19.586 5H14V3zM5 5h4v2H7v10h10v-2h2v4H5V5z"
+            />
+          </svg>
+        </a>
       </nav>
       <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
         <img
@@ -47,56 +80,114 @@
   </header>
 
   <main class="section">
-    <div class="container grid-2">
-      <!-- Left column: how to reach the church. -->
-      <section class="panel">
-        <h3>Contact details</h3>
+    <div class="container">
+      <!-- Two-column block: contact details on the left, address + map on the right. -->
+      <div class="grid-2">
+        <!-- Left column: how to reach the church. -->
+        <section class="panel">
+          <h3>Contact details</h3>
+          <p>
+            Please feel free to contact the church office if you have any questions about the church, hiring our hall or property, or want to know more about our services.
+          </p>
+          <ul class="list">
+            <li>
+              <strong>Administrator:</strong>
+              Oliver Collins
+            </li>
+            {# Phone and email are split into separate data-* attributes with a
+               tokenised fallback, so the full number/address never appears as one
+               continuous string in the served HTML. The script at the bottom of
+               base.html reassembles each into a clickable tel:/mailto: link on
+               load. This is a light deterrent only (it does not hide anything from
+               the browser Inspector or JS-running scrapers) — see the fuller note
+               beside that script. To change the phone or email, edit the data-*
+               attributes and the matching fallback text below. #}
+            <li>
+              <strong>Phone:</strong>
+              <span class="js-phone"
+                    data-cc="27"
+                    data-prefix="076"
+                    data-mid="589"
+                    data-suffix="0261">+2 7 &middot; 7 6 &middot; 5 8 9 &middot; 0 2 6 1</span>
+            </li>
+            <li>
+              <strong>Email:</strong>
+              <span class="js-email"
+                    data-user="office"
+                    data-domain="plumsteadbaptist.co.za">office [at] plumsteadbaptist [dot] co [dot] za</span>
+            </li>
+            <li>
+              <strong>Office hours:</strong>
+              Mon, Wed, Fri 09:00 - 13:00
+            </li>
+          </ul>
+
+          {# "Follow us" sub-section: small horizontal row of links to the
+             church's social media pages. Markup comes from the shared
+             partial that also feeds the site-wide footer, so adding or
+             removing a network only needs one edit. #}
+          <div class="contact-follow">
+            <h4 class="contact-follow__heading">Follow us</h4>
+            {% include "partials/social_links.html" %}
+          </div>
+        </section>
+
+        <!-- Right column: address and embedded map. -->
+        <section class="panel">
+          <h3>Find us</h3>
+          <p>
+            <strong>Address:</strong>
+            20 Toulon Ave, Plumstead, Cape Town, 7945
+          </p>
+          <div class="map" aria-label="Map showing Plumstead Baptist Church">
+            {% include "partials/map_embed.html" %}
+          </div>
+        </section>
+      </div>
+
+      <!-- ========================================================================
+           BANKING DETAILS FOR GIVING
+           Lives on this page only, NOT in the site-wide footer. This keeps the
+           church's bank account out of every page (less prominence for would-be
+           scrapers or phishing impersonators) while keeping it easy to find for
+           anyone actually wanting to give.
+
+           To add an official bank-confirmation-letter PDF later:
+             1. Save the file to  static/documents/pbc-bank-confirmation.pdf
+             2. Uncomment the "confirmation letter" paragraph below.
+           ======================================================================== -->
+      <section class="panel contact-banking">
+        <h3>Banking details for giving</h3>
         <p>
-          Please feel free to contact the church office if you have any questions about the church, hiring our hall or property, or want to know more about our services.
+          If you would like to support the work of the church through a one-off or recurring electronic transfer, you can use the banking details below.
         </p>
         <ul class="list">
-          <li>
-            <strong>Administrator:</strong>
-            Oliver Collins
+          <li><strong>Account name:</strong> Plumstead Baptist Church</li>
+          <li><strong>Bank:</strong> Absa Bank</li>
+          {# Account number is split into parts (data-p1/p2/p3) with a tokenised
+             fallback, so the full number isn't a single plain string in the
+             served HTML. The script in base.html reassembles it on load. This is
+             a light deterrent only — see the note next to that script. #}
+          <li><strong>Account number:</strong>
+            <span class="js-account"
+                  data-p1="4055"
+                  data-p2="960"
+                  data-p3="150">4 0 5 5 &middot; 9 6 0 &middot; 1 5 0</span>
           </li>
-          <li>
-            <strong>Phone:</strong>
-            076 589 0261 
-          </li>
-          <li>
-            <strong>Email:</strong>
-            office@plumsteadbaptist.co.za
-          </li>
-          <li>
-            <strong>Office hours:</strong>
-            Mon, Wed, Fri 09:00 - 13:00
-          </li>
+          <li><strong>Branch:</strong> Plumstead Branch</li>
+          <li><strong>Reference:</strong> Offerings</li>
         </ul>
+        {#
+          Optional: a downloadable PDF confirmation of the church's banking
+          details, on bank letterhead, for anyone whose bank requires one
+          before adding a new beneficiary. Save the PDF to
+          static/documents/pbc-bank-confirmation.pdf and uncomment:
 
-      </section>
-
-      <!-- Right column: address and embedded map. -->
-      <section class="panel">
-        <h3>Find us</h3>
-        <p>
-          <strong>Address:</strong>
-         20 Toulon Ave, Plumstead, Cape Town, 7945
-        </p>
-        <p>
-    
-        </p>
-        <div class="map" aria-label="Map showing Plumstead Baptist Church">
-          <iframe
-            src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Plumstead Baptist Church location on Google Maps"
-          ></iframe>
-        </div>
+          <p>
+            For an official confirmation of these details on bank letterhead,
+            <a href="{{ url_for('static', filename='documents/pbc-bank-confirmation.pdf') }}">download the confirmation letter (PDF)</a>.
+          </p>
+        #}
       </section>
     </div>
   </main>

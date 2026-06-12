@@ -1,0 +1,10 @@
+# robots.txt for Plumstead Baptist Church
+# Public church site: allow all search engines to index every page.
+# If you ever want to hide a page from search results, add a
+#   Disallow: /that-page.html
+# line below the User-agent rule.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://plumsteadbaptist.co.za/sitemap.xml

@@ -1,0 +1,93 @@
+# =============================================================================
+# Rebuild and publish the Plumstead Baptist Church site to GitHub Pages.
+#
+# What this does, in plain language:
+#   - Every 6 hours, GitHub runs `python build_static.py` for us. That script
+#     reads the church YouTube channel's RSS feed and writes fresh HTML into
+#     the docs/ folder. If anything actually changed (e.g. a new sermon was
+#     uploaded), the workflow commits docs/ back to main and GitHub Pages
+#     re-publishes the site within a minute or two.
+#   - The same thing happens whenever you push template or CSS changes to
+#     main, so you do NOT have to remember to run build_static.py locally
+#     before pushing.
+#   - You can also trigger a rebuild manually from the GitHub website:
+#     Actions tab -> "Rebuild and publish site" -> "Run workflow".
+#
+# Nothing has to be done on a regular basis to keep the latest sermon on
+# the home page — this workflow handles it.
+# =============================================================================
+
+name: Rebuild and publish site
+
+on:
+  # Run every 6 hours, on the hour. Picks up new YouTube uploads automatically.
+  # Cron is in UTC. "0 */6 * * *" = 00:00, 06:00, 12:00, 18:00 UTC each day.
+  schedule:
+    - cron: "0 */6 * * *"
+
+  # Run whenever source content is updated on main. We deliberately IGNORE
+  # changes that only touched docs/ — otherwise the workflow's own commits
+  # would re-trigger it. (GitHub already prevents that loop for the default
+  # token, but paths-ignore is a clear belt-and-braces.)
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+
+  # Manual "Run workflow" button on the Actions tab.
+  workflow_dispatch:
+
+# The workflow's GITHUB_TOKEN needs write access to push the rebuilt docs/.
+permissions:
+  contents: write
+
+# Avoid two scheduled rebuilds racing each other.
+concurrency:
+  group: rebuild-site
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Rebuild the static site
+        run: python build_static.py
+
+      - name: Sanity-check that the YouTube embed survived
+        # If YouTube's RSS feed was unreachable at build time the rebuilt
+        # home page falls back to a "Latest sermon video will appear here."
+        # placeholder. Don't commit a regression — leave the previous good
+        # docs/ in place and try again on the next scheduled run.
+        run: |
+          if ! grep -q "youtube.com/embed/" docs/index.html; then
+            echo "::warning::No YouTube embed found in rebuilt docs/index.html — skipping commit."
+            echo "SKIP_COMMIT=1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit and push docs/ if it changed
+        if: env.SKIP_COMMIT != '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [ -z "$(git status --porcelain docs/)" ]; then
+            echo "No changes to docs/ — nothing to commit."
+            exit 0
+          fi
+
+          git add docs/
+          git commit -m "Rebuild static site (automated)"
+          git push

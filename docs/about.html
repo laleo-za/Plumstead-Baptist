@@ -4,8 +4,8 @@
      Every page (Home, Visit, About, etc.) extends this file. This provides:
      - The <head> (title, stylesheet link)
      - A placeholder where each page inserts its main content
-     - The footer (address, service times, bank details) on every page
-     - Scripts that run on all pages (e.g. sticky header behaviour)
+         - The footer (address, contact links, and service times) on every page
+         - Scripts that run on all pages (e.g. sticky header behaviour)
      Edit the footer section below to change contact info site-wide.
      ============================================================================= -->
 <html lang="en">
@@ -13,11 +13,77 @@
     <!-- Page title: shows in the browser tab. "Home | Plumstead Baptist Church" etc. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>About | Plumstead Baptist Church</title>
+
+    <!-- =====================================================================
+         SECURITY HEADERS (set via <meta> tags because GitHub Pages does not
+         allow custom HTTP response headers).
+
+         Content-Security-Policy below tells the browser EXACTLY which other
+         websites this page is allowed to load content from. If a malicious
+         script ever sneaked into our HTML (e.g. via a typo or compromised
+         third-party copy/paste), it would be unable to phone home anywhere
+         not on this list. Each "directive" controls one type of resource:
+
+           default-src 'self'         everything not listed below must come from us
+           script-src                 JavaScript: from us; inline scripts allowed
+                                      (we have inline scripts in this file and
+                                      in index.html for the banner carousel)
+           style-src                  CSS: from us; inline style="..." allowed
+                                      (we use inline backgrounds on banner slides)
+           img-src                    images: from us, and small inline "data:" images
+           font-src                   fonts: from us; data: covers any inlined fonts
+           frame-src                  iframes: YouTube, Facebook plugin, Google Maps
+           object-src 'none'          flat-out forbid <object>/<embed> tags
+           base-uri / form-action     lock down where links and forms can go
+           upgrade-insecure-requests  silently upgrade any stray http:// to https://
+
+         If you ever add another third-party embed (e.g. a Vimeo video or a
+         Spotify player), add its iframe origin to "frame-src" below.
+         ===================================================================== -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        font-src 'self' data:;
+        frame-src https://www.youtube.com https://www.facebook.com https://www.google.com;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;
+      "
+    />
+
+    <!-- Referrer-Policy: when the visitor clicks a link off our site, only
+         send the bare domain "https://plumsteadbaptist.example/" as the
+         referrer, not the full URL of the page they were on. Sensible
+         default that protects visitor privacy. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    
+    
+  <meta name="description" content="Learn about Plumstead Baptist Church in Cape Town — our ministries, history since the early 1900s, statement of faith, and Squirrels Leap Farm." />
+
+
+    
+
+    <!-- Page title: shows in the browser tab and as the blue heading in
+         search results. Includes "Cape Town" so the church is easier to
+         find for searches like "baptist church plumstead cape town". -->
+    <title>About | Plumstead Baptist Church · Cape Town</title>
     <link
       rel="stylesheet"
       href="static/css/styles.css?v=20260424"
     />
+
+    <!-- Favicon: the little church-logo icon shown in the browser tab and in
+         bookmarks. The image lives at static/images/site/favicon.png; the
+         apple-touch-icon line reuses the same file for when someone saves the
+         site to a phone home screen. -->
+    <link rel="icon" type="image/png" href="static/images/site/favicon.png" />
+    <link rel="apple-touch-icon" href="static/images/site/favicon.png" />
   </head>
   <body>
     <!-- Required by Facebook's embed script (used on the home page). -->
@@ -51,6 +117,32 @@
         >
           Contact
         </a>
+        <!-- Sermons: external link to the church YouTube channel. Opens in a
+             new tab (target="_blank"); the small arrow icon after the text
+             signals that this leaves the website. This is a link out, not a
+             page on this site, so it has no active_page state. -->
+        <a
+          href="https://www.youtube.com/@plumsteadbaptist3246"
+          class="nav__external"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Sermons on our YouTube channel (opens in a new tab)"
+        >
+          Sermons
+          <svg
+            class="nav__external-icon"
+            viewBox="0 0 24 24"
+            width="0.7em"
+            height="0.7em"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M14 3h7v7h-2V6.414l-8.293 8.293-1.414-1.414L19.586 5H14V3zM5 5h4v2H7v10h10v-2h2v4H5V5z"
+            />
+          </svg>
+        </a>
       </nav>
       <a href="index.html" class="logo" aria-label="Church logo – go to Home">
         <img
@@ -62,7 +154,7 @@
     </div>
   </header>
 
-  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Squirrels Leap Farm). -->
+  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Leadership, Squirrels Leap Farm). -->
   <main class="section intro about-page">
     <div class="container">
       <!-- Tab controls: radio inputs drive which panel is visible (no JS required). -->
@@ -98,6 +190,15 @@
         <input
           type="radio"
           name="about-tab"
+          id="about-tab-leadership"
+          value="leadership"
+          class="about-tab-input"
+          aria-controls="about-panel-leadership"
+          aria-label="Show Leadership"
+        />
+        <input
+          type="radio"
+          name="about-tab"
           id="about-tab-squirrels"
           value="squirrels"
           class="about-tab-input"
@@ -108,20 +209,59 @@
           <label for="about-tab-ministries" class="about-tab" role="tab" id="about-tab-label-ministries" aria-selected="true" aria-controls="about-panel-ministries">Ministries</label>
           <label for="about-tab-history" class="about-tab" role="tab" id="about-tab-label-history" aria-selected="false" aria-controls="about-panel-history">History</label>
           <label for="about-tab-faith" class="about-tab" role="tab" id="about-tab-label-faith" aria-selected="false" aria-controls="about-panel-faith">Statement of Faith</label>
+          <label for="about-tab-leadership" class="about-tab" role="tab" id="about-tab-label-leadership" aria-selected="false" aria-controls="about-panel-leadership">Leadership</label>
           <label for="about-tab-squirrels" class="about-tab" role="tab" id="about-tab-label-squirrels" aria-selected="false" aria-controls="about-panel-squirrels">Squirrels Leap Farm</label>
         </div>
 
+        <!-- Panels shown one at a time, controlled by the radio inputs above.
+             They are listed here in a fixed content order; the tab that opens by
+             default is whichever input has "checked" — currently Ministries. -->
         <div class="about-tab-panels">
-          <!-- Panel 1: History (split into three periods with matching photo galleries). -->
+          <!-- Tab panel: History (split into three periods with matching photo galleries). -->
           <div id="about-panel-history" class="about-tab-panel panel-history" role="tabpanel" aria-labelledby="about-tab-label-history">
             <!-- ======== History section 1: 2010s to present ======== -->
             <section class="panel">
+
+              <!-- Scripture quote: Psalm 105:1-7 introduces the History tab as a call
+                   to remember and give thanks for what God has done.
+
+                   The "about-quote--float-right" modifier floats the quote to the right
+                   side of the panel, so the H2/H3/paragraph text wraps around it on the
+                   left (similar to a floated image in a Word document). On small screens
+                   the modifier collapses back to a normal full-width block (see styles.css).
+
+                   The figure must appear BEFORE the headings/text in the markup so the
+                   floated content wraps correctly.
+                   <br> tags preserve the verse line breaks (HTML collapses plain newlines). -->
+              <figure class="about-quote about-quote--float-right">
+                <div class="about-quote__marks">“</div>
+                <blockquote>
+                  Give thanks to the LORD, call upon His name;<br>
+                  make known His deeds among the nations.<br>
+                  Sing to Him, sing praises to Him;<br>
+                  tell of all His wonders.<br>
+                  Glory in His holy name;<br>
+                  let the hearts of those who seek the LORD rejoice.<br>
+                  Seek out the LORD and His strength;<br>
+                  seek His face always.<br>
+                  Remember the wonders He has done,<br>
+                  His marvels, and the judgments He has pronounced,<br>
+                  O offspring of His servant Abraham,<br>
+                  O sons of Jacob, His chosen ones.<br>
+                  He is the LORD our God;<br>
+                  His judgments carry throughout the earth.
+                </blockquote>
+                <figcaption class="about-quote__source">
+                  — Psalm 105:1-7
+                </figcaption>
+              </figure>
+
               <h2>Our History</h2>
               <h3>From 2010 to the present day</h3>
               <p>
                 In the mid 2010s, our then pastor and associate pastor both accepted calls to shepherd other congregations in South Africa, after
                 many years of fruitful ministry to the believers of PBC and our community. During the state-mandated society lockdowns
-                of 2020-2022, the church called a missionary associated with PBC to serve as a sort-term pastor for a few years. The church also
+                of 2020-2022, the church called a missionary associated with PBC to serve as a short-term pastor for a few years. The church also
                 experienced growth in attendance due to community involvement during the destitution of lockdowns.
                 <br>
                 <br>
@@ -132,6 +272,8 @@
                 We give God all the Glory for his continued Grace over all these years, now spanning over 130 years.
               </p>
             </section>
+
+
             <section class="panel about-gallery" aria-label="Church history photos from 2010 to present">
               <div class="about-gallery-grid">
 
@@ -139,6 +281,8 @@
                   <img
                     src="static/images/site/service2.jpg"
                     alt="Weekly services"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Sunday services.</figcaption>
                 </figure>
@@ -147,6 +291,8 @@
                   <img
                     src="static/images/site/kitchenproject.jpg"
                     alt="Progress on the kitchen and bathroom extension"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Progress on the kitchen and bathroom extension.</figcaption>
                 </figure>
@@ -155,6 +301,8 @@
                   <img
                     src="static/images/site/lockdownoutreach.jpg"
                     alt="Community outreach during lockdown"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Community outreach during lockdown.</figcaption>
                 </figure>
@@ -192,6 +340,8 @@
                   <img
                     src="static/images/history/compilation.jpg"
                     alt="Compilation of recent church moments"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Church life and moments from the last century</figcaption>
                 </figure>
@@ -200,11 +350,13 @@
                   <img
                     src="static/images/banners/banner3.jpg"
                     alt="Early new hall services"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Service early on after the completion of the new hall</figcaption>
                 </figure>
 
-                <figure class="about-photo">
+                <!-- <figure class="about-photo">
                   <img
                     src="static/images/history/FILENAME.jpg"
                     alt="image-name"
@@ -218,9 +370,9 @@
                     alt="image-name"
                   />
                   <figcaption>Placeholder image for 2007 to the 2010s</figcaption>
-                </figure>
+                </figure> 
 
-              </div>
+              </div> -->
             </section>
 
             <!-- ======== History section 3: How it all began ======== -->
@@ -239,7 +391,7 @@
                 The work began with cottage meetings in 1876. In 1878 the Rev. H.T. Batts arrived in Cape Town to assist the
                 Rev. Hamilton. For two months after his arrival the two men held a series of special services between Cape
                 Town and Wynberg, preaching almost every night. The cottage meetings soon grew into an organised service held
-                in the old Government School at the corner of Tenant Road. A year later the old Court House in Durban Road was
+                in the old Government School at the corner of Tenannt Road. A year later the old Court House in Durban Road was
                 hired.
                 <br>
                 <br>
@@ -260,58 +412,76 @@
             <section class="panel about-gallery" aria-label="Church history photos from the early years">
               <div class="about-gallery-grid">
 
-                <figure class="about-photo" style="--image-scale: .8;">
+                <figure class="about-photo" style="--image-scale: .6;">
                   <img
                     src="static/images/history/battswoodmission.jpg"
                     alt="Battswood Mission historic photo"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Battswood Mission</figcaption>
                 </figure>
 
-                <figure class="about-photo">
-                  <img
-                    src="static/images/history/familytree.jpg"
-                    alt="Church history family tree graphic"
-                  />
-                  <figcaption>Family tree timeline</figcaption>
-                </figure>
 
-                <figure class="about-photo">
+                <figure class="about-photo" style="--image-scale: 1.0;">
                   <img
                     src="static/images/history/govthall.jpg"
                     alt="Historic Government Hall photo"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Government Hall gathering</figcaption>
+                </figure>
+
+                
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/wbchallcomplete.jpg"
+                    alt="Completed Wynberg Baptist Church hall"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>Wynberg Baptist Church hall (completed)</figcaption>
                 </figure>
 
                 <figure class="about-photo" style="--image-scale: .8;">
                   <img
                     src="static/images/history/wbchall.jpg"
                     alt="Wynberg Baptist Church hall"
+                    loading="lazy"
+                    decoding="async"
                   />
-                  <figcaption>The originalWynberg Baptist Church hall</figcaption>
+                  <figcaption>The original Wynberg Baptist Church hall</figcaption>
                 </figure>
 
-                <figure class="about-photo">
-                  <img
-                    src="static/images/history/wbchallcomplete.jpg"
-                    alt="Completed Wynberg Baptist Church hall"
-                  />
-                  <figcaption>Wynberg Baptist Church hall (completed)</figcaption>
-                </figure>
 
                 <figure class="about-photo">
                   <img
                     src="static/images/history/sundayschool.jpg"
                     alt="Sunday school ministry"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Sunday school ministry in earlier years</figcaption>
+                </figure>
+
+                
+                <figure class="about-photo">
+                  <img
+                    src="static/images/history/familytree.jpg"
+                    alt="Church history family tree graphic"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>Family tree timeline</figcaption>
                 </figure>
 
                 <figure class="about-photo">
                   <img
                     src="static/images/history/deacons1991.jpg"
                     alt="Church leadership and members"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Leadership and membership across the years</figcaption>
                 </figure>
@@ -320,49 +490,162 @@
             </section>
           </div>
 
-          <!-- Panel 2: Statement of Faith. -->
+          <!-- Tab panel: Statement of Faith. -->
           <div id="about-panel-faith" class="about-tab-panel panel-faith" role="tabpanel" aria-labelledby="about-tab-label-faith">
             <div class="card">
               <div>
                 <h2>Statement of Faith</h2>
                 <p>
-                  Plumstead Baptist Church is a member of the <a href="https://baptistunion.org.za/"><u>Baptist Union of South Africa (BUSA)</u></a>. We as Baptists share many areas of our faith with 
+                  <i>Plumstead Baptist Church is a member of the <a href="https://baptistunion.org.za/"><u>Baptist Union of South Africa (BUSA)</u></a>. We as Baptists share many areas of our faith with 
                   other members of the professing Christian Church. These include a belief in one God, Father, Son and Holy Spirit; in the supreme Lordship
                    of Jesus Christ as Head of the Church; and in the Bible as the inspired Word of God, and as the final authority in all matters of faith and practice.
 
                   There are however areas of principle and practice where we as Baptists make distinctive emphases arising out of our understanding of the Scriptures
-                   such as the direct lordship of Jesus Christ, the autonomy of the local church, believer’s baptism, the congregational principal of church government, 
-                   the priesthood of all believers, the principle of religious liberty and the principle of separation of church and state.
+                   such as the direct lordship of Jesus Christ, the autonomy of the local church, believer’s baptism, the congregational principle of church government, 
+                   the priesthood of all believers, the principle of religious liberty and the principle of separation of church and state.</i>
                 </p>
-                <p><strong>We believe</strong></p>
-                <ul class="list statement-of-faith-list">
-                  <li>In the Scriptures of the Old and New Testaments in their original writings as fully inspired of God, and accept them as the final authority for faith and life;</li>
-                  <li>In one God, eternally existing in three Persons – Father, Son and Holy Spirit;</li>
-                  <li>In Jesus Christ the only begotten Son of God, who was conceived by the Holy Spirit, born of the Virgin Mary, and is therefore True God and True Man;</li>
-                  <li>That God created man in His own image; that man sinned and thereby incurred the penalty of death, physical and spiritual;</li>
-                  <li>That all human beings inherit a sinful nature, which issues (in the case of those who have reached moral responsibility) in actual transgression involving personal guilt;</li>
-                  <li>That the Lord Jesus Christ died for our sins, a substitutionary sacrifice according to the Scriptures, and that all who believe in Him are justified on the ground of His shed blood;</li>
-                  <li>In the bodily resurrection of the Lord Jesus Christ, His ascension into heaven, and His present life as our High Priest and Advocate;</li>
-                  <li>In the Personality and Godhead of the Holy Spirit, His indwelling of the Believer in Christ from the time of conversion, and the necessity of His work in making the death and resurrection of Christ effective to the individual;</li>
-                  <li>In the Holy, Catholic, Apostolic Church, which is the Body of Christ, of which Christ is the Head, and which is manifest locally in the gathering together of believers in obedience to Christ alone;</li>
-                  <li>That the Lord Jesus Christ appointed two ordinances – Baptism and the Lord’s Supper – to be observed as acts of obedience and as perpetual witnesses to the cardinal facts of the Christian faith;</li>
-                  <li>That Baptism is the immersion of the believer in water as confession of, and identification with Christ in burial and resurrection;</li>
-                  <li>That the Lord’s Supper is the partaking of bread and wine as symbolical of the Saviour’s broken body and shed blood in remembrance of His sacrificial death, “till He come”;</li>
-                  <li>In the priesthood of all believers;</li>
-                  <li>In the personal return of our Lord Jesus Christ, the bodily resurrection of the just and the unjust, the eternal blessedness of the saved, and the eternal punishment of the lost;</li>
-                  <li>That God has sanctioned marriage between a man and a woman, therefore we believe in heterosexual relationships between a natural man and a natural woman within the confines of lawful matrimony.</li>
-                </ul>
+                <!-- Statement of Faith "creed card": this is the main content of the
+                     About page, so it gets a distinct card treatment to set it apart
+                     from the surrounding paragraphs. Styling lives in styles.css under
+                     ".statement-of-faith-card" / ".statement-of-faith-list". Numbered
+                     ochre circle markers are generated via CSS counters. -->
+                <div class="statement-of-faith-card">
+                  <p class="statement-of-faith-card__title"><strong>We believe</strong></p>
+                  <ul class="list statement-of-faith-list">
+                    <li>In the Scriptures of the Old and New Testaments in their original writings as fully inspired of God, and accept them as the final authority for faith and life;</li>
+                    <li>In one God, eternally existing in three Persons – Father, Son and Holy Spirit;</li>
+                    <li>In Jesus Christ the only begotten Son of God, who was conceived by the Holy Spirit, born of the Virgin Mary, and is therefore True God and True Man;</li>
+                    <li>That God created man in His own image; that man sinned and thereby incurred the penalty of death, physical and spiritual;</li>
+                    <li>That all human beings inherit a sinful nature, which issues (in the case of those who have reached moral responsibility) in actual transgression involving personal guilt;</li>
+                    <li>That the Lord Jesus Christ died for our sins, a substitutionary sacrifice according to the Scriptures, and that all who believe in Him are justified on the ground of His shed blood;</li>
+                    <li>In the bodily resurrection of the Lord Jesus Christ, His ascension into heaven, and His present life as our High Priest and Advocate;</li>
+                    <li>In the Personality and Godhead of the Holy Spirit, His indwelling of the Believer in Christ from the time of conversion, and the necessity of His work in making the death and resurrection of Christ effective to the individual;</li>
+                    <li>In the Holy, Catholic, Apostolic Church, which is the Body of Christ, of which Christ is the Head, and which is manifest locally in the gathering together of believers in obedience to Christ alone;</li>
+                    <li>That the Lord Jesus Christ appointed two ordinances – Baptism and the Lord’s Supper – to be observed as acts of obedience and as perpetual witnesses to the cardinal facts of the Christian faith;</li>
+                    <li>That Baptism is the immersion of the believer in water as confession of, and identification with Christ in burial and resurrection;</li>
+                    <li>That the Lord’s Supper is the partaking of bread and wine as symbolical of the Saviour’s broken body and shed blood in remembrance of His sacrificial death, “till He come”;</li>
+                    <li>In the priesthood of all believers;</li>
+                    <li>In the personal return of our Lord Jesus Christ, the bodily resurrection of the just and the unjust, the eternal blessedness of the saved, and the eternal punishment of the lost;</li>
+                    <li>That God has sanctioned marriage between a man and a woman, therefore we believe in heterosexual relationships between a natural man and a natural woman within the confines of lawful matrimony.</li>
+                  </ul>
+                </div>
               </div>
+
+              <figure class="about-quote">
+                <div class="about-quote__marks">“</div>
+                <blockquote>
+                  This Jesus is the stone that was rejected by you, the builders, which has become the cornerstone.
+                  And there is salvation in no one else, for there is no other name under heaven given among men by 
+                  which we must be saved.
+                </blockquote>
+                <figcaption class="about-quote__source">
+                  — Acts 4:11-12
+                </figcaption>
+              </figure>
+
               <div
                 class="card__media"
                 aria-label="Statement of faith image"
                 style="background-image: url('static/images/banners/banner1.jpg'); background-size: cover; background-position: center;"
               >
+
+              
               </div>
+
             </div>
           </div>
 
-          <!-- Panel 3: Squirrels Leap Farm (history of the property). -->
+          <!-- Tab panel: Leadership (elders with photos + bios, deacons with bios). -->
+          <div id="about-panel-leadership" class="about-tab-panel panel-leadership" role="tabpanel" aria-labelledby="about-tab-label-leadership">
+            <section class="panel">
+              <h2>Our Leadership</h2>
+            <!-- ========   <p>
+                Plumstead Baptist Church is served by a team of elders, who give spiritual oversight
+                and teaching, and deacons, who care for the practical needs of the church family.
+                Below is a short introduction to those currently serving.
+              </p>-->
+
+              <!-- ======== Elders (each has a photo and a short bio) ========
+                   To add a real photo: save the image into
+                   static/images/leadership/ (create the folder if needed) and
+                   change the src below to point at it, e.g.
+                   images/leadership/firstname-surname.jpg. Until a photo is
+                   added, the church logo is shown as a placeholder. -->
+              <h3>Elders</h3>
+              <div class="leader-grid">
+
+                <!-- Elder 1 -->
+                <article class="leader-card">
+                  <img
+                    class="leader-card__photo"
+                    src="static/images/PBC%20logo%20transparent.png"
+                    alt="Photo of the first elder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div class="leader-card__body">
+                    <h4 class="leader-card__name">Paul Karstens</h4>
+                    <p class="leader-card__role">Elder</p>
+                  </div>
+                </article>
+
+                <!-- Elder 2 -->
+                <article class="leader-card">
+                  <img
+                    class="leader-card__photo"
+                    src="static/images/leadership/nickcollins.jpeg"
+                    alt="Photo of the second elder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div class="leader-card__body">
+                    <h4 class="leader-card__name">Nick Collins</h4>
+                    <p class="leader-card__role">Elder</p>
+                  </div>
+                </article>
+
+              </div>
+
+              <!-- ======== Deacons (short bio only, no photos) ========
+                   To add or remove a deacon, copy or delete one <li> block below. -->
+              <h3>Deacons</h3>
+              <ul class="leader-list">
+
+                <!-- Deacon 1 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Henry Jooste</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 2 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Yolandi Nicolau</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 3 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Elias Nicolau</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 4 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Denise Brown</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+                <!-- Deacon 5 -->
+                <li class="leader-list__item">
+                  <h4 class="leader-card__name">Charmaine Williams</h4>
+                  <p class="leader-card__role">Deacon</p>
+                </li>
+
+              </ul>
+            </section>
+          </div>
+
+          <!-- Tab panel: Squirrels Leap Farm (history of the property). -->
           <div id="about-panel-squirrels" class="about-tab-panel panel-squirrels" role="tabpanel" aria-labelledby="about-tab-label-squirrels">
             <div class="card">
               <div>
@@ -374,7 +657,7 @@
                     and we hoped to land on <b>some</b> branch, as squirrels do, even if it wasn't the one they aimed for.
                   </blockquote>
                   <figcaption class="about-quote__source">
-                    — Cabbages and Cream, by D.M. Fitzroy
+                    — Cabbages and Cream, by V.M. Fitzroy
                   </figcaption>
                 </figure>
                 <p>
@@ -385,20 +668,20 @@
                 </p>
                 <p>
                   The book "Cabbages and Cream" by VM Fitzroy describes her family's move to the farm in the 1940s,
-                   making an already-old building and plot into a working homestead. It is a very interesting account 
-                   of life on a smallholding, growing a garden, taking care of cows, chickens, and children, and about
-                    the property and surroundings.
-                    <p>
-                   She relates <i>“The house had been 
-                    built more than a century before by a freed slave, and it had every characteristic of its period:
-                     thick whitewashed walls, low-slung thatch, shuttered windows, the air of being settled snugly on the 
-                     land that Dutch architecture achieved as if without effort. Its builder had a grant of fourty acres 
-                     of the land round about; it must have been a pearl of a property in those days; in 
-                     fact, he called it Pearldale.”</i>  
-                    </p>
-                    <p>They also had problems with moles, the sandy soil, and an old and maintenance-heavy building!
-                    
-                    </p>
+                  making an already-old building and plot into a working homestead. It is a very interesting account
+                  of life on a smallholding, growing a garden, taking care of cows, chickens, and children, and about
+                  the property and surroundings.
+                </p>
+                <p>
+                  She relates <i>“The house had been
+                  built more than a century before by a freed slave, and it had every characteristic of its period:
+                  thick whitewashed walls, low-slung thatch, shuttered windows, the air of being settled snugly on the
+                  land that Dutch architecture achieved as if without effort. Its builder had a grant of forty acres
+                  of the land round about; it must have been a pearl of a property in those days; in
+                  fact, he called it Pearldale.”</i>
+                </p>
+                <p>
+                  They also had problems with moles, the sandy soil, and an old and maintenance-heavy building!
                 </p>
                 <p>
                   The Vernacular Architecture Society of South Africa (VASSA) visited the property on 2021, and included a 
@@ -413,13 +696,17 @@
                   <img
                     src="static/images/site/20toulon.jpg"
                     alt="View of 20 Toulon Avenue and the surrounding property"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>The old farmhouse in 2008, before the thatch was replaced due to fire</figcaption>
                 </figure>
                 <figure class="about-photo">
                   <img
-                    src="static/images/site/20toulon1958.png"
+                    src="static/images/site/20toulon1958.jpg"
                     alt="20 Toulon Avenue as it appeared in 1958"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Squirrel's Leap Farm is visible in the main central rectangle of this 
                     1958 aerial photograph, taken 
@@ -427,15 +714,19 @@
                 </figure>
                 <figure class="about-photo">
                   <img
-                    src="static/images/site/Ave%20Toulon.bmp"
+                    src="static/images/site/Ave%20Toulon.jpg"
                     alt="Historic view along Toulon Avenue near the property"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Squirrel's Leap farm layout</figcaption>
                 </figure>
                 <figure class="about-photo">
                   <img
-                    src="static/images/site/Picture%20of%20house.bmp"
+                    src="static/images/site/Picture%20of%20house.jpg"
                     alt="Older photograph of the house on the Squirrels Leap Farm property"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>An older drawing of the house on the farm</figcaption>
                 </figure>
@@ -443,6 +734,8 @@
                   <img
                     src="static/images/site/property.jpg"
                     alt="Current view of the grounds at Squirrels Leap Farm"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>The grounds at the current day</figcaption>
                 </figure>
@@ -450,26 +743,34 @@
             </section>
           </div>
 
-          <!-- Panel 4: Ministries (church life and outreach activities). -->
+          <!-- Tab panel: Ministries — the DEFAULT tab, shown when the About page
+               first loads (set by the "checked" radio input near the top of this
+               file). Church life and outreach activities. -->
           <div id="about-panel-ministries" class="about-tab-panel panel-ministries" role="tabpanel" aria-labelledby="about-tab-label-ministries">
             <section class="panel">
-              <h2>Ministries</h2>
+
+              <!-- <h2>Ministries</h2>
               <p>
                 Ministry is at the heart of church life at Plumstead Baptist Church. Below is an overview of how we
                 serve one another and reach out to our wider community.
-              </p>
+              </p> -->
 
-              <h3>Service kinds</h3>
+              <h3>Services</h3>
+              <p>We meet for prayer at <b>9:15</b> and for worship at <b>10:00</b>. The music is a blend of traditional hymns and congregational modern 
+                worship songs, and the whole service usually lasts between 1 and 1.5 hours. We try follow the pattern of the early church in the book of Acts,
+                where the church <i>"devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer"</i>.
+                The expositional preaching of the Word is central to the service, and we celebrate the Lord's Supper at the beginning of every month.  
+                </p>
+
               <ul class="list">
                 <li><strong>Sunday worship services:</strong> Prayer, Bible preaching, congregational worship, and fellowship.</li>
-                <li><strong>Midweek Bible studies:</strong> Smaller group gatherings focused on Scripture, prayer, and mutual care.</li>
-                <li><strong>Youth and children:</strong> Age-appropriate teaching, discipleship, and activities throughout the year.</li>
-              </ul>
+                <li><strong>Midweek Bible studies:</strong> Smaller group gatherings in the Plumstead area focused on Scripture, prayer, and mutual care.</li>
+                </ul>
 
               <h3>Missionaries</h3>
               <p>
-                We support missionary work through prayer, practical encouragement, and financial giving. This includes
-                both local and cross-cultural gospel partnerships.
+                We support the spread of the Good News of Jesus Christ through missionary work and prayer, practical encouragement, and financial giving.
+                 Our two main missionaries we support work in Nigeria and locally in South Africa with various people groups.
               </p>
 
               <h3>Community outreach</h3>
@@ -479,12 +780,29 @@
                 with the life of the church.
               </p>
 
-              <h3>Holiday clubs and seasonal events</h3>
+              <h3>Holiday clubs, Youth, and seasonal events</h3>
               <p>
                 During school holidays and key times of the year, we run church activities for children and families.
                 These events provide Bible teaching, games, and opportunities to build friendships.
               </p>
             </section>
+
+                          <!-- Scripture quote: the Great Commission (Matthew 28:18-20) frames why
+                   the church engages in the ministries listed below. Uses the shared
+                   .about-quote styling for an indented, highlighted blockquote. -->
+                   <figure class="about-quote">
+                    <div class="about-quote__marks">“</div>
+                    <blockquote>
+                      All authority in heaven and on earth has been given to me.
+                       Therefore go and make disciples of all nations, baptizing them in the name of the
+                      Father and of the Son and of the Holy Spirit,
+                       and teaching them to obey everything I have commanded you. And surely I am with you
+                      always, to the very end of the age.
+                    </blockquote>
+                    <figcaption class="about-quote__source">
+                      — Matthew 28:18-20
+                    </figcaption>
+                  </figure>
 
             <!-- Ministries gallery: two placeholder photos below the text content. -->
             <section class="panel about-gallery" aria-label="Ministries photos">
@@ -494,14 +812,18 @@
                   <img
                     src="static/images/site/hc2025.jpg"
                     alt="2025 Holiday Club"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>2025 Holiday Club.</figcaption>
                 </figure>
 
-                <figure class="about-photo">
+                <figure class="about-photo" style="--image-scale: 0.9;">
                   <img
                     src="static/images/site/vwlucktalk.jpg"
                     alt="Talk and testimony"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Talk and testimony of salvation from drug abuse.</figcaption>
                 </figure>
@@ -510,6 +832,8 @@
                   <img
                     src="static/images/site/missionsbreakfast.jpg"
                     alt="Missionaries breakfast"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Missions weekend breakfast and prayer.</figcaption>
                 </figure>
@@ -518,6 +842,8 @@
                   <img
                     src="static/images/site/youthgroup2.jpg"
                     alt="Youth group meeting"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <figcaption>Youth group meeting.</figcaption>
                 </figure>
@@ -535,10 +861,15 @@
 
     <!-- ========================================================================
          FOOTER (appears on every page)
-         Update address, phone, email, service times, and bank details here.
+         Update address, phone, email, and service times here.
          Changes will show on all pages at once.
          ======================================================================== -->
     <footer>
+      <!-- Footer is now a two-column grid: Find us + Service times.
+           Banking details previously lived here as a third column, but are
+           now on the Contact page only (see templates/contact.html). This
+           keeps the church's bank account out of every page's HTML and out
+           of every search-engine snapshot of every page. -->
       <div class="footer-grid">
         <div>
           <h5>Find us</h5>
@@ -548,46 +879,84 @@
           </p>
           <p>
             <strong>Contacts:</strong>
-            076 589 0261 · office@plumsteadbaptist.co.za
+            
+            <span class="js-phone"
+                  data-cc="27"
+                  data-prefix="076"
+                  data-mid="589"
+                  data-suffix="0261">+2 7 &middot; 7 6 &middot; 5 8 9 &middot; 0 2 6 1</span>
+            ·
+            <span class="js-email"
+                  data-user="office"
+                  data-domain="plumsteadbaptist.co.za">office [at] plumsteadbaptist [dot] co [dot] za</span>
             <br>(Office hours: Mon, Wed, Fri 09:00 - 13:00)
           </p>
-          <ul>
-            <li><a href="https://https://www.youtube.com/@plumsteadbaptist3246#youtube">YouTube</a></li>
-          </ul>
-          <ul>
-            <li><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Facebook</a></li>
-          </ul>
+          
+          
+<ul class="social-links">
+  <li>
+    <a
+      href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Plumstead Baptist Church on Facebook (opens in a new tab)"
+    >
+      <svg
+        class="social-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"
+        />
+      </svg>
+      <span>Facebook</span>
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.youtube.com/@plumsteadbaptist3246"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Plumstead Baptist Church on YouTube (opens in a new tab)"
+    >
+      <svg
+        class="social-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+        />
+      </svg>
+      <span>YouTube</span>
+    </a>
+  </li>
+</ul>
         </div>
         <div>
           <h5>Service times</h5>
           <ul>
             <li><strong>Sunday morning:</strong> 10:00</li>
             <!--<li><strong>Sunday evening:</strong> 18:00</li>-->
-            <li><strong>Sunday School &amp; youth:</strong> during the morning service, and every 2nd Saturday</li>
+            <li><strong>Sunday School &amp; youth:</strong> During the morning service.</li>
             <li><strong>Midweek groups for adults and Young adults:</strong> Tue morning/Wed evenings</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Bank details</h5>
-          <ul>
-            <li><strong>Name:</strong> Plumstead Baptist Church</li>
-            <li><strong>Bank:</strong> Absa Bank</li>
-            <li><strong>Account:</strong> 4055 960 150</li>
-            <li><strong>Branch:</strong> Plumstead Branch</li>
-            <li><strong>Reference:</strong> Offerings</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 Plumstead Baptist Church. All rights reserved.</span>
-        
       </div>
     </footer>
 
-    <!-- Scripts block: each page can add its own scripts. The script below
-         runs on every page and makes the top nav bar shrink slightly when
-         you scroll down. -->
+    <!-- Scripts block: each page can add its own scripts. The scripts below
+         run on every page. -->
     
+      <!-- Sticky header: makes the top nav bar shrink slightly when scrolled. -->
       <script>
         (function () {
           function updateHeader() {
@@ -599,6 +968,50 @@
           }
           window.addEventListener("scroll", updateHeader);
           updateHeader();
+        })();
+      </script>
+
+      ) is stripped at render time, so it does not
+         ship to the browser. #}
+      <script>
+        (function () {
+          document.querySelectorAll("span.js-email").forEach(function (span) {
+            var user = span.dataset.user;
+            var domain = span.dataset.domain;
+            if (!user || !domain) return;
+            var address = user + "@" + domain;
+            var link = document.createElement("a");
+            link.href = "mailto:" + address;
+            link.textContent = address;
+            span.replaceWith(link);
+          });
+
+          document.querySelectorAll("span.js-phone").forEach(function (span) {
+            var cc = span.dataset.cc;
+            var prefix = span.dataset.prefix;
+            var mid = span.dataset.mid;
+            var suffix = span.dataset.suffix;
+            if (!cc || !prefix || !mid || !suffix) return;
+            / Rebuild both the readable number and the international tel: target
+            / from the parts, so the full number is never stored as one string
+            / in the page source. Both now show the country code; the local
+            / leading zero is dropped after it (prefix "076" -> "76").
+            var local = prefix.replace(/^0/, "");
+            var display = "+" + cc + " " + local + " " + mid + " " + suffix;
+            var intl = "+" + cc + local + mid + suffix;
+            var link = document.createElement("a");
+            link.href = "tel:" + intl;
+            link.textContent = display;
+            span.replaceWith(link);
+          });
+
+          / Bank account number (Contact page): swap the tokenised fallback for
+          / the real spaced number once JavaScript runs. No link needed.
+          document.querySelectorAll("span.js-account").forEach(function (span) {
+            var parts = [span.dataset.p1, span.dataset.p2, span.dataset.p3];
+            if (parts.some(function (p) { return !p; })) return;
+            span.textContent = parts.join(" ");
+          });
         })();
       </script>
     

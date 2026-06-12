@@ -4,8 +4,8 @@
      Every page (Home, Visit, About, etc.) extends this file. This provides:
      - The <head> (title, stylesheet link)
      - A placeholder where each page inserts its main content
-     - The footer (address, service times, bank details) on every page
-     - Scripts that run on all pages (e.g. sticky header behaviour)
+         - The footer (address, contact links, and service times) on every page
+         - Scripts that run on all pages (e.g. sticky header behaviour)
      Edit the footer section below to change contact info site-wide.
      ============================================================================= -->
 <html lang="en">
@@ -13,11 +13,90 @@
     <!-- Page title: shows in the browser tab. "Home | Plumstead Baptist Church" etc. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% if page_title %}{{ page_title }} | {% endif %}Plumstead Baptist Church</title>
+
+    <!-- =====================================================================
+         SECURITY HEADERS (set via <meta> tags because GitHub Pages does not
+         allow custom HTTP response headers).
+
+         Content-Security-Policy below tells the browser EXACTLY which other
+         websites this page is allowed to load content from. If a malicious
+         script ever sneaked into our HTML (e.g. via a typo or compromised
+         third-party copy/paste), it would be unable to phone home anywhere
+         not on this list. Each "directive" controls one type of resource:
+
+           default-src 'self'         everything not listed below must come from us
+           script-src                 JavaScript: from us; inline scripts allowed
+                                      (we have inline scripts in this file and
+                                      in index.html for the banner carousel)
+           style-src                  CSS: from us; inline style="..." allowed
+                                      (we use inline backgrounds on banner slides)
+           img-src                    images: from us, and small inline "data:" images
+           font-src                   fonts: from us; data: covers any inlined fonts
+           frame-src                  iframes: YouTube, Facebook plugin, Google Maps
+           object-src 'none'          flat-out forbid <object>/<embed> tags
+           base-uri / form-action     lock down where links and forms can go
+           upgrade-insecure-requests  silently upgrade any stray http:// to https://
+
+         If you ever add another third-party embed (e.g. a Vimeo video or a
+         Spotify player), add its iframe origin to "frame-src" below.
+         ===================================================================== -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        font-src 'self' data:;
+        frame-src https://www.youtube.com https://www.facebook.com https://www.google.com;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;
+      "
+    />
+
+    <!-- Referrer-Policy: when the visitor clicks a link off our site, only
+         send the bare domain "https://plumsteadbaptist.example/" as the
+         referrer, not the full URL of the page they were on. Sensible
+         default that protects visitor privacy. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    {# =====================================================================
+       PAGE DESCRIPTION (for Google, Bing, etc.)
+       This is the grey snippet you see under the blue page title in search
+       results, and also the preview text some chat apps show when someone
+       shares the church URL.
+
+       Each page should set its OWN description by overriding the
+       meta_description block (see near the top of index.html, visit.html,
+       about.html, and contact.html). The text below is the fallback used
+       if a future page forgets to set its own.
+
+       Keep descriptions to about 150 characters — anything longer is cut
+       off by Google.
+       ===================================================================== #}
+    {% block meta_description %}
+    <meta name="description" content="Plumstead Baptist Church is a Bible-believing family church in Plumstead, Cape Town. Join us Sundays at 10:00 for worship, teaching and community." />
+    {% endblock %}
+
+    {% block head_extra %}{% endblock %}
+
+    <!-- Page title: shows in the browser tab and as the blue heading in
+         search results. Includes "Cape Town" so the church is easier to
+         find for searches like "baptist church plumstead cape town". -->
+    <title>{% if page_title %}{{ page_title }} | {% endif %}Plumstead Baptist Church · Cape Town</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}?v=20260424"
     />
+
+    <!-- Favicon: the little church-logo icon shown in the browser tab and in
+         bookmarks. The image lives at static/images/site/favicon.png; the
+         apple-touch-icon line reuses the same file for when someone saves the
+         site to a phone home screen. -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/site/favicon.png') }}" />
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/site/favicon.png') }}" />
   </head>
   <body>
     <!-- Required by Facebook's embed script (used on the home page). -->
@@ -26,10 +105,15 @@
 
     <!-- ========================================================================
          FOOTER (appears on every page)
-         Update address, phone, email, service times, and bank details here.
+         Update address, phone, email, and service times here.
          Changes will show on all pages at once.
          ======================================================================== -->
     <footer>
+      <!-- Footer is now a two-column grid: Find us + Service times.
+           Banking details previously lived here as a third column, but are
+           now on the Contact page only (see templates/contact.html). This
+           keeps the church's bank account out of every page's HTML and out
+           of every search-engine snapshot of every page. -->
       <div class="footer-grid">
         <div>
           <h5>Find us</h5>
@@ -39,46 +123,57 @@
           </p>
           <p>
             <strong>Contacts:</strong>
-            076 589 0261 · office@plumsteadbaptist.co.za
+            {# Phone and email are split into separate data-* attributes, each with
+               a "tokenised" fallback (digits spaced out / "[at]" and "[dot]" for the
+               email), so the full phone number and email address never appear as one
+               continuous string in the SERVED HTML. A small script at the bottom of
+               this file reassembles each into a clickable tel:/mailto: link on load.
+
+               What this does and does NOT do:
+                 - It defeats the simplest bots that scan the raw HTML (View Source)
+                   for a "name@domain" address or a run of digits — the pieces are
+                   never adjacent in the source, so those scrapers find nothing.
+                 - It does NOT hide anything in the browser's Inspector/Elements
+                   panel (that shows the page AFTER this script runs), nor from any
+                   scraper that executes JavaScript. It is a light deterrent only.
+
+               To change the phone or email, edit the data-* attributes below and the
+               matching fallback text; the script rebuilds the link automatically. #}
+            <span class="js-phone"
+                  data-cc="27"
+                  data-prefix="076"
+                  data-mid="589"
+                  data-suffix="0261">+2 7 &middot; 7 6 &middot; 5 8 9 &middot; 0 2 6 1</span>
+            ·
+            <span class="js-email"
+                  data-user="office"
+                  data-domain="plumsteadbaptist.co.za">office [at] plumsteadbaptist [dot] co [dot] za</span>
             <br>(Office hours: Mon, Wed, Fri 09:00 - 13:00)
           </p>
-          <ul>
-            <li><a href="https://https://www.youtube.com/@plumsteadbaptist3246#youtube">YouTube</a></li>
-          </ul>
-          <ul>
-            <li><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Facebook</a></li>
-          </ul>
+          {# Social media links live in a shared partial so the footer
+             and the Contact page's "Follow us" section stay in sync.
+             To add/remove a network, edit partials/social_links.html. #}
+          {% include "partials/social_links.html" %}
         </div>
         <div>
           <h5>Service times</h5>
           <ul>
             <li><strong>Sunday morning:</strong> 10:00</li>
             <!--<li><strong>Sunday evening:</strong> 18:00</li>-->
-            <li><strong>Sunday School &amp; youth:</strong> during the morning service, and every 2nd Saturday</li>
+            <li><strong>Sunday School &amp; youth:</strong> During the morning service.</li>
             <li><strong>Midweek groups for adults and Young adults:</strong> Tue morning/Wed evenings</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Bank details</h5>
-          <ul>
-            <li><strong>Name:</strong> Plumstead Baptist Church</li>
-            <li><strong>Bank:</strong> Absa Bank</li>
-            <li><strong>Account:</strong> 4055 960 150</li>
-            <li><strong>Branch:</strong> Plumstead Branch</li>
-            <li><strong>Reference:</strong> Offerings</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 Plumstead Baptist Church. All rights reserved.</span>
-        
       </div>
     </footer>
 
-    <!-- Scripts block: each page can add its own scripts. The script below
-         runs on every page and makes the top nav bar shrink slightly when
-         you scroll down. -->
+    <!-- Scripts block: each page can add its own scripts. The scripts below
+         run on every page. -->
     {% block scripts %}
+      <!-- Sticky header: makes the top nav bar shrink slightly when scrolled. -->
       <script>
         (function () {
           function updateHeader() {
@@ -90,6 +185,72 @@
           }
           window.addEventListener("scroll", updateHeader);
           updateHeader();
+        })();
+      </script>
+
+      {# Contact-detail assembly (light anti-scraper measure).
+
+         Finds the split-up contact spans on the page and rebuilds them:
+           - span.js-email   -> a clickable mailto: link
+           - span.js-phone   -> a clickable tel: link
+           - span.js-account -> the bank account number (text only; Contact page)
+
+         Why: in the SERVED HTML (View Source / the network response) the full
+         email address, phone number and bank account number never appear as one
+         continuous string — each is stored as separate data-* attributes with a
+         tokenised fallback. So the simplest bots that scan raw HTML for a
+         "name@domain" address or a run of digits come up empty.
+
+         IMPORTANT — this is only a light deterrent, NOT real protection:
+           - After this script runs, the assembled values exist in the live DOM.
+             That is what the browser's Inspector/Elements panel shows, which is
+             why you can still see the plain email/phone there — normal and
+             unavoidable for this technique.
+           - Any scraper that executes JavaScript sees the same assembled values.
+           - The pieces are still present in the data-* attributes, so a
+             determined scraper can reassemble them.
+
+         This Jinja comment ({# ... #}) is stripped at render time, so it does not
+         ship to the browser. #}
+      <script>
+        (function () {
+          document.querySelectorAll("span.js-email").forEach(function (span) {
+            var user = span.dataset.user;
+            var domain = span.dataset.domain;
+            if (!user || !domain) return;
+            var address = user + "@" + domain;
+            var link = document.createElement("a");
+            link.href = "mailto:" + address;
+            link.textContent = address;
+            span.replaceWith(link);
+          });
+
+          document.querySelectorAll("span.js-phone").forEach(function (span) {
+            var cc = span.dataset.cc;
+            var prefix = span.dataset.prefix;
+            var mid = span.dataset.mid;
+            var suffix = span.dataset.suffix;
+            if (!cc || !prefix || !mid || !suffix) return;
+            // Rebuild both the readable number and the international tel: target
+            // from the parts, so the full number is never stored as one string
+            // in the page source. Both now show the country code; the local
+            // leading zero is dropped after it (prefix "076" -> "76").
+            var local = prefix.replace(/^0/, "");
+            var display = "+" + cc + " " + local + " " + mid + " " + suffix;
+            var intl = "+" + cc + local + mid + suffix;
+            var link = document.createElement("a");
+            link.href = "tel:" + intl;
+            link.textContent = display;
+            span.replaceWith(link);
+          });
+
+          // Bank account number (Contact page): swap the tokenised fallback for
+          // the real spaced number once JavaScript runs. No link needed.
+          document.querySelectorAll("span.js-account").forEach(function (span) {
+            var parts = [span.dataset.p1, span.dataset.p2, span.dataset.p3];
+            if (parts.some(function (p) { return !p; })) return;
+            span.textContent = parts.join(" ");
+          });
         })();
       </script>
     {% endblock %}

@@ -4,8 +4,8 @@
      Every page (Home, Visit, About, etc.) extends this file. This provides:
      - The <head> (title, stylesheet link)
      - A placeholder where each page inserts its main content
-     - The footer (address, service times, bank details) on every page
-     - Scripts that run on all pages (e.g. sticky header behaviour)
+         - The footer (address, contact links, and service times) on every page
+         - Scripts that run on all pages (e.g. sticky header behaviour)
      Edit the footer section below to change contact info site-wide.
      ============================================================================= -->
 <html lang="en">
@@ -13,11 +13,77 @@
     <!-- Page title: shows in the browser tab. "Home | Plumstead Baptist Church" etc. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact | Plumstead Baptist Church</title>
+
+    <!-- =====================================================================
+         SECURITY HEADERS (set via <meta> tags because GitHub Pages does not
+         allow custom HTTP response headers).
+
+         Content-Security-Policy below tells the browser EXACTLY which other
+         websites this page is allowed to load content from. If a malicious
+         script ever sneaked into our HTML (e.g. via a typo or compromised
+         third-party copy/paste), it would be unable to phone home anywhere
+         not on this list. Each "directive" controls one type of resource:
+
+           default-src 'self'         everything not listed below must come from us
+           script-src                 JavaScript: from us; inline scripts allowed
+                                      (we have inline scripts in this file and
+                                      in index.html for the banner carousel)
+           style-src                  CSS: from us; inline style="..." allowed
+                                      (we use inline backgrounds on banner slides)
+           img-src                    images: from us, and small inline "data:" images
+           font-src                   fonts: from us; data: covers any inlined fonts
+           frame-src                  iframes: YouTube, Facebook plugin, Google Maps
+           object-src 'none'          flat-out forbid <object>/<embed> tags
+           base-uri / form-action     lock down where links and forms can go
+           upgrade-insecure-requests  silently upgrade any stray http:// to https://
+
+         If you ever add another third-party embed (e.g. a Vimeo video or a
+         Spotify player), add its iframe origin to "frame-src" below.
+         ===================================================================== -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        font-src 'self' data:;
+        frame-src https://www.youtube.com https://www.facebook.com https://www.google.com;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;
+      "
+    />
+
+    <!-- Referrer-Policy: when the visitor clicks a link off our site, only
+         send the bare domain "https://plumsteadbaptist.example/" as the
+         referrer, not the full URL of the page they were on. Sensible
+         default that protects visitor privacy. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    
+    
+  <meta name="description" content="Contact Plumstead Baptist Church in Plumstead, Cape Town. Office hours, phone, email, address and map for general enquiries and hall hire." />
+
+
+    
+
+    <!-- Page title: shows in the browser tab and as the blue heading in
+         search results. Includes "Cape Town" so the church is easier to
+         find for searches like "baptist church plumstead cape town". -->
+    <title>Contact | Plumstead Baptist Church · Cape Town</title>
     <link
       rel="stylesheet"
       href="static/css/styles.css?v=20260424"
     />
+
+    <!-- Favicon: the little church-logo icon shown in the browser tab and in
+         bookmarks. The image lives at static/images/site/favicon.png; the
+         apple-touch-icon line reuses the same file for when someone saves the
+         site to a phone home screen. -->
+    <link rel="icon" type="image/png" href="static/images/site/favicon.png" />
+    <link rel="apple-touch-icon" href="static/images/site/favicon.png" />
   </head>
   <body>
     <!-- Required by Facebook's embed script (used on the home page). -->
@@ -51,6 +117,32 @@
         >
           Contact
         </a>
+        <!-- Sermons: external link to the church YouTube channel. Opens in a
+             new tab (target="_blank"); the small arrow icon after the text
+             signals that this leaves the website. This is a link out, not a
+             page on this site, so it has no active_page state. -->
+        <a
+          href="https://www.youtube.com/@plumsteadbaptist3246"
+          class="nav__external"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Sermons on our YouTube channel (opens in a new tab)"
+        >
+          Sermons
+          <svg
+            class="nav__external-icon"
+            viewBox="0 0 24 24"
+            width="0.7em"
+            height="0.7em"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M14 3h7v7h-2V6.414l-8.293 8.293-1.414-1.414L19.586 5H14V3zM5 5h4v2H7v10h10v-2h2v4H5V5z"
+            />
+          </svg>
+        </a>
       </nav>
       <a href="index.html" class="logo" aria-label="Church logo – go to Home">
         <img
@@ -63,52 +155,145 @@
   </header>
 
   <main class="section">
-    <div class="container grid-2">
-      <!-- Left column: how to reach the church. -->
-      <section class="panel">
-        <h3>Contact details</h3>
+    <div class="container">
+      <!-- Two-column block: contact details on the left, address + map on the right. -->
+      <div class="grid-2">
+        <!-- Left column: how to reach the church. -->
+        <section class="panel">
+          <h3>Contact details</h3>
+          <p>
+            Please feel free to contact the church office if you have any questions about the church, hiring our hall or property, or want to know more about our services.
+          </p>
+          <ul class="list">
+            <li>
+              <strong>Administrator:</strong>
+              Oliver Collins
+            </li>
+            
+            <li>
+              <strong>Phone:</strong>
+              <span class="js-phone"
+                    data-cc="27"
+                    data-prefix="076"
+                    data-mid="589"
+                    data-suffix="0261">+2 7 &middot; 7 6 &middot; 5 8 9 &middot; 0 2 6 1</span>
+            </li>
+            <li>
+              <strong>Email:</strong>
+              <span class="js-email"
+                    data-user="office"
+                    data-domain="plumsteadbaptist.co.za">office [at] plumsteadbaptist [dot] co [dot] za</span>
+            </li>
+            <li>
+              <strong>Office hours:</strong>
+              Mon, Wed, Fri 09:00 - 13:00
+            </li>
+          </ul>
+
+          
+          <div class="contact-follow">
+            <h4 class="contact-follow__heading">Follow us</h4>
+            
+<ul class="social-links">
+  <li>
+    <a
+      href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Plumstead Baptist Church on Facebook (opens in a new tab)"
+    >
+      <svg
+        class="social-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"
+        />
+      </svg>
+      <span>Facebook</span>
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.youtube.com/@plumsteadbaptist3246"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Plumstead Baptist Church on YouTube (opens in a new tab)"
+    >
+      <svg
+        class="social-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+        />
+      </svg>
+      <span>YouTube</span>
+    </a>
+  </li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Right column: address and embedded map. -->
+        <section class="panel">
+          <h3>Find us</h3>
+          <p>
+            <strong>Address:</strong>
+            20 Toulon Ave, Plumstead, Cape Town, 7945
+          </p>
+          <div class="map" aria-label="Map showing Plumstead Baptist Church">
+            
+<iframe
+  src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
+  width="100%"
+  height="100%"
+  style="border:0;"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+  title="Plumstead Baptist Church location on Google Maps"
+></iframe>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========================================================================
+           BANKING DETAILS FOR GIVING
+           Lives on this page only, NOT in the site-wide footer. This keeps the
+           church's bank account out of every page (less prominence for would-be
+           scrapers or phishing impersonators) while keeping it easy to find for
+           anyone actually wanting to give.
+
+           To add an official bank-confirmation-letter PDF later:
+             1. Save the file to  static/documents/pbc-bank-confirmation.pdf
+             2. Uncomment the "confirmation letter" paragraph below.
+           ======================================================================== -->
+      <section class="panel contact-banking">
+        <h3>Banking details for giving</h3>
         <p>
-          Please feel free to contact the church office if you have any questions about the church, hiring our hall or property, or want to know more about our services.
+          If you would like to support the work of the church through a one-off or recurring electronic transfer, you can use the banking details below.
         </p>
         <ul class="list">
-          <li>
-            <strong>Phone:</strong>
-            076 589 0261 
+          <li><strong>Account name:</strong> Plumstead Baptist Church</li>
+          <li><strong>Bank:</strong> Absa Bank</li>
+          
+          <li><strong>Account number:</strong>
+            <span class="js-account"
+                  data-p1="4055"
+                  data-p2="960"
+                  data-p3="150">4 0 5 5 &middot; 9 6 0 &middot; 1 5 0</span>
           </li>
-          <li>
-            <strong>Email:</strong>
-            office@plumsteadbaptist.co.za
-          </li>
-          <li>
-            <strong>Office hours:</strong>
-            Office hours: Mon, Wed, Fri 09:00 - 13:00
-          </li>
+          <li><strong>Branch:</strong> Plumstead Branch</li>
+          <li><strong>Reference:</strong> Offerings</li>
         </ul>
-
-      </section>
-
-      <!-- Right column: address and embedded map. -->
-      <section class="panel">
-        <h3>Find us</h3>
-        <p>
-          <strong>Address:</strong>
-         20 Toulon Ave, Plumstead, Cape Town, 7945
-        </p>
-        <p>
-    
-        </p>
-        <div class="map" aria-label="Map showing Plumstead Baptist Church">
-          <iframe
-            src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Plumstead Baptist Church location on Google Maps"
-          ></iframe>
-        </div>
+        
       </section>
     </div>
   </main>
@@ -116,10 +301,15 @@
 
     <!-- ========================================================================
          FOOTER (appears on every page)
-         Update address, phone, email, service times, and bank details here.
+         Update address, phone, email, and service times here.
          Changes will show on all pages at once.
          ======================================================================== -->
     <footer>
+      <!-- Footer is now a two-column grid: Find us + Service times.
+           Banking details previously lived here as a third column, but are
+           now on the Contact page only (see templates/contact.html). This
+           keeps the church's bank account out of every page's HTML and out
+           of every search-engine snapshot of every page. -->
       <div class="footer-grid">
         <div>
           <h5>Find us</h5>
@@ -129,46 +319,84 @@
           </p>
           <p>
             <strong>Contacts:</strong>
-            076 589 0261 · office@plumsteadbaptist.co.za
+            
+            <span class="js-phone"
+                  data-cc="27"
+                  data-prefix="076"
+                  data-mid="589"
+                  data-suffix="0261">+2 7 &middot; 7 6 &middot; 5 8 9 &middot; 0 2 6 1</span>
+            ·
+            <span class="js-email"
+                  data-user="office"
+                  data-domain="plumsteadbaptist.co.za">office [at] plumsteadbaptist [dot] co [dot] za</span>
             <br>(Office hours: Mon, Wed, Fri 09:00 - 13:00)
           </p>
-          <ul>
-            <li><a href="https://https://www.youtube.com/@plumsteadbaptist3246#youtube">YouTube</a></li>
-          </ul>
-          <ul>
-            <li><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Facebook</a></li>
-          </ul>
+          
+          
+<ul class="social-links">
+  <li>
+    <a
+      href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Plumstead Baptist Church on Facebook (opens in a new tab)"
+    >
+      <svg
+        class="social-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"
+        />
+      </svg>
+      <span>Facebook</span>
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.youtube.com/@plumsteadbaptist3246"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Plumstead Baptist Church on YouTube (opens in a new tab)"
+    >
+      <svg
+        class="social-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+        />
+      </svg>
+      <span>YouTube</span>
+    </a>
+  </li>
+</ul>
         </div>
         <div>
           <h5>Service times</h5>
           <ul>
             <li><strong>Sunday morning:</strong> 10:00</li>
             <!--<li><strong>Sunday evening:</strong> 18:00</li>-->
-            <li><strong>Sunday School &amp; youth:</strong> during the morning service, and every 2nd Saturday</li>
+            <li><strong>Sunday School &amp; youth:</strong> During the morning service.</li>
             <li><strong>Midweek groups for adults and Young adults:</strong> Tue morning/Wed evenings</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Bank details</h5>
-          <ul>
-            <li><strong>Name:</strong> Plumstead Baptist Church</li>
-            <li><strong>Bank:</strong> Absa Bank</li>
-            <li><strong>Account:</strong> 4055 960 150</li>
-            <li><strong>Branch:</strong> Plumstead Branch</li>
-            <li><strong>Reference:</strong> Offerings</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 Plumstead Baptist Church. All rights reserved.</span>
-        
       </div>
     </footer>
 
-    <!-- Scripts block: each page can add its own scripts. The script below
-         runs on every page and makes the top nav bar shrink slightly when
-         you scroll down. -->
+    <!-- Scripts block: each page can add its own scripts. The scripts below
+         run on every page. -->
     
+      <!-- Sticky header: makes the top nav bar shrink slightly when scrolled. -->
       <script>
         (function () {
           function updateHeader() {
@@ -180,6 +408,50 @@
           }
           window.addEventListener("scroll", updateHeader);
           updateHeader();
+        })();
+      </script>
+
+      ) is stripped at render time, so it does not
+         ship to the browser. #}
+      <script>
+        (function () {
+          document.querySelectorAll("span.js-email").forEach(function (span) {
+            var user = span.dataset.user;
+            var domain = span.dataset.domain;
+            if (!user || !domain) return;
+            var address = user + "@" + domain;
+            var link = document.createElement("a");
+            link.href = "mailto:" + address;
+            link.textContent = address;
+            span.replaceWith(link);
+          });
+
+          document.querySelectorAll("span.js-phone").forEach(function (span) {
+            var cc = span.dataset.cc;
+            var prefix = span.dataset.prefix;
+            var mid = span.dataset.mid;
+            var suffix = span.dataset.suffix;
+            if (!cc || !prefix || !mid || !suffix) return;
+            / Rebuild both the readable number and the international tel: target
+            / from the parts, so the full number is never stored as one string
+            / in the page source. Both now show the country code; the local
+            / leading zero is dropped after it (prefix "076" -> "76").
+            var local = prefix.replace(/^0/, "");
+            var display = "+" + cc + " " + local + " " + mid + " " + suffix;
+            var intl = "+" + cc + local + mid + suffix;
+            var link = document.createElement("a");
+            link.href = "tel:" + intl;
+            link.textContent = display;
+            span.replaceWith(link);
+          });
+
+          / Bank account number (Contact page): swap the tokenised fallback for
+          / the real spaced number once JavaScript runs. No link needed.
+          document.querySelectorAll("span.js-account").forEach(function (span) {
+            var parts = [span.dataset.p1, span.dataset.p2, span.dataset.p3];
+            if (parts.some(function (p) { return !p; })) return;
+            span.textContent = parts.join(" ");
+          });
         })();
       </script>
     

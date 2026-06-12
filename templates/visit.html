@@ -5,6 +5,12 @@
    location, parking info, and an embedded map. Update address and map if needed.
    ============================================================================= #}
 
+{# Search-result description for the VISIT page. Wording is tuned for queries
+   like "service times", "first visit", "parking", "directions". #}
+{% block meta_description %}
+  <meta name="description" content="Planning your first visit to Plumstead Baptist Church? Find our service times, address, parking, and what to expect at 20 Toulon Avenue, Plumstead." />
+{% endblock %}
+
 {% block content %}
   <!-- Blue header bar: nav + logo. -->
   <header class="subpage-header">
@@ -33,6 +39,32 @@
           class="{% if active_page == 'contact' %}is-active{% endif %}"
         >
           Contact
+        </a>
+        <!-- Sermons: external link to the church YouTube channel. Opens in a
+             new tab (target="_blank"); the small arrow icon after the text
+             signals that this leaves the website. This is a link out, not a
+             page on this site, so it has no active_page state. -->
+        <a
+          href="https://www.youtube.com/@plumsteadbaptist3246"
+          class="nav__external"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Sermons on our YouTube channel (opens in a new tab)"
+        >
+          Sermons
+          <svg
+            class="nav__external-icon"
+            viewBox="0 0 24 24"
+            width="0.7em"
+            height="0.7em"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M14 3h7v7h-2V6.414l-8.293 8.293-1.414-1.414L19.586 5H14V3zM5 5h4v2H7v10h10v-2h2v4H5V5z"
+            />
+          </svg>
         </a>
       </nav>
       <a href="{{ url_for('home') }}" class="logo" aria-label="Church logo – go to Home">
@@ -75,11 +107,7 @@
               </li>
               <li>
                 <strong>Kids &amp; youth:</strong>
-                Younger children stay in for the opening part of the service and then head to age-appropriate groups.
-                <p>
-                Our high-school aged kids stay for the whole Sunday service, andmeet every 2nd Saturday of the month for a youth night, filled with games, fellowship, 
-                and a message from the Bible.
-                </p>
+                Younger children stay in for the opening part of the service and then head to age-appropriate groups. High-school aged kids stay for the whole Sunday service.
               </li>
               <li>
                 <strong>Midweek groups:</strong>
@@ -106,9 +134,9 @@
                 On-site parking is available, including visitor and disabled bays close to the hall entrance.
               </li>
               <li>
-                <strong>Cry room:</strong>
+                <strong>Mothers' Room:</strong>
                 A Mothers' Room is available for mothers with babies and toddlers,
-                 with an audio feed from the service so you can still follow along.
+                 with an audio feed from the service and privacy glass so you can still follow along.
               </li>
               <li>
                 <strong>Refreshments:</strong>
@@ -120,10 +148,11 @@
                 If you have specific accessibility needs, please chat to a door steward on arrival.
               </li>
               <li>
-                <strong>Garden & play area</strong>
+                <strong>Garden &amp; play area:</strong>
                 We are blessed to have a large and beautiful property, with open grassy space, trees, and play equipment
-                 for children after the service.
-                       </ul>
+                for children after the service.
+              </li>
+            </ul>
           </section>
         </div>
         <div class="visit-columns-right">
@@ -138,16 +167,7 @@
               Please feel free to make use of the Visitor and Disabled parking bays near the hall.
             </p>
             <div class="map" aria-label="Map showing Plumstead Baptist Church">
-              <iframe
-                src="https://www.google.com/maps?q=Plumstead+Baptist+Church,20+Toulon+Ave+Plumstead+Cape+Town+South+Africa&z=17&output=embed"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Plumstead Baptist Church location on Google Maps"
-              ></iframe>
+              {% include "partials/map_embed.html" %}
             </div>
           </section>
 

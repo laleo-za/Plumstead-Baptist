@@ -8,7 +8,6 @@ search engines know which pages exist and which they may crawl.
 
 from datetime import date
 from pathlib import Path
-import re
 import shutil
 
 from flask import render_template
@@ -69,8 +68,6 @@ def rewrite_links_for_github_pages(html: str) -> str:
     for old, new in replacements.items():
         html = html.replace(old, new)
 
-    # Leave full external URLs untouched; tidy accidental double slashes in local refs.
-    html = re.sub(r'(?<!https:)(?<!http:)//+', '/', html)
     return html
 
 

@@ -335,7 +335,7 @@
                   ></iframe>
                 
               </div>
-              <h4>Sermons</h4>
+              <h4><a href="https://www.youtube.com/@plumsteadbaptist3246">Sermons</a></h4>
               <p>
                 Our most recent sermons from our Youtube Channel.
               </p>
@@ -356,7 +356,7 @@
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                 ></iframe>
               </div>
-              <h4>Latest updates</h4>
+              <h4><a href="https://www.facebook.com/people/Plumstead-Baptist-Church/100064453489540/">Latest updates</a></h4>
               <p>
                 Our most recent updates and notifications from our Facebook page appear here automatically.
               </p>
@@ -526,8 +526,7 @@
         })();
       </script>
 
-      ) is stripped at render time, so it does not
-         ship to the browser. #}
+      
       <script>
         (function () {
           document.querySelectorAll("span.js-email").forEach(function (span) {
@@ -547,10 +546,10 @@
             var mid = span.dataset.mid;
             var suffix = span.dataset.suffix;
             if (!cc || !prefix || !mid || !suffix) return;
-            / Rebuild both the readable number and the international tel: target
-            / from the parts, so the full number is never stored as one string
-            / in the page source. Both now show the country code; the local
-            / leading zero is dropped after it (prefix "076" -> "76").
+            // Rebuild both the readable number and the international tel: target
+            // from the parts, so the full number is never stored as one string
+            // in the page source. Both now show the country code; the local
+            // leading zero is dropped after it (prefix "076" -> "76").
             var local = prefix.replace(/^0/, "");
             var display = "+" + cc + " " + local + " " + mid + " " + suffix;
             var intl = "+" + cc + local + mid + suffix;
@@ -560,8 +559,8 @@
             span.replaceWith(link);
           });
 
-          / Bank account number (Contact page): swap the tokenised fallback for
-          / the real spaced number once JavaScript runs. No link needed.
+          // Bank account number (Contact page): swap the tokenised fallback for
+          // the real spaced number once JavaScript runs. No link needed.
           document.querySelectorAll("span.js-account").forEach(function (span) {
             var parts = [span.dataset.p1, span.dataset.p2, span.dataset.p3];
             if (parts.some(function (p) { return !p; })) return;
@@ -577,10 +576,10 @@
       const dots = Array.from(document.querySelectorAll(".hero__dot"));
       let i = 0;
       let timerId = null;
-      / Pause flags: the carousel only auto-advances when BOTH are false.
-      / Tracking them separately means a mouse leaving the hero won't
-      / accidentally resume the timer if keyboard focus is still inside,
-      / and vice-versa.
+      // Pause flags: the carousel only auto-advances when BOTH are false.
+      // Tracking them separately means a mouse leaving the hero won't
+      // accidentally resume the timer if keyboard focus is still inside,
+      // and vice-versa.
       let isHovered = false;
       let isFocused = false;
 
@@ -653,8 +652,8 @@
         });
       }
 
-      / Pause-on-hover (covers mouse users) and pause-on-focus (covers
-      / keyboard users tabbing through links/buttons in the hero).
+      // Pause-on-hover (covers mouse users) and pause-on-focus (covers
+      // keyboard users tabbing through links/buttons in the hero).
       if (hero) {
         hero.addEventListener("mouseenter", function () {
           isHovered = true;

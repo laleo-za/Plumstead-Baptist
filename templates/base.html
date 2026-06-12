@@ -210,8 +210,8 @@
            - The pieces are still present in the data-* attributes, so a
              determined scraper can reassemble them.
 
-         This Jinja comment ({# ... #}) is stripped at render time, so it does not
-         ship to the browser. #}
+         This explanatory note is a Jinja comment, so it is removed when the page
+         is rendered and never reaches the browser. #}
       <script>
         (function () {
           document.querySelectorAll("span.js-email").forEach(function (span) {

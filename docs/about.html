@@ -154,7 +154,7 @@
     </div>
   </header>
 
-  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Leadership, Squirrels Leap Farm). -->
+  <!-- About page: tabbed content (Ministries = default, History, Statement of Faith, Leadership, Squirrels Leap Farm, Recommended Resources). -->
   <main class="section intro about-page">
     <div class="container">
       <!-- Tab controls: radio inputs drive which panel is visible (no JS required). -->
@@ -205,12 +205,22 @@
           aria-controls="about-panel-squirrels"
           aria-label="Show Squirrels Leap Farm"
         />
+        <input
+          type="radio"
+          name="about-tab"
+          id="about-tab-resources"
+          value="resources"
+          class="about-tab-input"
+          aria-controls="about-panel-resources"
+          aria-label="Show Recommended Resources"
+        />
         <div class="about-tab-list" role="tablist" aria-label="About">
           <label for="about-tab-ministries" class="about-tab" role="tab" id="about-tab-label-ministries" aria-selected="true" aria-controls="about-panel-ministries">Ministries</label>
           <label for="about-tab-history" class="about-tab" role="tab" id="about-tab-label-history" aria-selected="false" aria-controls="about-panel-history">History</label>
           <label for="about-tab-faith" class="about-tab" role="tab" id="about-tab-label-faith" aria-selected="false" aria-controls="about-panel-faith">Statement of Faith</label>
           <label for="about-tab-leadership" class="about-tab" role="tab" id="about-tab-label-leadership" aria-selected="false" aria-controls="about-panel-leadership">Leadership</label>
           <label for="about-tab-squirrels" class="about-tab" role="tab" id="about-tab-label-squirrels" aria-selected="false" aria-controls="about-panel-squirrels">Squirrels Leap Farm</label>
+          <label for="about-tab-resources" class="about-tab" role="tab" id="about-tab-label-resources" aria-selected="false" aria-controls="about-panel-resources">Recommended Resources</label>
         </div>
 
         <!-- Panels shown one at a time, controlled by the radio inputs above.
@@ -585,7 +595,7 @@
                   />
                   <div class="leader-card__body">
                     <h4 class="leader-card__name">Paul Karstens</h4>
-                    <p class="leader-card__role">Elder</p>
+                    <p class="leader-card__role">Elder/Pastor</p>
                   </div>
                 </article>
 
@@ -600,7 +610,7 @@
                   />
                   <div class="leader-card__body">
                     <h4 class="leader-card__name">Nick Collins</h4>
-                    <p class="leader-card__role">Elder</p>
+                    <p class="leader-card__role">Elder/Pastor</p>
                   </div>
                 </article>
 
@@ -851,6 +861,61 @@
 
 
               </div>
+            </section>
+          </div>
+
+          <!-- Tab panel: Recommended Resources (links to external Christian /
+               theological websites, grouped by category, with a disclaimer).
+               Each link opens in a new tab and points to a site we do not control;
+               edit the lists below to add, remove or recategorise resources. -->
+          <div id="about-panel-resources" class="about-tab-panel panel-resources" role="tabpanel" aria-labelledby="about-tab-label-resources">
+            <section class="panel">
+              <h2>Recommended Resources</h2>
+
+              <!-- Disclaimer: pointing to a resource is not a blanket endorsement. -->
+              <p class="resource-disclaimer">
+                The websites below are ones we have generally found helpful for Bible
+                study, teaching and Christian living. Recommending a resource is not a
+                blanket endorsement: we cannot vouch for everything published on these
+                sites, and we do not claim they agree with Plumstead Baptist Church on
+                every point of doctrine or practice. Please read with discernment,
+                testing everything against Scripture. All links open in a new tab and
+                lead to external websites we do not control.
+              </p>
+
+              <h3>Bibles &amp; Bible study tools</h3>
+              <ul class="resource-links">
+                <li><a href="https://www.biblegateway.com/" target="_blank" rel="noopener noreferrer">Bible Gateway</a> — read and search the Bible in many translations.</li>
+                <li><a href="https://www.blueletterbible.org/" target="_blank" rel="noopener noreferrer">Blue Letter Bible</a> — Bible text with original-language and study tools.</li>
+              </ul>
+
+              <h3>Sermons, teaching, &amp; devotionals</h3>
+              <ul class="resource-links">
+                <li><a href="https://www.desiringgod.org/" target="_blank" rel="noopener noreferrer">Desiring God</a> — articles, sermons, and books from John Piper and others.</li>
+                <li><a href="https://www.ligonier.org/" target="_blank" rel="noopener noreferrer">Ligonier Ministries</a> — teaching and resources in the Reformed tradition.</li>
+                <li><a href="https://www.thegospelcoalition.org/" target="_blank" rel="noopener noreferrer">The Gospel Coalition</a> — gospel-centred articles and resources from various Christian authors.</li>
+              </ul>
+
+              <h3>Questions &amp; apologetics</h3>
+              <ul class="resource-links">
+                <li><a href="https://www.gotquestions.org/" target="_blank" rel="noopener noreferrer">Got Questions</a> — answers and reasoning around common Bible and faith-related questions.</li>
+                <li><a href="https://www.str.org/" target="_blank" rel="noopener noreferrer">Stand to Reason</a> — thinking clearly about faith, ethics and worldview.</li>
+                <li><a href="https://creation.com/en-ZA/" target="_blank" rel="noopener noreferrer">Creation Ministries International</a> — Biblical and scientific answers to common questions about Creation and evolution.</li>
+            </ul>
+
+              <h3>Church &amp; the Christian life</h3>
+              <ul class="resource-links">
+                <li><a href="https://www.9marks.org/" target="_blank" rel="noopener noreferrer">9Marks</a> — resources for building healthy churches.</li>
+                <li><a href="https://baptistunion.org.za/" target="_blank" rel="noopener noreferrer">Baptist Union of South Africa</a></li>
+                <li><a href="https://www.safamily.co.za" target="_blank" rel="noopener noreferrer">Focus on the Family Africa</a>- Helping families thrive.</li>
+              </ul>
+
+              <h3>Creeds and confessions</h3>
+              <ul class="resource-links">
+                <li><a href="https://ccel.org/creeds/nicene.creed.html" target="_blank" rel="noopener noreferrer">Nicene Creed</a></li>
+              </ul>
+
+
             </section>
           </div>
         </div>

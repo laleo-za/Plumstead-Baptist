@@ -553,6 +553,7 @@ img {
 #about-tab-faith:checked ~ .about-tab-list .about-tab[for="about-tab-faith"],
 #about-tab-leadership:checked ~ .about-tab-list .about-tab[for="about-tab-leadership"],
 #about-tab-squirrels:checked ~ .about-tab-list .about-tab[for="about-tab-squirrels"],
+#about-tab-resources:checked ~ .about-tab-list .about-tab[for="about-tab-resources"],
 #about-tab-ministries:checked ~ .about-tab-list .about-tab[for="about-tab-ministries"] {
   color: var(--deep-blue);
   border-bottom-color: var(--ochre);
@@ -570,8 +571,45 @@ img {
 #about-tab-faith:checked ~ .about-tab-panels .panel-faith,
 #about-tab-leadership:checked ~ .about-tab-panels .panel-leadership,
 #about-tab-squirrels:checked ~ .about-tab-panels .panel-squirrels,
+#about-tab-resources:checked ~ .about-tab-panels .panel-resources,
 #about-tab-ministries:checked ~ .about-tab-panels .panel-ministries {
   display: block;
+}
+
+/* About page: Recommended Resources tab.
+   - The disclaimer paragraph is softened with a tinted, left-bordered box so it
+     reads as a caveat rather than body text.
+   - External links get a small north-east arrow after them to signal they open
+     a different website in a new tab. */
+.resource-disclaimer {
+  font-size: 0.95rem;
+  color: #555;
+  background: #f6f4ee;
+  border-left: 4px solid var(--ochre);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+}
+
+.resource-links {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.resource-links li {
+  margin-bottom: 0.4rem;
+}
+
+/* Underline the resource links so they read clearly as clickable links. */
+.resource-links a {
+  text-decoration: underline;
+}
+
+.resource-links a[target="_blank"]::after {
+  content: "\2197"; /* north-east arrow: indicates the link opens externally */
+  display: inline-block;
+  margin-left: 0.15em;
+  font-size: 0.8em;
+  text-decoration: none; /* keep the arrow itself free of the underline */
 }
 
 /* About page: Leadership tab.
@@ -826,6 +864,16 @@ img {
   place-items: center;
   color: var(--stone-grey);
   font-weight: 600;
+}
+
+/* Home page only: smaller map in the "Visit Us" strip at the bottom of index.
+   Half the default height and width so it loads less into view and takes less
+   space; Visit and Contact pages keep the full-size .map above. */
+#visit .map {
+  height: 190px;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Subpage header (About, Visit, Contact, Sermons): same blue bar, no hero images */
@@ -1200,6 +1248,11 @@ footer {
     height: 280px;
   }
 
+  #visit .map {
+    height: 140px;
+    max-width: 70%;
+  }
+
   .visit .cta,
   .visit .address {
     margin-bottom: 1rem;
@@ -1272,5 +1325,10 @@ footer {
 
   .map {
     height: 240px;
+  }
+
+  #visit .map {
+    height: 120px;
+    max-width: 100%;
   }
 }

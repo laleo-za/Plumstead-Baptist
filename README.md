@@ -10,7 +10,7 @@ A simple church website built with **Python (Flask)** for local previewing and *
 
 - **Home page**: Rotating banner images, welcome message, “Who we are”, service times, latest YouTube sermon (refreshed when the site is rebuilt — see _Automatic content_ below), Facebook feed embed, and a visit section with address and map.
 - **Visit page**: Plan your visit, service times (same list as home), location, parking, and embedded Google Map.
-- **About page**: Five sub-tabs covering Ministries, History, Statement of Faith, Leadership (elders and deacons), and Squirrels Leap Farm. **Ministries** is the tab shown by default when the page opens.
+- **About page**: Six sub-tabs covering Ministries, History, Statement of Faith, Leadership (elders and deacons), Squirrels Leap Farm, and Recommended Resources (links to external Christian/theological sites, with a disclaimer). **Ministries** is the tab shown by default when the page opens.
 - **Contact page**: Phone, email, office hours, address, and map.
 
 Shared across the site:
@@ -31,7 +31,7 @@ Shared across the site:
 | **`templates/base.html`** | Shared layout: `<head>`, footer (address, contact links, service times), security meta tags, and scripts that run on every page. Edit the footer here to change contact info site-wide. |
 | **`templates/index.html`** | Home page: hero banner, “Who we are”, services + YouTube/Facebook embeds, visit block. Comments in the file describe each section. |
 | **`templates/visit.html`** | Visit page: intro text, service times (from partial), location, parking, map. |
-| **`templates/about.html`** | About page: tabbed content (Ministries, History, Statement of Faith, Leadership, Squirrels Leap Farm). **Ministries is the default tab** (the radio input with `checked`); to change which tab opens first, move `checked` to a different input. The Leadership tab lists elders (with photos) and deacons (bios only); add elder photos to `static/images/leadership/` and update the `src` in each elder card. |
+| **`templates/about.html`** | About page: tabbed content (Ministries, History, Statement of Faith, Leadership, Squirrels Leap Farm, Recommended Resources). **Ministries is the default tab** (the radio input with `checked`); to change which tab opens first, move `checked` to a different input. The Leadership tab lists elders (with photos) and deacons (bios only); add elder photos to `static/images/leadership/` and update the `src` in each elder card. The Recommended Resources tab holds categorised external links with a disclaimer — edit the `.resource-links` lists to add or remove sites. To add a brand-new sub-tab, copy an existing radio input, label and panel, then add the new `#about-tab-…` id to the two `:checked` selector lists in `static/css/styles.css`. |
 | **`templates/contact.html`** | Contact page: contact details and address + map. |
 | **`templates/partials/service_times.html`** | **Single source for service times and ministry list.** Used on Home and Visit; edit here to change both. |
 | **`templates/partials/map_embed.html`** | **Single source for the Google Maps iframe.** Used anywhere the site embeds the church map (Home, Visit, Contact); edit here if the address or map embed ever changes. |

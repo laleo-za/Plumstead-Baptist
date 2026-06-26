@@ -12,7 +12,16 @@ import xml.etree.ElementTree as ET
 
 from flask import Flask, render_template
 
+from site_config import church_json_ld, seo_page_context
+
 app = Flask(__name__)
+
+
+@app.context_processor
+def inject_structured_data() -> dict:
+    """Make Church JSON-LD available in every template (SEO-04)."""
+    return {"church_json_ld": church_json_ld()}
+
 
 # YouTube channel RSS feed: used to fetch the latest video ID for the home page embed.
 # Channel ID is for @plumsteadbaptist3246 (Plumstead Baptist Church).
@@ -81,25 +90,41 @@ def home():
         page_title="Home",
         active_page="home",
         latest_video_id=latest_video_id,
+        **seo_page_context("home"),
     )
 
 
 @app.route("/visit")
 def visit():
     """Visit page: plan your visit, service times, location, map."""
-    return render_template("visit.html", page_title="Visit", active_page="visit")
+    return render_template(
+        "visit.html",
+        page_title="Visit",
+        active_page="visit",
+        **seo_page_context("visit"),
+    )
 
 
 @app.route("/about")
 def about():
     """About page: church story, beliefs, what to expect."""
-    return render_template("about.html", page_title="About", active_page="about")
+    return render_template(
+        "about.html",
+        page_title="About",
+        active_page="about",
+        **seo_page_context("about"),
+    )
 
 
 @app.route("/contact")
 def contact():
     """Contact page: phone, email, address, map."""
-    return render_template("contact.html", page_title="Contact", active_page="contact")
+    return render_template(
+        "contact.html",
+        page_title="Contact",
+        active_page="contact",
+        **seo_page_context("contact"),
+    )
 
 
 if __name__ == "__main__":

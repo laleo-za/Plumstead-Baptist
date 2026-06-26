@@ -477,14 +477,19 @@
                 </figcaption>
               </figure>
 
-              <div
-                class="card__media"
-                aria-label="Statement of faith image"
-                style="background-image: url('{{ url_for('static', filename='images/banners/banner1.jpg') }}'); background-size: cover; background-position: center;"
-              >
-
-              
-              </div>
+              <!-- ======== Statement of Faith: decorative photo ========
+                   Size and layout: edit the "IMAGE CONTROLS — Statement of Faith
+                   banner" block in static/css/styles.css (search for faith-banner).
+                   This image is scoped to this tab only; other pages are unchanged. -->
+              <figure class="faith-banner">
+                <img
+                  class="faith-banner__img"
+                  src="{{ url_for('static', filename='images/banners/banner1.jpg') }}"
+                  alt="Plumstead Baptist Church building"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
 
             </div>
           </div>
@@ -512,7 +517,7 @@
                 <article class="leader-card">
                   <img
                     class="leader-card__photo"
-                    src="{{ url_for('static', filename='images/PBC logo transparent.png') }}"
+                    src="{{ url_for('static', filename='images/leadership/paulkarstenswebsite2.png') }}"
                     alt="Photo of the first elder"
                     loading="lazy"
                     decoding="async"
@@ -832,6 +837,8 @@
                 <li><a href="https://www.9marks.org/" target="_blank" rel="noopener noreferrer">9Marks</a> — resources for building healthy churches.</li>
                 <li><a href="https://baptistunion.org.za/" target="_blank" rel="noopener noreferrer">Baptist Union of South Africa</a></li>
                 <li><a href="https://www.safamily.co.za" target="_blank" rel="noopener noreferrer">Focus on the Family Africa</a>- Helping families thrive.</li>
+                <li><a href="https://biblicalcounsellingafrica.com/" target="_blank" rel="noopener noreferrer">Biblical Counseling Coalition</a>- Promoting excellence and unity in biblical counseling as a means to accomplish compassionate outreach and effective discipleship.</li>
+
               </ul>
 
               <h3>Creeds and confessions</h3>

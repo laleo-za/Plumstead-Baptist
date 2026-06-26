@@ -80,6 +80,37 @@
     <meta name="description" content="Plumstead Baptist Church is a Bible-believing family church in Plumstead, Cape Town. Join us Sundays at 10:00 for worship, teaching and community." />
     {% endblock %}
 
+    {# =====================================================================
+       SOCIAL PREVIEW TAGS (SEO-02: Open Graph + Twitter)
+       When someone shares a page link on WhatsApp, Facebook, Slack, etc.,
+       these tags control the preview card (title, description, image).
+
+       Per-page title and description come from the route / build script via
+       page_title, seo_description, canonical_url, and og_image_url.
+       To change the share image for the whole site, edit OG_IMAGE_PATH in
+       site_config.py (ideally use a 1200×630 photo of the church building).
+       ===================================================================== #}
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Plumstead Baptist Church" />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:title" content="{% if page_title %}{{ page_title }} | {% endif %}Plumstead Baptist Church · Cape Town" />
+    <meta property="og:description" content="{{ seo_description }}" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:image" content="{{ og_image_url }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{% if page_title %}{{ page_title }} | {% endif %}Plumstead Baptist Church · Cape Town" />
+    <meta name="twitter:description" content="{{ seo_description }}" />
+    <meta name="twitter:image" content="{{ og_image_url }}" />
+
+    {# =====================================================================
+       STRUCTURED DATA (SEO-04: Schema.org Church)
+       Machine-readable church details for Google — may show address, phone,
+       Sunday service time, and social profiles in search results. Edit church
+       facts (address, hours, phone, social URLs) in site_config.py.
+       ===================================================================== #}
+    <script type="application/ld+json">{{ church_json_ld | tojson }}</script>
+
     {% block head_extra %}{% endblock %}
 
     <!-- Page title: shows in the browser tab and as the blue heading in

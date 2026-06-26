@@ -27,7 +27,8 @@ Shared across the site:
 | Path | Purpose |
 |------|---------|
 | **`app.py`** | Flask app used for local preview. Defines the URLs (`/`, `/visit`, `/about`, `/contact`) and fetches the latest YouTube video ID. Not used on the live site (which is static HTML) — only when you run the app locally to preview your changes. |
-| **`build_static.py`** | Builds the published site. Renders every template into a plain HTML file inside `docs/`, copies `static/` across, and writes a `robots.txt` plus a `sitemap.xml` so search engines can index the site. The first few lines of the file contain a `SITE_URL` constant (and a list of pages) that you may need to edit — see _Before going live_ below. Normally run automatically by the GitHub Action; you only need to run it by hand if you want to preview the exact static HTML locally. |
+| **`site_config.py`** | **Single place for the live site URL** (`SITE_URL`), Open Graph share image, church address/phone for Google structured data, and per-page SEO descriptions. Edit here when the domain or contact details change — used by templates, `app.py`, and `build_static.py`. |
+| **`build_static.py`** | Builds the published site. Renders every template into a plain HTML file inside `docs/`, copies `static/` across, and writes `robots.txt` plus `sitemap.xml`. Imports `SITE_URL` from `site_config.py` (see _Before going live_ below). Normally run automatically by the GitHub Action; run by hand only to preview the exact static HTML locally. |
 | **`templates/base.html`** | Shared layout: `<head>`, footer (address, contact links, service times), security meta tags, and scripts that run on every page. Edit the footer here to change contact info site-wide. |
 | **`templates/index.html`** | Home page: hero banner, “Who we are”, services + YouTube/Facebook embeds, visit block. Comments in the file describe each section. |
 | **`templates/visit.html`** | Visit page: intro text, service times (from partial), location, parking, map. |
@@ -97,31 +98,146 @@ All main sections in the templates and in `styles.css` are marked with comments 
 
 The published site includes a `robots.txt` and a `sitemap.xml` so Google and other search engines can index it. Both files need to know the **real** address where the site is published. Until that is known, the build uses a placeholder.
 
-When the church website's real public URL is decided (e.g. `https://plumsteadbaptist.co.za/` if you set up the custom domain, or `https://<username>.github.io/Plumstead-Baptist/` for the default GitHub Pages URL), open **`build_static.py`** and change the `SITE_URL` line near the top:
+When the church website's real public URL is decided (e.g. `https://plumsteadbaptist.co.za/` if you set up the custom domain, or `https://<username>.github.io/Plumstead-Baptist/` for the default GitHub Pages URL), open **`site_config.py`** and change the `SITE_URL` line near the top:
 
 ```python
 SITE_URL = "https://plumsteadbaptist.co.za/"  # <-- change this to the real URL
 ```
 
-Keep the trailing slash. Then commit and push — the next rebuild will regenerate `robots.txt` and `sitemap.xml` with the correct URLs, and you can submit `sitemap.xml` to **Google Search Console** to ask Google to index the site sooner.
+This updates canonical links, social preview tags, Google structured data, `robots.txt`, and `sitemap.xml` in one place. Keep the trailing slash. Then commit and push, and submit `sitemap.xml` to **Google Search Console**.
+
+**Social link previews (WhatsApp / Facebook):** the share image is set by `OG_IMAGE_PATH` in `site_config.py` (currently the church property photo). For best results, use a **1200×630** image of the building exterior.
+
+**Google church info (address, Sunday time, phone):** edit the `CHURCH_*` fields and `openingHoursSpecification` in `site_config.py`. Per-page share descriptions live in `PAGE_SEO` there — keep them in sync with each page's `{% block meta_description %}` in the templates.
 
 ---
 
 ## Publishing changes (deploying to GitHub Pages)
 
-The live site is hosted on **GitHub Pages** and published by a GitHub Action (see `.github/workflows/rebuild.yml`). The workflow builds the site from the templates and deploys it straight to Pages — you do **not** need to run `build_static.py` yourself, and nothing is committed back to the repository.
+The live site is hosted on **GitHub Pages** and published by a GitHub Action (see `.github/workflows/rebuild.yml`). The workflow builds the site from the templates and deploys it straight to Pages — you do **not** need to run `build_static.py` yourself for the live site, and nothing is committed back to the repository by the bot.
 
 The full cycle from "I edited a template" to "the world can see it" is:
 
-1. **Make your edits** in the relevant `templates/` file (or in `static/css/styles.css`).
+1. **Make your edits** in the relevant `templates/` file (or in `static/css/styles.css`, `static/images/`, or `site_config.py`).
 2. **Preview locally** with `python app.py` and check the page in your browser at http://127.0.0.1:5000.
-3. **Commit and push** to GitHub:
+3. **Commit and push** to GitHub (step-by-step below).
+4. **GitHub does the rest**: the workflow runs `build_static.py` on its servers and publishes the result to GitHub Pages within a minute or two. Watch progress on the **Actions** tab on github.com.
+
+---
+
+## Step-by-step: commit and push with Git (no Cursor required)
+
+These instructions use **PowerShell** on Windows. They work in the ordinary terminal (Win+X → Terminal), in VS Code’s terminal, or in **Git Bash** (commands are the same except where noted).
+
+### Before you start (one-time setup)
+
+1. **Install Git** if you do not have it: https://git-scm.com/download/win  
+2. **Clone the repository** (only the first time on a new PC):
    ```powershell
-   git add .
-   git commit -m "Describe what you changed"
-   git push
+   cd C:\Users\YourName\Source\repos
+   git clone https://github.com/laleo-za/Plumstead-Baptist.git
+   cd Plumstead-Baptist
    ```
-4. **GitHub does the rest**: the workflow runs `build_static.py` on its servers and publishes the result to GitHub Pages within a minute or two. Watch progress on the **Actions** tab.
+3. **Sign in to GitHub** when Git asks (HTTPS), or set up SSH keys. The first `git push` may open a browser window to log in.
+
+### Every time you want to publish changes
+
+**1. Open a terminal in the project folder**
+
+```powershell
+cd "C:\Users\djoli\Source\repos\Plumstead Baptist"
+```
+
+(Use your actual path to the folder.)
+
+**2. See what changed**
+
+```powershell
+git status
+```
+
+Modified files appear in red; new files appear as “untracked”. This is a safety check before you publish.
+
+**3. Stage your changes** (tell Git what to include in the next commit)
+
+```powershell
+git add .
+```
+
+This stages everything that changed. To stage only specific files instead:
+
+```powershell
+git add templates/about.html static/css/styles.css
+```
+
+**4. Commit** (save a named snapshot on your computer)
+
+```powershell
+git commit -m "Short description of what you changed"
+```
+
+Examples:
+
+```powershell
+git commit -m "Update leadership photos and bios on About page"
+git commit -m "Fix service times wording on Visit page"
+```
+
+Use a clear message so you can find this change later in the history.
+
+**5. Push** (upload the commit to GitHub)
+
+```powershell
+git push origin main
+```
+
+- `origin` = the GitHub copy of the repo  
+- `main` = the branch the live site is built from  
+
+**6. Wait for the site to rebuild**
+
+1. Open https://github.com/laleo-za/Plumstead-Baptist/actions  
+2. Open the latest **“Build and deploy site to GitHub Pages”** run  
+3. Wait until both **build** and **deploy** jobs show a green tick (usually 1–3 minutes)  
+4. Visit https://plumsteadbaptist.co.za/ (or your GitHub Pages URL) and hard-refresh: **Ctrl+F5**
+
+### If `git push` is rejected
+
+GitHub may refuse the push if someone else (or the Actions bot, in older setups) updated the remote. Pull first, then push:
+
+```powershell
+git pull origin main
+git push origin main
+```
+
+If `git pull` reports a merge conflict, ask someone comfortable with Git to help, or use GitHub Desktop (below) which shows conflicts visually.
+
+### Alternative: GitHub Desktop (no command line)
+
+1. Install **GitHub Desktop**: https://desktop.github.com/  
+2. **File → Add local repository** and choose the `Plumstead Baptist` folder  
+3. After editing files, GitHub Desktop lists changes on the left  
+4. Write a short **Summary** (commit message), click **Commit to main**  
+5. Click **Push origin**  
+6. Check the **Actions** tab on github.com as above  
+
+### What *not* to commit
+
+- **`__pycache__/`** — Python cache; already listed in `.gitignore`. If it appears in `git status`, do not add it.  
+- **Secrets** — never commit passwords, API keys, or `.env` files.  
+
+### Quick reference
+
+| Goal | Command |
+|------|---------|
+| See changes | `git status` |
+| Stage all changes | `git add .` |
+| Save snapshot | `git commit -m "Your message"` |
+| Upload to GitHub | `git push origin main` |
+| Download latest from GitHub | `git pull origin main` |
+| Preview locally | `python app.py` → http://127.0.0.1:5000 |
+
+---
 
 ### How the automatic publish works
 

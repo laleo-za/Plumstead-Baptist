@@ -46,8 +46,9 @@ img {
 /* --- Hero banner (home page top section with rotating images) --- */
 .hero {
   position: relative;
-  height: 72vh;
-  min-height: 520px;
+  /* ~80% of the original banner height so more of the page is visible on load */
+  height: 58vh;
+  min-height: 416px;
   color: var(--white);
   overflow: hidden;
   background: var(--deep-blue);
@@ -290,10 +291,6 @@ img {
   grid-template-columns: 1fr;
 }
 
-.about-page .card__media {
-  margin-top: 1.5rem;
-}
-
 .card h2 {
   margin: 0 0 0.75rem 0;
   font-size: clamp(1.4rem, 2.3vw, 2rem);
@@ -341,7 +338,13 @@ img {
   gap: 1rem;
 }
 
-/* About gallery photos: can use global --image-scale per figure/image */
+/* About gallery photos (History, Ministries, Squirrels Leap Farm tabs).
+   -----------------------------------------------------------------------------
+   IMAGE CONTROLS — About page gallery photos
+   To zoom a single photo in or out, add style="--image-scale: 0.9;" (or 1.1)
+   on that photo's <figure class="about-photo"> in templates/about.html.
+   Default is 1 (full width of its grid cell). Does NOT affect the Statement
+   of Faith banner — see "faith-banner" controls further down. */
 .about-photo {
   margin: 0;
   overflow: hidden;
@@ -505,6 +508,44 @@ img {
   .statement-of-faith-card {
     padding: 1.25rem 1.1rem;
   }
+}
+
+/* =============================================================================
+   IMAGE CONTROLS — Statement of Faith banner (About page, Statement of Faith tab)
+   -----------------------------------------------------------------------------
+   Affects ONLY the photo below the Acts 4 quote in templates/about.html
+   (<figure class="faith-banner">). No other image on the site uses these rules.
+
+   HOW TO TWEAK (change the values on .panel-faith .faith-banner below):
+     --faith-banner-max-width   Maximum width of the image (centred).
+     --faith-banner-max-height  Tallest the image may be; scales down to fit
+                                without cropping.
+     --faith-banner-radius      Rounded corners (matches other About photos).
+
+   No coloured frame or padding — just the photo on the page background, like
+   the gallery images elsewhere on the About page.
+   ============================================================================= */
+.panel-faith .faith-banner {
+  --faith-banner-max-width: min(100%, 720px);
+  --faith-banner-max-height: 360px;
+  --faith-banner-radius: 10px;
+
+  margin: 1.5rem auto 0;
+  max-width: var(--faith-banner-max-width);
+  text-align: center;
+}
+
+.panel-faith .faith-banner__img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: var(--faith-banner-max-height);
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+  object-position: center center;
+  border-radius: var(--faith-banner-radius);
 }
 
 /* About page: tabbed content (Ministries / History / Statement of Faith / Leadership / Squirrels Leap Farm) */
@@ -871,7 +912,7 @@ img {
    space; Visit and Contact pages keep the full-size .map above. */
 #visit .map {
   height: 190px;
-  max-width: 50%;
+  max-width: 70%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1189,8 +1230,8 @@ footer {
   }
 
   .hero {
-    height: 68vh;
-    min-height: 420px;
+    height: 54vh;
+    min-height: 336px;
   }
 
   .hero__center {
@@ -1307,7 +1348,7 @@ footer {
 /* --- Small phone (narrow screens) --- */
 @media (max-width: 480px) {
   .hero {
-    min-height: 380px;
+    min-height: 304px;
   }
 
   .hero__bottom {

@@ -15,25 +15,11 @@ from flask import render_template
 from app import app, get_latest_youtube_video_id
 
 
+from site_config import SITE_URL, seo_page_context
+
 OUTPUT_DIR = Path("docs")
 
-# =============================================================================
-# LIVE SITE URL
-# This is the full address visitors type into their browser to reach the
-# published church website. It is used to write absolute URLs into
-# robots.txt and sitemap.xml so Google can crawl the right pages.
-#
-# *** UPDATE THIS WHEN THE SITE GOES LIVE. ***
-#
-# Examples:
-#   - Custom domain:        "https://plumsteadbaptist.co.za/"
-#   - Default GitHub Pages: "https://your-github-username.github.io/Plumstead-Baptist/"
-#
-# Must end with a trailing slash.
-# =============================================================================
-SITE_URL = "https://plumsteadbaptist.co.za/"
-
-# Pages we publish. Used both for rendering the HTML and for listing
+# Pages we publish.
 # their URLs in sitemap.xml. Keep this list in sync if you add a new page.
 # Tuple: (output filename, sitemap path relative to SITE_URL, priority 0.0-1.0)
 PAGES = [
@@ -135,10 +121,27 @@ def main() -> None:
 
     latest_video_id = get_latest_youtube_video_id()
     page_contexts = {
-        "index.html": {"page_title": "Home", "active_page": "home", "latest_video_id": latest_video_id},
-        "visit.html": {"page_title": "Visit", "active_page": "visit"},
-        "about.html": {"page_title": "About", "active_page": "about"},
-        "contact.html": {"page_title": "Contact", "active_page": "contact"},
+        "index.html": {
+            "page_title": "Home",
+            "active_page": "home",
+            "latest_video_id": latest_video_id,
+            **seo_page_context("home"),
+        },
+        "visit.html": {
+            "page_title": "Visit",
+            "active_page": "visit",
+            **seo_page_context("visit"),
+        },
+        "about.html": {
+            "page_title": "About",
+            "active_page": "about",
+            **seo_page_context("about"),
+        },
+        "contact.html": {
+            "page_title": "Contact",
+            "active_page": "contact",
+            **seo_page_context("contact"),
+        },
     }
 
     with app.app_context():

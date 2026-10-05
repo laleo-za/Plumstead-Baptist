@@ -1,5 +1,5 @@
 # Plumstead Baptist Church — Website
-
+TEST
 A simple church website built with **Python (Flask)** for local previewing and **HTML templates + CSS** for the actual pages. There is no database — all content lives in the templates and one shared partial. The site is designed to be easy to edit for someone with little coding experience; key sections are clearly commented in the code.
 
 **The published site is fully static HTML** rendered ahead of time and hosted on **GitHub Pages**. Flask is only used as a convenient way to build the pages from templates; no Python runs on the live website.
